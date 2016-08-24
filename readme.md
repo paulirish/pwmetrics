@@ -4,9 +4,11 @@
 
 > Progressive web metrics at your fingertipz. 💅
 
-CLI tool and lib to gather performance metrics via [Lighthouse](https://github.com/GoogleChrome/lighthouse/).
+CLI tool and lib to gather performance metrics via [Lighthouse](https://github.com/GoogleChrome/lighthouse/). _IN BETA_.
 
-![image](https://cloud.githubusercontent.com/assets/39191/17918270/5649c990-6978-11e6-8293-527a489eada4.png)
+![image](https://cloud.githubusercontent.com/assets/39191/17918763/a18b78f0-697c-11e6-939f-2fb3b3fad8d9.png)
+
+ Documentation on these metrics in the works. If you hit bugs in the metrics collection, report at [Lighthouse issues](https://github.com/GoogleChrome/lighthouse/issues).
 
 ### Install [![NPM pwmetrics package](https://img.shields.io/npm/v/pwmetrics.svg)](https://npmjs.org/package/pwmetrics)
 ```sh
