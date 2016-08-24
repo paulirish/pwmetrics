@@ -1,0 +1,32 @@
+{
+  "name": "pwmetrics",
+  "version": "1.0.0",
+  "description": "Gather progressive web metrics for a url. CLI & lib",
+  "main": "index.js",
+  "bin": {
+    "pwmetrics": "bin/cli.js"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Paul Irish",
+  "license": "Apache-2.0",
+  "dependencies": {
+    "cli-chart": "^0.3.1",
+    "lighthouse": "github:googlechrome/lighthouse"
+  },
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/paulirish/pwmetrics.git"
+  },
+  "keywords": [
+    "metrics",
+    "performance",
+    "lighthouse"
+  ],
+  "bugs": {
+    "url": "https://github.com/paulirish/pwmetrics/issues"
+  },
+  "homepage": "https://github.com/paulirish/pwmetrics#readme"
+}
