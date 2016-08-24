@@ -8,6 +8,14 @@ CLI tool and lib to gather performance metrics via [Lighthouse](github.com/Googl
 
 ![image](https://cloud.githubusercontent.com/assets/39191/17918270/5649c990-6978-11e6-8293-527a489eada4.png)
 
+### Install [![NPM pwmetrics package](https://img.shields.io/npm/v/pwmetrics.svg)](https://npmjs.org/package/pwmetrics)
+```sh
+$ npm install --global pwmetrics
+# or
+$ npm install --save pwmetrics
+```
+
+
 ### CLI Usage
 
 ```sh
