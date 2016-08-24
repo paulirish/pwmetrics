@@ -58,4 +58,4 @@ new PWMetrics('http://bubbles.com', opts);
 
 ### License
 
-Apache 2.0. Google.
+Apache 2.0. Google Inc.
