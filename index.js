@@ -1,5 +1,6 @@
 // Copyright 2016 Google Inc. All Rights Reserved.
 // Licensed under the Apache License, Version 2.0. See LICENSE
+"use strict";
 
 const lighthouse = require('lighthouse');
 const Chart = require('cli-chart');
