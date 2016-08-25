@@ -28,5 +28,8 @@
   "bugs": {
     "url": "https://github.com/paulirish/pwmetrics/issues"
   },
-  "homepage": "https://github.com/paulirish/pwmetrics#readme"
+  "homepage": "https://github.com/paulirish/pwmetrics#readme",
+  "engines" : {
+    "node" : ">= 4.4.6"
+  }
 }
