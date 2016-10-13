@@ -21,9 +21,6 @@ $ npm install --save pwmetrics
 ### CLI Usage
 
 ```sh
-# run Chrome with port 9222 open
-chrome  --remote-debugging-port=9222 --no-first-run --user-data-dir=$(mktemp -d -t pwm.XXXXX)
-
 # run pwmetrics with your url
 pwmetrics http://goat.com
 ```
