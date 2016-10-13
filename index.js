@@ -8,7 +8,7 @@ const util = require('util');
 const fs = require('fs');
 const path = require('path');
 
-const perfConfig = require('lighthouse/lighthouse-core/config/perf.example-custom.json')
+const perfConfig = require('lighthouse/lighthouse-core/config/perf.json')
 
 class PWMetrics {
 
