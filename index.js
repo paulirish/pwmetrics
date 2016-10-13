@@ -2,11 +2,14 @@
 // Licensed under the Apache License, Version 2.0. See LICENSE
 "use strict";
 
-const lighthouse = require('lighthouse');
-const Chart = require('cli-chart');
 const util = require('util');
 const fs = require('fs');
 const path = require('path');
+
+
+const Chart = require('cli-chart');
+const lighthouse = require('lighthouse');
+const ChromeLauncher = require('lighthouse/lighthouse-cli/chrome-launcher');
 
 const perfConfig = require('lighthouse/lighthouse-core/config/perf.json')
 
@@ -16,7 +19,16 @@ class PWMetrics {
     this.url = url;
     this.opts = opts;
 
-    return this.recordLighthouseTrace();
+    const launcher = new ChromeLauncher();
+
+    return launcher
+    .isDebuggerReady()
+    .catch(() => {
+      console.log('Launching Chrome...');
+      return launcher.run();
+    })
+    .then(() => this.recordLighthouseTrace())
+    .then(() => launcher.kill());
   }
 
   recordLighthouseTrace() {
