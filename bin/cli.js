@@ -16,6 +16,14 @@ argv
     flags[flagKey] = keyValue[1] || true;
   });
 
+if (!url || flags.help) {
+  if (!flags.help) console.error('No url entered.');
+  console.error('Usage:');
+  console.error('    pwmetrics http://goat.com');
+  console.error('    pwmetrics --json http://goat.com');
+  return;
+}
+
 const p = new PWMetrics(url, flags);
 Promise.resolve(p)
   .then(data => {

@@ -16,16 +16,6 @@ class PWMetrics {
     this.url = url;
     this.opts = opts;
 
-    if (this.opts.data) {
-      const filename = this.opts.data;
-      const savedResults = JSON.parse(fs.readFileSync(path.join(__dirname, filename), 'utf8'));
-      return this.displayResults(savedResults.audits);
-    }
-
-    if (!this.url) {
-      return new Error('Please provide a URL');
-    }
-
     return this.recordLighthouseTrace();
   }
 
