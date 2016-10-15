@@ -65,29 +65,33 @@ class PWMetrics {
       value: resFMP.rawValue,
       color: colorP0
     }, {
-      name: 'Median Visual Completion',
-      value: resSI.rawValue,
+      name: 'Perceptual Speed Index',
+      value: resSIext && resSIext.value.speedline.perceptualSpeedIndex,
       color: colorVisual
     }, {
       name: 'First Visual Change',
       value: resSIext && resSIext.value.first,
       color: colorVisual
-    }, {
-      name: 'Visually Complete 100%',
-      value: resSIext && resSIext.value.complete,
-      color: colorVisual
-    }, {
+    },
+    // {
+    //   name: 'Visually Complete 100%',
+    //   value: resSIext && resSIext.value.complete,
+    //   color: colorVisual
+    // },
+     {
       name: 'Time to Interactive',
       value: resTTI.rawValue,
       color: colorP0
-    }, {
-      name: 'Visually Complete 85%',
-      value: resTTIext && resTTIext.value.timings.visuallyReady,
-      color: colorVisual
-    }, {
-      name: 'Navigation Start',
-      value: 0 // naturally.
-    }
+    },
+    // {
+    //   name: 'Visually Complete 85%',
+    //   value: resTTIext && resTTIext.value.timings.visuallyReady,
+    //   color: colorVisual
+    // },
+    // {
+    //   name: 'Navigation Start',
+    //   value: 0 // naturally.
+    // }
     ];
     return {
       timings,
@@ -112,7 +116,9 @@ class PWMetrics {
     data = data.timings.sort((a,b) => b.value - a.value);
     const chart_width = 80;
     const fullWidthInMs = 7000;
-    const maxLabelWidth = Math.max.apply(Math, data.map(r => r.name.length));
+    const maxLabelWidth = Math.max.apply(Math, data.map(result => {
+      return `${result.name} (${result.value.toFixed(0)})`.length
+    }));
 
     data.forEach(r => {
       if (r.value === undefined) {
@@ -128,13 +134,14 @@ class PWMetrics {
       height: data.length * 2,
       step: 2,
       direction: 'x',
+      maxBound: 3500
     };
 
     var chart = new Chart(chartOps);
     data.forEach(result => {
       chart.addBar({
         size: result.value,
-        label: result.name,
+        label: `${result.name} (${result.value.toFixed(0)})`,
         color: result.color
       })
     });
