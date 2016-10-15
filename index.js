@@ -121,7 +121,7 @@ class PWMetrics {
     })
 
     const chartOps = {
-      width: process.stdout.columns * 0.75, // 75% of terminal  width
+      width: process.stdout.columns * 0.75, // 75% of terminal width
       xlabel: 'Time (ms) since navigation start',
       xmax: fullWidthInMs,
       lmargin: maxLabelWidth + 1,
