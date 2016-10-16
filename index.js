@@ -114,11 +114,9 @@ class PWMetrics {
     }
 
     data = data.timings.sort((a,b) => b.value - a.value);
-    const chart_width = 80;
-    const fullWidthInMs = 7000;
-    const maxLabelWidth = Math.max.apply(Math, data.map(result => {
-      return `${result.name} (${result.value.toFixed(0)})`.length
-    }));
+
+    const fullWidthInMs = Math.max.apply(Math, data.map(result => result.value));
+    const maxLabelWidth = Math.max.apply(Math, data.map(result => result.name.length));
 
     data.forEach(r => {
       if (r.value === undefined) {
@@ -127,21 +125,25 @@ class PWMetrics {
     })
 
     const chartOps = {
-      width: process.stdout.columns * 0.75, // 75% of terminal width
+      // 90% of terminal width to give some right margin
+      width: process.stdout.columns * 0.9 - maxLabelWidth,
       xlabel: 'Time (ms) since navigation start',
-      xmax: fullWidthInMs,
+
+      xmax: fullWidthInMs.toFixed(0),
       lmargin: maxLabelWidth + 1,
+
+      // 2 rows per bar, horitzonal plot
       height: data.length * 2,
       step: 2,
-      direction: 'x',
-      maxBound: 3500
+      direction: 'x'
     };
 
     var chart = new Chart(chartOps);
     data.forEach(result => {
       chart.addBar({
         size: result.value,
-        label: `${result.name} (${result.value.toFixed(0)})`,
+        label: result.name,
+        barLabel: `${Math.floor(result.value).toLocaleString()}`,
         color: result.color
       })
     });
