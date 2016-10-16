@@ -6,7 +6,7 @@
 
 CLI tool and lib to gather performance metrics via [Lighthouse](https://github.com/GoogleChrome/lighthouse/). _IN BETA_.
 
-![image](https://cloud.githubusercontent.com/assets/39191/17918763/a18b78f0-697c-11e6-939f-2fb3b3fad8d9.png)
+![image](https://cloud.githubusercontent.com/assets/39191/19417867/7aead922-93af-11e6-88ec-917dad6e89d2.png)
 
  Documentation on these metrics in the works. If you hit bugs in the metrics collection, report at [Lighthouse issues](https://github.com/GoogleChrome/lighthouse/issues).
 
