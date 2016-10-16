@@ -63,10 +63,10 @@ class PWMetrics {
     }, {
       name: 'First Meaningful Paint',
       value: resFMP.rawValue,
-      color: colorP0
+      color: colorP2
     }, {
       name: 'Perceptual Speed Index',
-      value: resSIext && resSIext.value.speedline.perceptualSpeedIndex,
+      value: resSI.rawValue,
       color: colorVisual
     }, {
       name: 'First Visual Change',
