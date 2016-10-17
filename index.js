@@ -68,11 +68,12 @@ class PWMetrics {
       name: 'Perceptual Speed Index',
       value: resSI.rawValue,
       color: colorVisual
-    }, {
-      name: 'First Visual Change',
-      value: resSIext && resSIext.value.first,
-      color: colorVisual
     },
+    // {
+    //   name: 'First Visual Change',
+    //   value: resSIext && resSIext.value.first,
+    //   color: colorVisual
+    // },
     // {
     //   name: 'Visually Complete 100%',
     //   value: resSIext && resSIext.value.complete,
