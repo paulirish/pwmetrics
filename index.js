@@ -114,7 +114,7 @@ class PWMetrics {
       return this.spitJSON(data);
     }
 
-    data = data.timings.sort((a,b) => b.value - a.value);
+    data = data.timings.reverse(); //.sort((a,b) => b.value - a.value);
 
     const fullWidthInMs = Math.max.apply(Math, data.map(result => result.value));
     const maxLabelWidth = Math.max.apply(Math, data.map(result => result.name.length));
