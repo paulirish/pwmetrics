@@ -6,7 +6,6 @@ const util = require('util');
 const fs = require('fs');
 const path = require('path');
 
-
 const Chart = require('cli-chart');
 const lighthouse = require('lighthouse');
 const ChromeLauncher = require('lighthouse/lighthouse-cli/chrome-launcher');
@@ -25,7 +24,7 @@ class PWMetrics {
       'Navigation Start'
     ];
 
-    const launcher = new ChromeLauncher();
+    const launcher = new (ChromeLauncher.ChromeLauncher || ChromeLauncher)();
 
     return launcher
     .isDebuggerReady()
@@ -46,7 +45,6 @@ class PWMetrics {
       .then(res => this.prepareData(res))
       .then(data => this.displayOutput(data));
   }
-
 
   prepareData(res) {
     const audits = res.audits;
@@ -125,7 +123,6 @@ class PWMetrics {
     }
 
     data = data.timings.reverse();
-
 
     data = data.filter(r => {
       if (r.value === undefined) {
