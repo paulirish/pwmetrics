@@ -142,7 +142,9 @@ class PWMetrics {
       width: process.stdout.columns * 0.9 - maxLabelWidth,
       xlabel: 'Time (ms) since navigation start',
 
-      xmax: fullWidthInMs.toFixed(0),
+      // nearest second
+      maxBound: Math.ceil(fullWidthInMs/1000)*1000,
+      xmax: fullWidthInMs,
       lmargin: maxLabelWidth + 1,
 
       // 2 rows per bar, horitzonal plot
