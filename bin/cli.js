@@ -28,7 +28,6 @@ const p = new PWMetrics(url, flags);
 Promise.resolve(p)
   .then(data => {
     data && process.stdout.write(data);
-    process.stdout.write('\n');
     process.exit(0);
   })
   .catch(err => {

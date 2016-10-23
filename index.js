@@ -18,6 +18,12 @@ class PWMetrics {
   constructor(url, opts) {
     this.url = url;
     this.opts = opts;
+    this.hiddenMetrics = [
+      'First Visual Change',
+      'Visually Complete 100%',
+      'Visually Complete 85%',
+      'Navigation Start'
+    ];
 
     const launcher = new ChromeLauncher();
 
@@ -28,7 +34,10 @@ class PWMetrics {
       return launcher.run();
     })
     .then(() => this.recordLighthouseTrace())
-    .then(() => launcher.kill());
+    .then(data => {
+      launcher.kill();
+      return data;
+    });
   }
 
   recordLighthouseTrace() {
@@ -69,30 +78,30 @@ class PWMetrics {
       value: resSI.rawValue,
       color: colorVisual
     },
-    // {
-    //   name: 'First Visual Change',
-    //   value: resSIext && resSIext.value.first,
-    //   color: colorVisual
-    // },
-    // {
-    //   name: 'Visually Complete 100%',
-    //   value: resSIext && resSIext.value.complete,
-    //   color: colorVisual
-    // },
+    {
+      name: 'First Visual Change',
+      value: resSIext && resSIext.value.first,
+      color: colorVisual
+    },
+    {
+      name: 'Visually Complete 100%',
+      value: resSIext && resSIext.value.complete,
+      color: colorVisual
+    },
      {
       name: 'Time to Interactive',
       value: resTTI.rawValue,
       color: colorP0
     },
-    // {
-    //   name: 'Visually Complete 85%',
-    //   value: resTTIext && resTTIext.value.timings.visuallyReady,
-    //   color: colorVisual
-    // },
-    // {
-    //   name: 'Navigation Start',
-    //   value: 0 // naturally.
-    // }
+    {
+      name: 'Visually Complete 85%',
+      value: resTTIext && resTTIext.value.timings.visuallyReady,
+      color: colorVisual
+    },
+    {
+      name: 'Navigation Start',
+      value: 0 // naturally.
+    }
     ];
     return {
       timings,
@@ -105,7 +114,7 @@ class PWMetrics {
       delete r.color;
       return r;
     });
-    var resultsStr = JSON.stringify(data, null, 2);
+    var resultsStr = JSON.stringify(data, null, 2) + '\n';
     return resultsStr;
   }
 
@@ -114,16 +123,19 @@ class PWMetrics {
       return this.spitJSON(data);
     }
 
-    data = data.timings.reverse(); //.sort((a,b) => b.value - a.value);
+    data = data.timings.reverse();
 
-    const fullWidthInMs = Math.max.apply(Math, data.map(result => result.value));
-    const maxLabelWidth = Math.max.apply(Math, data.map(result => result.name.length));
 
-    data.forEach(r => {
+    data = data.filter(r => {
       if (r.value === undefined) {
         console.error(`Sorry, ${r.name} metric is unavailable`);
       }
+      // don't chart hidden metrics, but include in json
+      return !this.hiddenMetrics.includes(r.name);
     })
+
+    const fullWidthInMs = Math.max.apply(Math, data.map(result => result.value));
+    const maxLabelWidth = Math.max.apply(Math, data.map(result => result.name.length));
 
     const chartOps = {
       // 90% of terminal width to give some right margin
