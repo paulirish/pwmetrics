@@ -48,31 +48,24 @@ class PWMetrics {
       .then(data => this.displayOutput(data));
   }
 
-  spitJSON(data) {
-    data.timings = data.timings.map(r => {
-      delete r.color;
-      return r;
-    });
-    return data;
-  }
-
   displayOutput(data) {
     if (this.opts.json) {
-      return this.spitJSON(data);
+      return data;
     }
 
+    // reverse to preserve the order, because cli-chart.
     data = data.timings.reverse();
 
     data = data.filter(r => {
       if (r.value === undefined) {
-        console.error(`Sorry, ${r.name} metric is unavailable`);
+        console.error(`Sorry, ${r.title} metric is unavailable`);
       }
       // don't chart hidden metrics, but include in json
       return !metrics.hiddenMetrics.includes(r.name);
     })
 
     const fullWidthInMs = Math.max.apply(Math, data.map(result => result.value));
-    const maxLabelWidth = Math.max.apply(Math, data.map(result => result.name.length));
+    const maxLabelWidth = Math.max.apply(Math, data.map(result => result.title.length));
 
     const chartOps = {
       // 90% of terminal width to give some right margin
@@ -94,7 +87,7 @@ class PWMetrics {
     data.forEach(result => {
       chart.addBar({
         size: result.value,
-        label: result.name,
+        label: result.title,
         barLabel: `${Math.floor(result.value).toLocaleString()}`,
         color: result.color
       })

@@ -3,11 +3,11 @@
 'use strict';
 
 module.exports = {
-  hiddenMetrics : [
-    'First Visual Change',
-    'Visually Complete 100%',
-    'Visually Complete 85%',
-    'Navigation Start'
+  hiddenMetrics: [
+    'fv',
+    'vc',
+    'vc85',
+    'navstart'
   ],
   prepareData
 }
@@ -27,43 +27,51 @@ function prepareData(res) {
   const colorVisual = 'blue';
 
   const timestamps = [{
-    name: 'Navigation Start',
+    title: 'Navigation Start',
+    name: 'navstart',
     value: resFMPext && resFMPext.value.timings.navStart
   }];
 
   const timings = [
     {
-      name: 'First Contentful Paint',
+      title: 'First Contentful Paint',
+      name: 'ttfcp',
       value: resFMPext && resFMPext.value.timings.fCP,
       color: colorP2
     },
     {
-      name: 'First Meaningful Paint',
+      title: 'First Meaningful Paint',
+      name: 'ttfmp',
       value: resFMP.rawValue,
       color: colorP2
     },
     {
-      name: 'Perceptual Speed Index',
+      title: 'Perceptual Speed Index',
+      name: 'psi',
       value: resSI.rawValue,
       color: colorVisual
     },
     {
-      name: 'First Visual Change',
+      title: 'First Visual Change',
+      name: 'fv',
       value: resSIext && resSIext.value.first,
       color: colorVisual
     },
     {
-      name: 'Visually Complete 100%',
+      title: 'Visually Complete 100%',
+      name: 'vc',
       value: resSIext && resSIext.value.complete,
       color: colorVisual
     },
     {
-      name: 'Time to Interactive',
+      title: 'Time to Interactive',
+      name: 'tti',
       value: resTTI.rawValue,
       color: colorP0
     },
     {
-      name: 'Visually Complete 85%',
+      title: 'Visually Complete 85%',
+      name: 'vc85',
       value: resTTIext && parseFloat(resTTIext.value.timings.visuallyReady),
       color: colorVisual
     }
