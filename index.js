@@ -1,6 +1,6 @@
 // Copyright 2016 Google Inc. All Rights Reserved.
 // Licensed under the Apache License, Version 2.0. See LICENSE
-"use strict";
+'use strict';
 
 const util = require('util');
 const fs = require('fs');
@@ -9,104 +9,43 @@ const path = require('path');
 const Chart = require('cli-chart');
 const lighthouse = require('lighthouse');
 const ChromeLauncher = require('lighthouse/lighthouse-cli/chrome-launcher');
-
 const perfConfig = require('lighthouse/lighthouse-core/config/perf.json')
+
+const metrics = require('./metrics')
 
 class PWMetrics {
 
   constructor(url, opts) {
     this.url = url;
     this.opts = opts;
-    this.hiddenMetrics = [
-      'First Visual Change',
-      'Visually Complete 100%',
-      'Visually Complete 85%',
-      'Navigation Start'
-    ];
+    this.runsRemaining = opts.runs || 1;
 
-    const launcher = new (ChromeLauncher.ChromeLauncher || ChromeLauncher)();
+    return this.run();
+  }
 
-    return launcher
-    .isDebuggerReady()
-    .catch(() => {
-      console.log('Launching Chrome...');
-      return launcher.run();
-    })
-    .then(() => this.recordLighthouseTrace())
-    .then(data => {
-      launcher.kill();
-      return data;
-    });
+  run() {
+    return this.launchChrome()
+      .then(() => this.recordLighthouseTrace())
+      .then(data => {
+        this.launcher.kill();
+        return data;
+      });
+  }
+
+  launchChrome() {
+    this.launcher = new (ChromeLauncher.ChromeLauncher || ChromeLauncher)();
+    return this.launcher.isDebuggerReady()
+      .catch(() => {
+        console.log('Launching Chrome...');
+        return launcher.run();
+      });
   }
 
   recordLighthouseTrace() {
     const lhOpts = {mobile: true, loadPage: true};
     return lighthouse(this.url, lhOpts, perfConfig)
-      .then(res => this.prepareData(res))
+      .then(res => metrics.prepareData(res))
       .then(data => this.displayOutput(data));
-  }
-
-  prepareData(res) {
-    const audits = res.audits;
-
-    const resFMP = audits['first-meaningful-paint'];
-    const resFMPext = resFMP.extendedInfo;
-    const resSI = audits['speed-index-metric'];
-    const resSIext = resSI.extendedInfo;
-    const resTTI = audits['time-to-interactive'];
-    const resTTIext = resTTI.extendedInfo;
-
-    const colorP0 = 'yellow';
-    const colorP2 = 'green';
-    const colorVisual = 'blue';
-
-    const timestamps = [{
-      name: 'Navigation Start',
-      value: resFMPext && resFMPext.value.timings.navStart
-    }];
-
-    const timings = [{
-      name: 'First Contentful Paint',
-      value: resFMPext && resFMPext.value.timings.fCP,
-      color: colorP2
-    }, {
-      name: 'First Meaningful Paint',
-      value: resFMP.rawValue,
-      color: colorP2
-    }, {
-      name: 'Perceptual Speed Index',
-      value: resSI.rawValue,
-      color: colorVisual
-    },
-    {
-      name: 'First Visual Change',
-      value: resSIext && resSIext.value.first,
-      color: colorVisual
-    },
-    {
-      name: 'Visually Complete 100%',
-      value: resSIext && resSIext.value.complete,
-      color: colorVisual
-    },
-     {
-      name: 'Time to Interactive',
-      value: resTTI.rawValue,
-      color: colorP0
-    },
-    {
-      name: 'Visually Complete 85%',
-      value: resTTIext && parseFloat(resTTIext.value.timings.visuallyReady),
-      color: colorVisual
-    }
-    ];
-    return {
-      timings,
-      timestamps,
-      generatedTime: res.generatedTime,
-      lighthouseVersion: res.lighthouseVersion,
-      initialUrl: res.initialUrl,
-      url: res.url
-    };
   }
 
   spitJSON(data) {
@@ -129,7 +68,7 @@ class PWMetrics {
         console.error(`Sorry, ${r.name} metric is unavailable`);
       }
       // don't chart hidden metrics, but include in json
-      return !this.hiddenMetrics.includes(r.name);
+      return !metrics.hiddenMetrics.includes(r.name);
     })
 
     const fullWidthInMs = Math.max.apply(Math, data.map(result => result.value));
