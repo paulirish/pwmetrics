@@ -27,6 +27,9 @@ if (!url || flags.help) {
 const p = new PWMetrics(url, flags);
 Promise.resolve(p)
   .then(data => {
+    if (flags.json)
+      data = JSON.stringify(data, null, 2) + '\n';
+
     data && process.stdout.write(data);
     process.exit(0);
   })

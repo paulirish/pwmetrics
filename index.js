@@ -49,22 +49,24 @@ class PWMetrics {
 
 
   prepareData(res) {
-    res = res.audits;
+    const audits = res.audits;
 
-    const resFMP = res['first-meaningful-paint'];
+    const resFMP = audits['first-meaningful-paint'];
     const resFMPext = resFMP.extendedInfo;
-    const resSI = res['speed-index-metric'];
+    const resSI = audits['speed-index-metric'];
     const resSIext = resSI.extendedInfo;
-    const resTTI = res['time-to-interactive'];
+    const resTTI = audits['time-to-interactive'];
     const resTTIext = resTTI.extendedInfo;
 
     const colorP0 = 'yellow';
     const colorP2 = 'green';
     const colorVisual = 'blue';
 
-    const timestamps = [
-      resFMPext && resFMPext.value.timings.navStart
-    ];
+    const timestamps = [{
+      name: 'Navigation Start',
+      value: resFMPext && resFMPext.value.timings.navStart
+    }];
+
     const timings = [{
       name: 'First Contentful Paint',
       value: resFMPext && resFMPext.value.timings.fCP,
@@ -95,17 +97,17 @@ class PWMetrics {
     },
     {
       name: 'Visually Complete 85%',
-      value: resTTIext && resTTIext.value.timings.visuallyReady,
+      value: resTTIext && parseFloat(resTTIext.value.timings.visuallyReady),
       color: colorVisual
-    },
-    {
-      name: 'Navigation Start',
-      value: 0 // naturally.
     }
     ];
     return {
       timings,
-      timestamps
+      timestamps,
+      generatedTime: res.generatedTime,
+      lighthouseVersion: res.lighthouseVersion,
+      initialUrl: res.initialUrl,
+      url: res.url
     };
   }
 
@@ -114,8 +116,7 @@ class PWMetrics {
       delete r.color;
       return r;
     });
-    var resultsStr = JSON.stringify(data, null, 2) + '\n';
-    return resultsStr;
+    return data;
   }
 
   displayOutput(data) {
