@@ -28,11 +28,16 @@ pwmetrics http://goat.com
 #### Options
 
 ```sh
-# --json
-pwmetrics --json http://example.com
+# --runs=n     Does n runs (eg. 3, 5), and reports the median run's numbers.
+#              Median run selected by run with the median TTI.
+pwmetrics http://goat.com --runs=3
+
+
+# --json       Reports json details to stdout.
+pwmetrics --json http://goat.com
 
 # returns...
-# {
+# {runs: [{
 #   "timings": [
 #     {
 #       "name": "First Contentful Paint",
@@ -49,7 +54,6 @@ pwmetrics --json http://example.com
 
 ```js
 const PWMetrics = require('pwmetrics');
-
 
 new PWMetrics('http://bubbles.com', opts);
 ```

@@ -7,6 +7,7 @@ const fs = require('fs');
 const path = require('path');
 
 const Chart = require('cli-chart');
+const median = require('median');
 const lighthouse = require('lighthouse');
 const ChromeLauncher = require('lighthouse/lighthouse-cli/chrome-launcher');
 const perfConfig = require('lighthouse/lighthouse-core/config/perf.json')
@@ -18,17 +19,35 @@ class PWMetrics {
   constructor(url, opts) {
     this.url = url;
     this.opts = opts;
-    this.runsRemaining = opts.runs || 1;
+    this.runs = opts.runs || 1;
 
-    return this.run();
+    const results = new Array(parseInt(this.runs, 10)).fill(false);
+
+    // do our runs in sequence
+    const allDone = results.reduce((chain, run, index) => {
+      return chain.then(_ => {
+        return this.run().then(data => {
+          results[index] = data;
+        });
+      });
+    }, Promise.resolve());
+
+    return allDone.then(_ => {
+      const ret = { runs: results };
+      if (this.runs > 1) {
+        ret.median = this.findMedianRun(results);
+        console.log('                ☆  Median run  ☆')
+        this.displayOutput(ret.median);
+      }
+      return ret;
+    })
   }
 
   run() {
     return this.launchChrome()
       .then(() => this.recordLighthouseTrace())
       .then(data => {
-        this.launcher.kill();
-        return data;
+        return this.launcher.kill().then(_ => data);
       });
   }
 
@@ -37,7 +56,7 @@ class PWMetrics {
     return this.launcher.isDebuggerReady()
       .catch(() => {
         console.log('Launching Chrome...');
-        return launcher.run();
+        return this.launcher.run();
       });
   }
 
@@ -54,9 +73,9 @@ class PWMetrics {
     }
 
     // reverse to preserve the order, because cli-chart.
-    data = data.timings.reverse();
+    let timings = data.timings.reverse();
 
-    data = data.filter(r => {
+    timings = timings.filter(r => {
       if (r.value === undefined) {
         console.error(`Sorry, ${r.title} metric is unavailable`);
       }
@@ -64,8 +83,8 @@ class PWMetrics {
       return !metrics.hiddenMetrics.includes(r.name);
     })
 
-    const fullWidthInMs = Math.max.apply(Math, data.map(result => result.value));
-    const maxLabelWidth = Math.max.apply(Math, data.map(result => result.title.length));
+    const fullWidthInMs = Math.max.apply(Math, timings.map(result => result.value));
+    const maxLabelWidth = Math.max.apply(Math, timings.map(result => result.title.length));
 
     const chartOps = {
       // 90% of terminal width to give some right margin
@@ -78,13 +97,13 @@ class PWMetrics {
       lmargin: maxLabelWidth + 1,
 
       // 2 rows per bar, horitzonal plot
-      height: data.length * 2,
+      height: timings.length * 2,
       step: 2,
       direction: 'x'
     };
 
     var chart = new Chart(chartOps);
-    data.forEach(result => {
+    timings.forEach(result => {
       chart.addBar({
         size: result.value,
         label: result.title,
@@ -93,6 +112,17 @@ class PWMetrics {
       })
     });
     chart.draw();
+    return data;
+  }
+
+  findMedianRun(results) {
+    const ttiValues = results.map(r => r.timings.find(timing => timing.name === 'tti').value);
+    const medianTTI = median(ttiValues);
+    // in the case of duplicate runs having the exact same TTI, we naively pick the first
+    const medianRun = results.find(result => result.timings.find(timing => {
+      return timing.name === 'tti' && timing.value === medianTTI;
+    }));
+    return medianRun;
   }
 }
 
