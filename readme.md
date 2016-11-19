@@ -48,6 +48,57 @@ pwmetrics --json http://goat.com
 #       "value": 289.6
 #     },
 #     ...
+
+
+# Useful for CI
+
+# --ttfcp       Expected First Contentful Paint
+pwmetrics http://goat.com --ttfcp=1000
+
+# returns...
+# Expected 1000 ms First Contentful Paint was not reached, actual result is 40000 ms
+
+
+# --ttfmp       Expected Meaningful Contentful Paint
+pwmetrics http://goat.com --ttfmp=1000
+
+# returns...
+# Expected 1000 ms First Meaningful Paint was not reached, actual result is 4000 ms
+
+
+# --psi         Expected Perceptual Speed Index
+pwmetrics http://goat.com --psi=1000
+
+# returns...
+# Expected 1000 ms Perceptual Speed Index was not reached, actual result is 2000 ms
+
+
+# --fv          Expected First Visual Change
+pwmetrics http://goat.com --fv=1000
+
+# returns...
+# Expected 1000 ms First Visual Change was not reached, actual result is 3000 ms
+
+
+# --vc          Expected Visually Complete 100%
+pwmetrics http://goat.com --vc=1000
+
+# returns...
+# Expected 1000 ms Visually Complete 100% was not reached, actual result is 5000 ms
+
+
+# --tti         Expected Time to Interactive
+pwmetrics http://goat.com --tti=1000
+
+# returns...
+# Expected 1000 ms Time to Interactive was not reached, actual result is 6000 ms
+
+
+# --vc85        Expected Visually Complete 85%
+pwmetrics http://goat.com --vc85=1000
+
+# returns...
+# Expected 1000 ms Visually Complete 85% was not reached, actual result is 2000 ms
 ```
 
 ### API

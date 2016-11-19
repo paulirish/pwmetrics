@@ -10,15 +10,19 @@ const Chart = require('cli-chart');
 const median = require('median');
 const lighthouse = require('lighthouse');
 const ChromeLauncher = require('lighthouse/lighthouse-cli/chrome-launcher');
-const perfConfig = require('lighthouse/lighthouse-core/config/perf.json')
+const perfConfig = require('lighthouse/lighthouse-core/config/perf.json');
 
-const metrics = require('./metrics')
+const metrics = require('./metrics');
+const messages = require('./messages');
+
+const availableExpectations = ['ttfcp', 'ttfmp', 'psi', 'fv', 'vc', 'tti', 'vc85'];
 
 class PWMetrics {
 
   constructor(url, opts) {
     this.url = url;
     this.opts = opts;
+    this.expectations = this.getExpectations(opts);
     this.runs = opts.runs || 1;
 
     const results = new Array(parseInt(this.runs, 10)).fill(false);
@@ -36,7 +40,7 @@ class PWMetrics {
       const ret = { runs: results };
       if (this.runs > 1) {
         ret.median = this.findMedianRun(results);
-        console.log('                ☆  Median run  ☆')
+        console.log(messages('MEDIAN_RUN'));
         this.displayOutput(ret.median);
       }
       return ret;
@@ -55,7 +59,7 @@ class PWMetrics {
     this.launcher = new (ChromeLauncher.ChromeLauncher || ChromeLauncher)();
     return this.launcher.isDebuggerReady()
       .catch(() => {
-        console.log('Launching Chrome...');
+        console.log(messages['LAUNCHING_CHROME']);
         return this.launcher.run();
       });
   }
@@ -63,11 +67,15 @@ class PWMetrics {
   recordLighthouseTrace() {
     const lhOpts = {mobile: true, loadPage: true};
     return lighthouse(this.url, lhOpts, perfConfig)
-      .then(res => metrics.prepareData(res))
+      .then(res => metrics.prepareData(res, this.expectations))
       .then(data => this.displayOutput(data));
   }
 
   displayOutput(data) {
+    if (data.expectationErrorMessage) {
+      throw new Error(data.expectationErrorMessage);
+    }
+
     if (this.opts.json) {
       return data;
     }
@@ -77,11 +85,11 @@ class PWMetrics {
 
     timings = timings.filter(r => {
       if (r.value === undefined) {
-        console.error(`Sorry, ${r.title} metric is unavailable`);
+        console.error(messages('METRIC_IS_UNAVAILABLE', r.title));
       }
       // don't chart hidden metrics, but include in json
       return !metrics.hiddenMetrics.includes(r.name);
-    })
+    });
 
     const fullWidthInMs = Math.max.apply(Math, timings.map(result => result.value));
     const maxLabelWidth = Math.max.apply(Math, timings.map(result => result.title.length));
@@ -123,6 +131,15 @@ class PWMetrics {
       return timing.name === 'tti' && timing.value === medianTTI;
     }));
     return medianRun;
+  }
+
+  getExpectations(opts) {
+    return Object.keys(opts)
+      .filter(key => availableExpectations.includes(key))
+      .reduce((obj, key) => {
+        obj[key] = opts[key];
+        return obj;
+      }, {});
   }
 }
 
