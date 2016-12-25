@@ -21,8 +21,52 @@ $ npm install --save pwmetrics
 ### CLI Usage
 
 ```sh
-# run pwmetrics with your url
-pwmetrics http://goat.com
+# run pwmetrics with config in package.json
+pwmetrics --expectations
+```
+
+`package.json`
+```json
+...
+  "pwmetrics": {
+    "expectations": {
+      "url": "http://localhost/awesomesite/",
+      "metrics": {
+        "ttfmp": {
+          "warn": ">=3000",
+          "error": ">=5000"
+        },
+        "psi": {
+          "warn": ">=1500",
+          "error": ">=3200"
+        }
+      }
+    }
+  }
+...
+```
+
+
+```sh
+# run pwmetrics with config in yor-own-file.js
+pwmetrics --expectations=yor-own-file.js
+```
+
+`yor-own-file.js`
+```js
+module.exports = {
+  url: 'http://localhost/awesomesite/',
+  metrics: {
+    ttfmp: {
+      warn: '>=3000',
+      error: '>=5000'
+    },
+    psi: {
+      warn: '>=1500',
+      error: '>=3200'
+    }
+  }
+}
 ```
 
 #### Options
@@ -51,54 +95,14 @@ pwmetrics --json http://goat.com
 
 
 # Useful for CI
+# --expectations       Expectations from metrics results. Compares Lighthouse metrics with set expectations.
 
-# --ttfcp       Expected First Contentful Paint
-pwmetrics http://goat.com --ttfcp=1000
+pwmetrics --expectations
+# uses configurations from packages.json
 
-# returns...
-# Expected 1000 ms First Contentful Paint was not reached, actual result is 40000 ms
+pwmetrics --expectations=yor-own-file.js
+# uses path to your own file
 
-
-# --ttfmp       Expected Meaningful Contentful Paint
-pwmetrics http://goat.com --ttfmp=1000
-
-# returns...
-# Expected 1000 ms First Meaningful Paint was not reached, actual result is 4000 ms
-
-
-# --psi         Expected Perceptual Speed Index
-pwmetrics http://goat.com --psi=1000
-
-# returns...
-# Expected 1000 ms Perceptual Speed Index was not reached, actual result is 2000 ms
-
-
-# --fv          Expected First Visual Change
-pwmetrics http://goat.com --fv=1000
-
-# returns...
-# Expected 1000 ms First Visual Change was not reached, actual result is 3000 ms
-
-
-# --vc          Expected Visually Complete 100%
-pwmetrics http://goat.com --vc=1000
-
-# returns...
-# Expected 1000 ms Visually Complete 100% was not reached, actual result is 5000 ms
-
-
-# --tti         Expected Time to Interactive
-pwmetrics http://goat.com --tti=1000
-
-# returns...
-# Expected 1000 ms Time to Interactive was not reached, actual result is 6000 ms
-
-
-# --vc85        Expected Visually Complete 85%
-pwmetrics http://goat.com --vc85=1000
-
-# returns...
-# Expected 1000 ms Visually Complete 85% was not reached, actual result is 2000 ms
 ```
 
 ### API

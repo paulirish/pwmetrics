@@ -3,9 +3,10 @@
 // Licensed under the Apache License, Version 2.0. See LICENSE
 
 const PWMetrics = require('..');
+const {getConfig} = require('../expectations');
+const {getErrorMessage} = require('../messages');
 
 const argv = process.argv.slice(2);
-const url = argv.filter(f => !f.startsWith('-')).shift();
 
 const flags = {};
 argv
@@ -16,19 +17,22 @@ argv
     flags[flagKey] = keyValue[1] || true;
   });
 
+let url;
+if (flags.expectations) {
+  const expectationsConfig = getConfig(flags.expectations);
+  url = expectationsConfig.url;
+  flags.metrics = expectationsConfig.metrics;
+} else {
+  url = argv.filter(f => !f.startsWith('-')).shift();
+}
+
 if (!url || flags.help) {
-  if (!flags.help) console.error('No url entered.');
+  if (!flags.help) console.error(getErrorMessage('NO_URL'));
   console.error('Usage:');
   console.error('    pwmetrics http://goat.com');
   console.error('    pwmetrics http://goat.com --json  Reports json details to stdout.');
   console.error('    pwmetrics http://goat.com --runs=n  Does n runs (eg. 3, 5), and reports the median run\'s numbers.');
-  console.error('    pwmetrics http://goat.com --ttfcp  Expected First Contentful Paint');
-  console.error('    pwmetrics http://goat.com --ttfmp  Expected Meaningful Contentful Paint');
-  console.error('    pwmetrics http://goat.com --psi  Expected Perceptual Speed Index');
-  console.error('    pwmetrics http://goat.com --fv  Expected First Visual Change');
-  console.error('    pwmetrics http://goat.com --vc  Expected Visually Complete 100%');
-  console.error('    pwmetrics http://goat.com --tti  Expected Time to Interactive');
-  console.error('    pwmetrics http://goat.com --vc85  Expected Visually Complete 85%');
+  console.error('    pwmetrics --expectations  Expectations from metrics results. Useful for CI.');
   return;
 }
 

@@ -4,7 +4,6 @@
 
 const util = require('util');
 const fs = require('fs');
-const path = require('path');
 
 const Chart = require('cli-chart');
 const median = require('median');
@@ -13,16 +12,15 @@ const ChromeLauncher = require('lighthouse/lighthouse-cli/chrome-launcher');
 const perfConfig = require('lighthouse/lighthouse-core/config/perf.json');
 
 const metrics = require('./metrics');
-const messages = require('./messages');
-
-const availableExpectations = ['ttfcp', 'ttfmp', 'psi', 'fv', 'vc', 'tti', 'vc85'];
+const expectations = require('./expectations');
+const {getMessage, getErrorMessage} = require('./messages');
 
 class PWMetrics {
 
   constructor(url, opts) {
     this.url = url;
     this.opts = opts;
-    this.expectations = this.getExpectations(opts);
+    this.metrics = opts.metrics;
     this.runs = opts.runs || 1;
 
     const results = new Array(parseInt(this.runs, 10)).fill(false);
@@ -40,7 +38,7 @@ class PWMetrics {
       const ret = { runs: results };
       if (this.runs > 1) {
         ret.median = this.findMedianRun(results);
-        console.log(messages('MEDIAN_RUN'));
+        console.log(getMessage('MEDIAN_RUN'));
         this.displayOutput(ret.median);
       }
       return ret;
@@ -59,7 +57,7 @@ class PWMetrics {
     this.launcher = new (ChromeLauncher.ChromeLauncher || ChromeLauncher)();
     return this.launcher.isDebuggerReady()
       .catch(() => {
-        console.log(messages['LAUNCHING_CHROME']);
+        console.log(getMessage('LAUNCHING_CHROME'));
         return this.launcher.run();
       });
   }
@@ -67,25 +65,27 @@ class PWMetrics {
   recordLighthouseTrace() {
     const lhOpts = {mobile: true, loadPage: true};
     return lighthouse(this.url, lhOpts, perfConfig)
-      .then(res => metrics.prepareData(res, this.expectations))
+      .then(res => metrics.prepareData(res))
       .then(data => this.displayOutput(data));
   }
 
   displayOutput(data) {
-    if (data.expectationErrorMessage) {
-      throw new Error(data.expectationErrorMessage);
-    }
-
     if (this.opts.json) {
       return data;
+    } else if (this.opts.expectations) {
+      expectations.checkExpectations(data.timings, this.opts.metrics)
+    } else {
+      this.showChart(data);
     }
+  }
 
+  showChart(data) {
     // reverse to preserve the order, because cli-chart.
     let timings = data.timings.reverse();
 
     timings = timings.filter(r => {
       if (r.value === undefined) {
-        console.error(messages('METRIC_IS_UNAVAILABLE', r.title));
+        console.error(getErrorMessage('METRIC_IS_UNAVAILABLE', r.title));
       }
       // don't chart hidden metrics, but include in json
       return !metrics.hiddenMetrics.includes(r.name);
@@ -131,15 +131,6 @@ class PWMetrics {
       return timing.name === 'tti' && timing.value === medianTTI;
     }));
     return medianRun;
-  }
-
-  getExpectations(opts) {
-    return Object.keys(opts)
-      .filter(key => availableExpectations.includes(key))
-      .reduce((obj, key) => {
-        obj[key] = opts[key];
-        return obj;
-      }, {});
   }
 }
 
