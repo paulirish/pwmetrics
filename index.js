@@ -61,7 +61,7 @@ class PWMetrics {
   }
 
   recordLighthouseTrace() {
-    const lhOpts = {mobile: true, loadPage: true};
+    const lhOpts = Object.assign({}, this.opts); // pass along all CLI flags
     return lighthouse(this.url, lhOpts, perfConfig)
       .then(res => metrics.prepareData(res))
       .then(data => this.displayOutput(data));
