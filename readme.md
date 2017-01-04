@@ -48,25 +48,28 @@ pwmetrics --expectations
 
 
 ```sh
-# run pwmetrics with config in yor-own-file.js
-pwmetrics --expectations=yor-own-file.js
+# run pwmetrics with config in your-own-file.js
+pwmetrics --expectations=your-own-file.js
 ```
 
-`yor-own-file.js`
+`your-own-file.js`
 ```js
 module.exports = {
-  url: 'http://localhost/awesomesite/',
-  metrics: {
-    ttfmp: {
-      warn: '>=3000',
-      error: '>=5000'
-    },
-    psi: {
-      warn: '>=1500',
-      error: '>=3200'
+  expectations: {
+    url: 'http://example.com/',
+    metrics: {
+      ttfmp: {
+        warn: '>=3000',
+        error: '>=5000'
+      },
+      psi: {
+        warn: '>=1500',
+        error: '>=3200'
+      }
     }
   }
 }
+
 ```
 
 #### Options
@@ -100,7 +103,7 @@ pwmetrics --json http://goat.com
 pwmetrics --expectations
 # uses configurations from packages.json
 
-pwmetrics --expectations=yor-own-file.js
+pwmetrics --expectations=your-own-file.js
 # uses path to your own file
 
 ```
