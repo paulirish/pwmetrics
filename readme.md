@@ -21,8 +21,55 @@ $ npm install --save pwmetrics
 ### CLI Usage
 
 ```sh
-# run pwmetrics with your url
-pwmetrics http://goat.com
+# run pwmetrics with config in package.json
+pwmetrics --expectations
+```
+
+`package.json`
+```json
+...
+  "pwmetrics": {
+    "expectations": {
+      "url": "http://localhost/awesomesite/",
+      "metrics": {
+        "ttfmp": {
+          "warn": ">=3000",
+          "error": ">=5000"
+        },
+        "psi": {
+          "warn": ">=1500",
+          "error": ">=3200"
+        }
+      }
+    }
+  }
+...
+```
+
+
+```sh
+# run pwmetrics with config in your-own-file.js
+pwmetrics --expectations=your-own-file.js
+```
+
+`your-own-file.js`
+```js
+module.exports = {
+  expectations: {
+    url: 'http://example.com/',
+    metrics: {
+      ttfmp: {
+        warn: '>=3000',
+        error: '>=5000'
+      },
+      psi: {
+        warn: '>=1500',
+        error: '>=3200'
+      }
+    }
+  }
+}
+
 ```
 
 #### Options
@@ -48,6 +95,17 @@ pwmetrics --json http://goat.com
 #       "value": 289.6
 #     },
 #     ...
+
+
+# Useful for CI
+# --expectations       Expectations from metrics results. Compares Lighthouse metrics with set expectations.
+
+pwmetrics --expectations
+# uses configurations from packages.json
+
+pwmetrics --expectations=your-own-file.js
+# uses path to your own file
+
 ```
 
 ### API

@@ -10,7 +10,7 @@ module.exports = {
     'navstart'
   ],
   prepareData
-}
+};
 
 function prepareData(res) {
   const audits = res.audits;
