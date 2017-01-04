@@ -22,7 +22,9 @@ class PWMetrics {
     this.opts = opts;
     this.metrics = opts.metrics;
     this.runs = opts.runs || 1;
+  }
 
+  start() {
     const results = new Array(parseInt(this.runs, 10)).fill(false);
 
     // do our runs in sequence
@@ -42,7 +44,7 @@ class PWMetrics {
         this.displayOutput(ret.median);
       }
       return ret;
-    })
+    });
   }
 
   run() {

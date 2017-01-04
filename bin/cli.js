@@ -36,8 +36,8 @@ if (!url || flags.help) {
   return;
 }
 
-const p = new PWMetrics(url, flags);
-Promise.resolve(p)
+const pwMetrics = new PWMetrics(url, flags);
+pwMetrics.start()
   .then(data => {
     if (flags.json) {
       data = JSON.stringify(data, null, 2) + '\n';
