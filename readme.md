@@ -30,7 +30,7 @@ pwmetrics --expectations
 ...
   "pwmetrics": {
     "expectations": {
-      "url": "http://localhost/awesomesite/",
+      "url": "http://example.com/",
       "metrics": {
         "ttfmp": {
           "warn": ">=3000",
@@ -77,11 +77,11 @@ module.exports = {
 ```sh
 # --runs=n     Does n runs (eg. 3, 5), and reports the median run's numbers.
 #              Median run selected by run with the median TTI.
-pwmetrics http://goat.com --runs=3
+pwmetrics http://example.com/ --runs=3
 
 
 # --json       Reports json details to stdout.
-pwmetrics --json http://goat.com
+pwmetrics --json http://example.com/
 
 # returns...
 # {runs: [{
@@ -113,7 +113,7 @@ pwmetrics --expectations=your-own-file.js
 ```js
 const PWMetrics = require('pwmetrics');
 
-new PWMetrics('http://bubbles.com', opts);
+new PWMetrics('http://example.com/', opts);
 ```
 
 

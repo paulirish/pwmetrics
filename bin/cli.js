@@ -29,9 +29,9 @@ if (flags.expectations) {
 if (!url || flags.help) {
   if (!flags.help) console.error(getMessageWithPrefix('ERROR', 'NO_URL'));
   console.error('Usage:');
-  console.error('    pwmetrics http://goat.com');
-  console.error('    pwmetrics http://goat.com --json  Reports json details to stdout.');
-  console.error('    pwmetrics http://goat.com --runs=n  Does n runs (eg. 3, 5), and reports the median run\'s numbers.');
+  console.error('    pwmetrics http://example.com/');
+  console.error('    pwmetrics http://example.com/ --json  Reports json details to stdout.');
+  console.error('    pwmetrics http://example.com/ --runs=n  Does n runs (eg. 3, 5), and reports the median run\'s numbers.');
   console.error('    pwmetrics --expectations  Expectations from metrics results. Useful for CI.');
   return;
 }
