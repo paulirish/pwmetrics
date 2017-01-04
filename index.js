@@ -110,7 +110,7 @@ class PWMetrics {
       direction: 'x'
     };
 
-    var chart = new Chart(chartOps);
+    const chart = new Chart(chartOps);
     timings.forEach(result => {
       chart.addBar({
         size: result.value,
