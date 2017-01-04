@@ -3,8 +3,8 @@
 // Licensed under the Apache License, Version 2.0. See LICENSE
 
 const PWMetrics = require('..');
-const {getConfig} = require('../expectations');
-const {getErrorMessage} = require('../messages');
+const { getConfig } = require('../expectations');
+const { getMessageWithPrefix } = require('../messages');
 
 const argv = process.argv.slice(2);
 
@@ -27,7 +27,7 @@ if (flags.expectations) {
 }
 
 if (!url || flags.help) {
-  if (!flags.help) console.error(getErrorMessage('NO_URL'));
+  if (!flags.help) console.error(getMessageWithPrefix('ERROR', 'NO_URL'));
   console.error('Usage:');
   console.error('    pwmetrics http://goat.com');
   console.error('    pwmetrics http://goat.com --json  Reports json details to stdout.');

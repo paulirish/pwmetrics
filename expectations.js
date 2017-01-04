@@ -4,7 +4,7 @@
 
 const path = require('path');
 
-const { getMessage, getAssertionMessage, getErrorPrefix, getWarningPrefix} = require('./messages');
+const { getAssertionMessage, getMessageWithPrefix } = require('./messages');
 
 function getConfig(fileName) {
   if (fileName === true) fileName='package.json';
@@ -29,13 +29,13 @@ function validateMetrics(metrics) {
   const metricsKeys = Object.keys(metrics);
 
   if (!metrics || !metricsKeys.length) {
-    console.error(getErrorPrefix() + getMessage('NO_EXPECTATION_METRICS'));
+    console.error(getMessageWithPrefix('ERROR', 'NO_METRICS'));
     process.exit(0);
   }
 
   metricsKeys.forEach(key => {
     if (!metrics[key] || !metrics[key].warn || !metrics[key].error) {
-      console.error(getErrorPrefix() + getMessage('NO_EXPECTATION_WARN_ERROR', key));
+      console.error(getMessageWithPrefix('ERROR', 'NO_EXPECTATION_ERROR', key));
       process.exit(0);
     }
   });

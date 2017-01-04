@@ -13,7 +13,7 @@ const perfConfig = require('lighthouse/lighthouse-core/config/perf.json');
 
 const metrics = require('./metrics');
 const expectations = require('./expectations');
-const {getMessage, getErrorMessage} = require('./messages');
+const { getMessage, getMessageWithPrefix } = require('./messages');
 
 class PWMetrics {
 
@@ -85,7 +85,7 @@ class PWMetrics {
 
     timings = timings.filter(r => {
       if (r.value === undefined) {
-        console.error(getErrorMessage('METRIC_IS_UNAVAILABLE', r.title));
+        console.error(getMessageWithPrefix('ERROR', 'METRIC_IS_UNAVAILABLE', r.title));
       }
       // don't chart hidden metrics, but include in json
       return !metrics.hiddenMetrics.includes(r.name);

@@ -26,6 +26,8 @@ const getMessage = function(messageType, ...args) {
     return 'No expectation metrics were found';
   case 'NO_EXPECTATION_ERROR':
     return `Metric ${args[0]} has to have warn and error values`;
+  case 'NO_MESSAGE_PREFIX_TYPE':
+    return `No matching message prefix: ${args[0]}`;
   case 'METRIC_IS_UNAVAILABLE':
     return `Sorry, ${args[0]} metric is unavailable`;
   case 'ttfcp':
@@ -43,18 +45,38 @@ const getMessage = function(messageType, ...args) {
   case 'vc85':
     return 'Visually Complete 85%';
   default:
-    throw new Error('No matching message ID: ' + messageType);
+    throw new Error(`No matching message ID: ${messageType}`);
   }
 };
 
 const getAssertionMessage = function(assertionLevel, messageType, expectedValue, actualValue) {
-  const message = getMessage(messageType);
-  const prefix = assertionLevel === 'ERROR' ? getErrorPrefix() : getWarningPrefix();
+  const message = getMessageWithPrefix(assertionLevel, messageType);
   const colorizer = assertionLevel === 'ERROR' ? redify : yellowify;
 
   const expectedStr = boldify(expectedValue + 'ms');
   const actualStr = boldify(colorizer(actualValue + 'ms'));
-  return `${prefix}${message}.${RESET} Expected ${expectedStr}, but found ${actualStr}.`;
+  return `${message} Expected ${expectedStr}, but found ${actualStr}.`;
+};
+
+const getMessageWithPrefix = function(assertionLevel, messageType, ...args) {
+  let prefix;
+  const message = getMessage(messageType, args);
+
+  switch (assertionLevel) {
+    case 'ERROR':
+      prefix = getErrorPrefix();
+      break;
+    case 'WARNING':
+      prefix = getWarningPrefix();
+      break;
+    case 'SUCCESS':
+      prefix = getSuccessPrefix();
+      break;
+    default:
+      throw new Error(getMessage(messageType, assertionLevel));
+  }
+
+  return `${prefix}${message}.${RESET}`;
 };
 
 
@@ -63,11 +85,11 @@ const YELLOW_FLAG = yellowify('⚑');
 const RED_X = redify('✘');
 const getErrorPrefix = _ => `  ${RED_X} Error: ${RED}`;
 const getWarningPrefix = _ => `  ${YELLOW_FLAG} Warning: ${YELLOW}`;
+const getSuccessPrefix = _ => `  ${GREEN_CHECK} Success: ${GREEN}`;
 
 
 module.exports = {
   getMessage,
   getAssertionMessage,
-  getErrorPrefix,
-  getWarningPrefix
+  getMessageWithPrefix
 };
