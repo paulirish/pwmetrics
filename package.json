@@ -1,6 +1,6 @@
 {
   "name": "pwmetrics",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "description": "Gather progressive web metrics for a url. CLI & lib",
   "main": "index.js",
   "bin": {
@@ -13,7 +13,7 @@
   "license": "Apache-2.0",
   "dependencies": {
     "cli-chart": "samccone/cli-chart",
-    "lighthouse": "^1.1.6",
+    "lighthouse": "1.3.2",
     "median": "^0.0.2"
   },
   "devDependencies": {},

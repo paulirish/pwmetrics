@@ -29,7 +29,7 @@ function prepareData(res) {
   const timestamps = [{
     title: 'Navigation Start',
     name: 'navstart',
-    value: resFMPext && resFMPext.value.timings.navStart
+    value: resFMPext && resFMPext.value.timestamps.navStart
   }];
 
   const timings = [
