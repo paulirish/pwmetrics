@@ -2,9 +2,9 @@
 // Copyright 2016 Google Inc. All Rights Reserved.
 // Licensed under the Apache License, Version 2.0. See LICENSE
 
-const PWMetrics = require('..');
-const {getConfig} = require('../expectations');
-const {getErrorMessage} = require('../messages');
+const PWMetrics = require('../lib');
+const {getConfig} = require('../lib/expectations');
+const {getErrorMessage} = require('../lib/messages');
 
 const argv = process.argv.slice(2);
 
