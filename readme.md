@@ -21,6 +21,42 @@ $ npm install --save pwmetrics
 ### CLI Usage
 
 ```sh
+# --runs=n     Does n runs (eg. 3, 5), and reports the median run's numbers.
+#              Median run selected by run with the median TTI.
+pwmetrics http://example.com/ --runs=3
+
+
+# --json       Reports json details to stdout.
+pwmetrics --json http://example.com/
+
+# returns...
+# {runs: [{
+#   "timings": [
+#     {
+#       "name": "First Contentful Paint",
+#       "value": 289.642
+#     },
+#     {
+#       "name": "First Meaningful Paint",
+#       "value": 289.6
+#     },
+#     ...
+
+
+# Useful for CI
+# --expectations       Expectations from metrics results. Compares Lighthouse metrics with set expectations.
+
+pwmetrics --expectations
+# uses configurations from packages.json
+
+pwmetrics --expectations=your-own-file.js
+# uses path to your own file
+
+```
+
+### Defining expectations
+
+```sh
 # run pwmetrics with config in package.json
 pwmetrics --expectations
 ```
@@ -72,41 +108,6 @@ module.exports = {
 
 ```
 
-#### Options
-
-```sh
-# --runs=n     Does n runs (eg. 3, 5), and reports the median run's numbers.
-#              Median run selected by run with the median TTI.
-pwmetrics http://example.com/ --runs=3
-
-
-# --json       Reports json details to stdout.
-pwmetrics --json http://example.com/
-
-# returns...
-# {runs: [{
-#   "timings": [
-#     {
-#       "name": "First Contentful Paint",
-#       "value": 289.642
-#     },
-#     {
-#       "name": "First Meaningful Paint",
-#       "value": 289.6
-#     },
-#     ...
-
-
-# Useful for CI
-# --expectations       Expectations from metrics results. Compares Lighthouse metrics with set expectations.
-
-pwmetrics --expectations
-# uses configurations from packages.json
-
-pwmetrics --expectations=your-own-file.js
-# uses path to your own file
-
-```
 
 ### API
 
