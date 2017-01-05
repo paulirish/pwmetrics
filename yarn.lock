@@ -77,12 +77,6 @@ center-align@^0.1.1:
     align-text "^0.1.3"
     lazy-cache "^1.0.3"
 
-charm@*:
-  version "1.0.1"
-  resolved "https://registry.yarnpkg.com/charm/-/charm-1.0.1.tgz#68566a7a553d4fe91797030dd1852d0dd6efa82d"
-  dependencies:
-    inherits "^2.0.1"
-
 chrome-devtools-frontend@1.0.401423:
   version "1.0.401423"
   resolved "https://registry.yarnpkg.com/chrome-devtools-frontend/-/chrome-devtools-frontend-1.0.401423.tgz#32a89b8d04e378a494be3c8d63271703be1c04ea"
@@ -90,12 +84,6 @@ chrome-devtools-frontend@1.0.401423:
 chrome-devtools-frontend@1.0.422034:
   version "1.0.422034"
   resolved "https://registry.yarnpkg.com/chrome-devtools-frontend/-/chrome-devtools-frontend-1.0.422034.tgz#071c8ce14466b7653032fcd1ad1a4a68d5e3cbd9"
-
-cli-chart@samccone/cli-chart:
-  version "0.3.1"
-  resolved "https://codeload.github.com/samccone/cli-chart/tar.gz/894b9880f0eb924a8a04922d29aff99b97a5ee26"
-  dependencies:
-    charm "*"
 
 cliui@^2.1.0:
   version "2.1.0"
@@ -221,7 +209,7 @@ inflight@^1.0.4:
     once "^1.3.0"
     wrappy "1"
 
-inherits@2, inherits@^2.0.1:
+inherits@2:
   version "2.0.3"
   resolved "https://registry.yarnpkg.com/inherits/-/inherits-2.0.3.tgz#633c2c83e3da42a502f52466022480f4208261de"
 
@@ -283,9 +271,9 @@ lcid@^1.0.0:
   dependencies:
     invert-kv "^1.0.0"
 
-lighthouse@1.3.2:
-  version "1.3.2"
-  resolved "https://registry.yarnpkg.com/lighthouse/-/lighthouse-1.3.2.tgz#d7c7053c0026da73d0c8e7d2d9ca901c4010179b"
+lighthouse@1.4.1:
+  version "1.4.1"
+  resolved "https://registry.yarnpkg.com/lighthouse/-/lighthouse-1.4.1.tgz#89fe81fbf449ee40e00eec8a6c056c9f3f5a8740"
   dependencies:
     axe-core "2.1.7"
     chrome-devtools-frontend "1.0.422034"
@@ -294,6 +282,7 @@ lighthouse@1.3.2:
     gl-matrix "2.3.2"
     handlebars "^4.0.5"
     json-stringify-safe "^5.0.1"
+    marked "^0.3.6"
     mkdirp "^0.5.1"
     opn "^4.0.2"
     rimraf "^2.2.8"
@@ -327,6 +316,10 @@ loud-rejection@^1.0.0, loud-rejection@^1.3.0:
 map-obj@^1.0.0, map-obj@^1.0.1:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/map-obj/-/map-obj-1.0.1.tgz#d933ceb9205d82bdcf4886f6742bdc2b4dea146d"
+
+marked@^0.3.6:
+  version "0.3.6"
+  resolved "https://registry.yarnpkg.com/marked/-/marked-0.3.6.tgz#b2c6c618fccece4ef86c4fc6cb8a7cbf5aeda8d7"
 
 median:
   version "0.0.2"
