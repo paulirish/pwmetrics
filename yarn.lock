@@ -77,6 +77,12 @@ center-align@^0.1.1:
     align-text "^0.1.3"
     lazy-cache "^1.0.3"
 
+charm@^1.0.2:
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/charm/-/charm-1.0.2.tgz#8add367153a6d9a581331052c4090991da995e35"
+  dependencies:
+    inherits "^2.0.1"
+
 chrome-devtools-frontend@1.0.401423:
   version "1.0.401423"
   resolved "https://registry.yarnpkg.com/chrome-devtools-frontend/-/chrome-devtools-frontend-1.0.401423.tgz#32a89b8d04e378a494be3c8d63271703be1c04ea"
@@ -209,7 +215,7 @@ inflight@^1.0.4:
     once "^1.3.0"
     wrappy "1"
 
-inherits@2:
+inherits@2, inherits@^2.0.1:
   version "2.0.3"
   resolved "https://registry.yarnpkg.com/inherits/-/inherits-2.0.3.tgz#633c2c83e3da42a502f52466022480f4208261de"
 

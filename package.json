@@ -12,6 +12,7 @@
   "author": "Paul Irish",
   "license": "Apache-2.0",
   "dependencies": {
+    "charm": "^1.0.2",
     "lighthouse": "1.4.1",
     "median": "^0.0.2"
   },
