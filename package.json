@@ -13,6 +13,8 @@
   "license": "Apache-2.0",
   "dependencies": {
     "charm": "^1.0.2",
+    "google-auth-library": "google/google-auth-library-nodejs",
+    "googleapis": "^16.0.0",
     "lighthouse": "1.4.1",
     "median": "^0.0.2"
   },
