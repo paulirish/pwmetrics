@@ -79,6 +79,8 @@ module.exports = {
 #              Median run selected by run with the median TTI.
 pwmetrics http://example.com/ --runs=3
 
+# --submit     Submits results to a google spreadsheet (requires some setup)
+pwmetrics http://goat.com --submit
 
 # --json       Reports json details to stdout.
 pwmetrics --json http://example.com/
