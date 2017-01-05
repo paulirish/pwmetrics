@@ -5,7 +5,7 @@
 const expect = require('chai').expect;
 const sinon = require('sinon');
 
-const PWMetrics = require('../');
+const PWMetrics = require('../lib');
 const runOptions = require('./fixtures/run-options');
 const dataMochs = require('./fixtures/data-mochs');
 
