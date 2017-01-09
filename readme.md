@@ -108,6 +108,16 @@ module.exports = {
 
 ```
 
+#### Available metrcis: 
+
+ - `ttfcp` - First Contentful Paint
+ - `ttfmp` - First Meaningful Paint
+ - `psi` - Perceptual Speed Index
+ - `fv` - First Visual Change
+ - `vc` - Visually Complete 100%
+ - `tti` - Time to Interactive
+ - `vc85` - Visually Complete 85%
+
 
 ### API
 
