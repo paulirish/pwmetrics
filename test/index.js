@@ -7,7 +7,7 @@ const sinon = require('sinon');
 
 const PWMetrics = require('../lib');
 const runOptions = require('./fixtures/run-options');
-const dataMochs = require('./fixtures/data-mochs');
+const dataMocks = require('./fixtures/mocks');
 
 describe('PWMetrics', () => {
   describe('public variables', () => {
@@ -62,10 +62,10 @@ describe('PWMetrics', () => {
       let medianResults, runResult;
 
       beforeEach(() => {
-        const medianResult = dataMochs.metricsResult;
-        const run1Result = dataMochs.metricsResult;
-        const run2Result = dataMochs.metricsResult;
-        runResult = dataMochs.metricsResult;
+        const medianResult = dataMocks.metricsResult;
+        const run1Result = dataMocks.metricsResult;
+        const run2Result = dataMocks.metricsResult;
+        runResult = dataMocks.metricsResult;
 
         medianResults = {
           median: medianResult,
