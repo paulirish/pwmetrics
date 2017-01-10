@@ -124,7 +124,8 @@ module.exports = {
 ```js
 const PWMetrics = require('pwmetrics');
 
-new PWMetrics('http://example.com/', opts);
+const pwMetrics = new PWMetrics('http://example.com/', opts);
+pwMetrics.start(); // returns Promise
 ```
 
 
