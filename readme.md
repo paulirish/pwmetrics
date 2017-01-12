@@ -97,11 +97,15 @@ pwmetrics --config=your-own-file.js
 ```js
 module.exports = {
   "url": "http://example.com/",
+  "flags": {
+    // submit: true, // submit metrics
+    // expectations: true // assert against the provided metric thresholds
+  }
   "sheets": {
-    // sheets configurations
+    // sheets configuration
   },
   "expectations": {
-    // expectations configurations
+    // expectations configuration
   }
 }
 ```
@@ -188,7 +192,7 @@ pwmetrics --submit
 
 ```sh
 # run pwmetrics with config in your-own-file.js
-pwmetrics --submit=your-own-file.js
+pwmetrics --submit --config=your-own-file.js
 ```
 
 `your-own-file.js`
