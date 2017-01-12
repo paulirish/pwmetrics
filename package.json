@@ -35,6 +35,6 @@
   },
   "homepage": "https://github.com/paulirish/pwmetrics#readme",
   "engines": {
-    "node": ">= 4.4.6"
+    "node": ">= 6"
   }
 }
