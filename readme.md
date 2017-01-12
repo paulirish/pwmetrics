@@ -44,31 +44,24 @@ pwmetrics --json http://example.com/
 #     },
 #     ...
 
-# --config        Defines configurations.
 
-pwmetrics --config
-# uses configurations from packages.json
-
+# --config        Provide configuration. See _Defining config_ below.
 pwmetrics --config=your-own-file.js
-# uses path to your own file
+pwmetrics --config
 
-# Useful for CI
-# --expectations       Expectations from metrics results. Compares Lighthouse metrics with set expectations. Requires config.
 
+##
+## CLI options useful for CI
+##
+
+# --expectations  Assert metrics results against provides values. See _Defining expectations_ below.
+pwmetrics --expectations=your-own-file.js
 pwmetrics --expectations
-# uses configurations from packages.json
 
-pwmetrics --expectations --config=your-own-file.js
-# uses path to your own file
 
-# Usefull for analytics
-# --submit       Flag which allow submit results to sheets. Right now it's just [Google Sheets](https://www.google.com/sheets/about/).
-
+# --submit       Submit results to [Google Sheets](https://www.google.com/sheets/about/). See _Defining submit_ below.
 pwmetrics --submit
-# uses configurations from packages.json
 
-pwmetrics --submit --config=your-own-file.js
-# uses path to your own file
 
 ```
 
@@ -164,7 +157,6 @@ module.exports = {
     }
   }
 }
-
 ```
 
 ### Defining submit
@@ -185,7 +177,7 @@ pwmetrics --submit
         spreadsheetId: 'sheet-id',
         tableName: 'my-sheeet-table-name',
         clientSecret: {
-          // Data object. Can be get by (using everything in step 1 here)[https://developers.google.com/sheets/api/quickstart/nodejs#step_1_turn_on_the_api_name]  
+          // Data object. Can be get by (using everything in step 1 here)[https://developers.google.com/sheets/api/quickstart/nodejs#step_1_turn_on_the_api_name]
         }
       }
     }
@@ -196,7 +188,7 @@ pwmetrics --submit
 
 ```sh
 # run pwmetrics with config in your-own-file.js
-pwmetrics --expectations --config=your-own-file.js
+pwmetrics --submit=your-own-file.js
 ```
 
 `your-own-file.js`
@@ -209,21 +201,31 @@ module.exports = {
       spreadsheetId: 'sheet-id',
       tableName: 'my-sheeet-table-name',
       clientSecret: {
-        // Data object. Can be get by (using everything in step 1 here)[https://developers.google.com/sheets/api/quickstart/nodejs#step_1_turn_on_the_api_name]  
+        // Follow step 1 of https://developers.google.com/sheets/api/quickstart/nodejs#step_1_turn_on_the_api_name
+        // Then paste resulting JSON payload as this clientSecret value
       }
     }
   }
 }
-
 ```
 
+#### Available metrcis:
+
+ - `ttfcp` - First Contentful Paint
+ - `ttfmp` - First Meaningful Paint
+ - `psi` - Perceptual Speed Index
+ - `fv` - First Visual Change
+ - `vc` - Visually Complete 100%
+ - `tti` - Time to Interactive
+ - `vc85` - Visually Complete 85%
 
 ### API
 
 ```js
 const PWMetrics = require('pwmetrics');
 
-new PWMetrics('http://example.com/', opts);
+const pwMetrics = new PWMetrics('http://example.com/', opts);
+pwMetrics.start(); // returns Promise
 ```
 
 
