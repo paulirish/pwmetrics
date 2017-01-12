@@ -21,60 +21,6 @@ $ npm install --save pwmetrics
 ### CLI Usage
 
 ```sh
-# run pwmetrics with config in package.json
-pwmetrics --expectations
-```
-
-`package.json`
-```json
-...
-  "pwmetrics": {
-    "expectations": {
-      "url": "http://example.com/",
-      "metrics": {
-        "ttfmp": {
-          "warn": ">=3000",
-          "error": ">=5000"
-        },
-        "psi": {
-          "warn": ">=1500",
-          "error": ">=3200"
-        }
-      }
-    }
-  }
-...
-```
-
-
-```sh
-# run pwmetrics with config in your-own-file.js
-pwmetrics --expectations=your-own-file.js
-```
-
-`your-own-file.js`
-```js
-module.exports = {
-  expectations: {
-    url: 'http://example.com/',
-    metrics: {
-      ttfmp: {
-        warn: '>=3000',
-        error: '>=5000'
-      },
-      psi: {
-        warn: '>=1500',
-        error: '>=3200'
-      }
-    }
-  }
-}
-
-```
-
-#### Options
-
-```sh
 # --runs=n     Does n runs (eg. 3, 5), and reports the median run's numbers.
 #              Median run selected by run with the median TTI.
 pwmetrics http://example.com/ --runs=3
@@ -98,17 +44,179 @@ pwmetrics --json http://example.com/
 #     },
 #     ...
 
+# --config        Defines configurations.
+
+pwmetrics --config
+# uses configurations from packages.json
+
+pwmetrics --config=your-own-file.js
+# uses path to your own file
 
 # Useful for CI
-# --expectations       Expectations from metrics results. Compares Lighthouse metrics with set expectations.
+# --expectations       Expectations from metrics results. Compares Lighthouse metrics with set expectations. Requires config.
 
 pwmetrics --expectations
 # uses configurations from packages.json
 
-pwmetrics --expectations=your-own-file.js
+pwmetrics --expectations --config=your-own-file.js
+# uses path to your own file
+
+# Usefull for analytics
+# --submit       Flag which allow submit results to sheets. Right now it's just [Google Sheets](https://www.google.com/sheets/about/).
+
+pwmetrics --submit
+# uses configurations from packages.json
+
+pwmetrics --submit --config=your-own-file.js
 # uses path to your own file
 
 ```
+
+### Defining config
+
+```sh
+# run pwmetrics with config in package.json
+pwmetrics --config
+```
+
+`package.json`
+```json
+...
+  "pwmetrics": {
+    "url": "http://example.com/",
+    "sheets": {
+      // sheets configurations
+    },
+    "expectations": {
+      // expectations configurations
+    }
+  }
+...
+```
+
+```sh
+# run pwmetrics with config in your-own-file.js
+pwmetrics --config=your-own-file.js
+```
+
+`your-own-file.js`
+
+```js
+module.exports = {
+  "url": "http://example.com/",
+  "sheets": {
+    // sheets configurations
+  },
+  "expectations": {
+    // expectations configurations
+  }
+}
+```
+
+### Defining expectations
+
+```sh
+# run pwmetrics with config in package.json
+pwmetrics --expectations
+```
+
+`package.json`
+```json
+...
+  "pwmetrics": {
+    "url": "http://example.com/",
+    "expectations": {
+      "metrics": {
+        "ttfmp": {
+          "warn": ">=3000",
+          "error": ">=5000"
+        },
+        "psi": {
+          "warn": ">=1500",
+          "error": ">=3200"
+        }
+      }
+    }
+  }
+...
+```
+
+
+```sh
+# run pwmetrics with config in your-own-file.js
+pwmetrics --expectations --config=your-own-file.js
+```
+
+`your-own-file.js`
+```js
+module.exports = {
+  url: 'http://example.com/',
+  expectations: {
+    metrics: {
+      ttfmp: {
+        warn: '>=3000',
+        error: '>=5000'
+      },
+      psi: {
+        warn: '>=1500',
+        error: '>=3200'
+      }
+    }
+  }
+}
+
+```
+
+### Defining submit
+
+```sh
+# run pwmetrics with config in package.json
+pwmetrics --submit
+```
+
+`package.json`
+```json
+...
+  "pwmetrics": {
+    url: 'http://example.com/',
+    sheets: {
+      type: 'GOOGLE_SHEETS', // sheets service type. Available types: GOOGLE_SHEETS
+      options: {
+        spreadsheetId: 'sheet-id',
+        tableName: 'my-sheeet-table-name',
+        clientSecret: {
+          // Data object. Can be get by (using everything in step 1 here)[https://developers.google.com/sheets/api/quickstart/nodejs#step_1_turn_on_the_api_name]  
+        }
+      }
+    }
+  }
+...
+```
+
+
+```sh
+# run pwmetrics with config in your-own-file.js
+pwmetrics --expectations --config=your-own-file.js
+```
+
+`your-own-file.js`
+```js
+module.exports = {
+  url: 'http://example.com/',
+  sheets: {
+    type: 'GOOGLE_SHEETS', // sheets service type. Available types: GOOGLE_SHEETS
+    options: {
+      spreadsheetId: 'sheet-id',
+      tableName: 'my-sheeet-table-name',
+      clientSecret: {
+        // Data object. Can be get by (using everything in step 1 here)[https://developers.google.com/sheets/api/quickstart/nodejs#step_1_turn_on_the_api_name]  
+      }
+    }
+  }
+}
+
+```
+
 
 ### API
 
