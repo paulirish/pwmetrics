@@ -3,12 +3,12 @@ matrix:
   include:
     - node_js: "6"
     - node_js: "7"
-sudo: required
 dist: trusty
 cache:
-   directories:
-     - node_modules
+  yarn: true
+  directories:
+    - node_modules
 install:
-  - npm install
+  - yarn install
 script:
-  - npm run test
+  - yarn run test
