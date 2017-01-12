@@ -108,7 +108,7 @@ module.exports = {
 
 ```
 
-#### Available metrcis: 
+#### Available metrics: 
 
  - `ttfcp` - First Contentful Paint
  - `ttfmp` - First Meaningful Paint
