@@ -119,6 +119,11 @@ module.exports = {
  - `vc85` - Visually Complete 85%
 
 
+### Default Lighthouse options
+
+ - `disableCpuThrottling` is set `false` by default. It means that CPU throttling `5x` is enabled. To turn it off, run `pwmetrcis http:example.com --disableCpuThrottling`
+
+
 ### API
 
 ```js
