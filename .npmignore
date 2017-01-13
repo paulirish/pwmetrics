@@ -2,3 +2,4 @@ test
 yarn.lock
 .editorconfig
 .gitignore
+gsheets.config.js

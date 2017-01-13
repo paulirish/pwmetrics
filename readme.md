@@ -213,7 +213,7 @@ module.exports = {
 }
 ```
 
-#### Available metrcis:
+#### Available metrics: 
 
  - `ttfcp` - First Contentful Paint
  - `ttfmp` - First Meaningful Paint
@@ -222,6 +222,12 @@ module.exports = {
  - `vc` - Visually Complete 100%
  - `tti` - Time to Interactive
  - `vc85` - Visually Complete 85%
+
+
+### Default Lighthouse options
+
+ - `disableCpuThrottling` is set `false` by default. It means that CPU throttling `5x` is enabled. To turn it off, run `pwmetrcis http:example.com --disableCpuThrottling`
+
 
 ### API
 

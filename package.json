@@ -1,6 +1,6 @@
 {
   "name": "pwmetrics",
-  "version": "1.2.3",
+  "version": "1.2.4",
   "description": "Gather progressive web metrics for a url. CLI & lib",
   "main": "lib/index.js",
   "bin": {
@@ -37,6 +37,6 @@
   },
   "homepage": "https://github.com/paulirish/pwmetrics#readme",
   "engines": {
-    "node": ">= 4.4.6"
+    "node": ">= 6"
   }
 }
