@@ -55,14 +55,15 @@ pwmetrics --config
 ##
 
 # --expectations  Assert metrics results against provides values. See _Defining expectations_ below.
-pwmetrics --expectations=your-own-file.js
+pwmetrics --expectations --config=your-own-file.js
 pwmetrics --expectations
 
 ##
-## CLI options useful for submittiing to data to services
+## CLI options useful for submittiing data to services
 ##
 
-# --submit       Submit results to [Google Sheets](https://www.google.com/sheets/about/). See _Defining submit_ below.
+# --submit       Submit results to Google Sheets. See _Defining submit_ below.
+pwmetrics --submit --config=your-own-file.js
 pwmetrics --submit
 
 
@@ -103,7 +104,7 @@ module.exports = {
   "flags": {
     // submit: true, // submit metrics
     // expectations: true // assert against the provided metric thresholds
-  }
+  },
   "sheets": {
     // sheets configuration
   },
@@ -185,13 +186,13 @@ pwmetrics --submit
 ```json
 ...
   "pwmetrics": {
-    url: 'http://example.com/',
-    sheets: {
-      type: 'GOOGLE_SHEETS', // sheets service type. Available types: GOOGLE_SHEETS
-      options: {
-        spreadsheetId: 'sheet-id',
-        tableName: 'my-sheeet-table-name',
-        clientSecret: {
+    "url": 'http://example.com/',
+    "sheets": {
+      "type": 'GOOGLE_SHEETS', // sheets service type. Available types: GOOGLE_SHEETS
+      "options": {
+        "spreadsheetId": "sheet-id",
+        "tableName": "my-sheeet-table-name",
+        "clientSecret": {
           // Data object. Can be get by (using everything in step 1 here)[https://developers.google.com/sheets/api/quickstart/nodejs#step_1_turn_on_the_api_name]
         }
       }
@@ -283,7 +284,7 @@ const pwMetrics = new PWMetrics('http://example.com/', {
 pwMetrics.start();
 ```
 
-See _Defining expectations_ above.
+See [Defining expectations](#defining-expectations) above.
 
 *Default*: `{}`
 
@@ -303,7 +304,7 @@ const pwMetrics = new PWMetrics('http://example.com/', {
 pwMetrics.start();
 ```
 
-See _Defining submit_ above.
+See [Defining submit](#defining-submit) above.
 
 *Default*: `{}`
 
