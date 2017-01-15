@@ -247,7 +247,65 @@ const PWMetrics = require('pwmetrics');
 
 const pwMetrics = new PWMetrics('http://example.com/', opts);
 pwMetrics.start(); // returns Promise
+
 ```
+
+#### Options Parameter
+
+**flags** [Object]
+
+Feature flags. These are equal to CLI options. 
+For example, if you want to get result in json format.
+
+```js
+const PWMetrics = require('pwmetrics');
+
+const pwMetrics = new PWMetrics('http://example.com/', { flags: { json: true } });
+pwMetrics.start();
+
+```
+ 
+*Default*: `{ disableCpuThrottling: false }`
+
+
+**expectations** [Object]
+
+Example: 
+
+```js
+const PWMetrics = require('pwmetrics');
+
+const pwMetrics = new PWMetrics('http://example.com/', { 
+  expectations: { 
+    // expecations data 
+  } 
+});
+pwMetrics.start();
+```
+
+See _Defining expectations_ above.
+
+*Default*: `{}`
+
+
+**sheets** [Object]
+
+Example: 
+
+```js
+const PWMetrics = require('pwmetrics');
+
+const pwMetrics = new PWMetrics('http://example.com/', { 
+  sheets: { 
+    // sheets data 
+  } 
+});
+pwMetrics.start();
+```
+
+See _Defining submit_ above.
+
+*Default*: `{}`
 
 
 ### License
