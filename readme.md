@@ -58,6 +58,9 @@ pwmetrics --config
 pwmetrics --expectations=your-own-file.js
 pwmetrics --expectations
 
+##
+## CLI options useful for submittiing to data to services
+##
 
 # --submit       Submit results to [Google Sheets](https://www.google.com/sheets/about/). See _Defining submit_ below.
 pwmetrics --submit
@@ -164,6 +167,14 @@ module.exports = {
 ```
 
 ### Defining submit
+
+*Instructions:*
+
+- Copy [this spreadsheet](https://docs.google.com/spreadsheets/d/1k9ukQrxlnn8H8BB0tIJg5Q-_b4qhgB6dGxgc5d0Ibpo/edit).
+- Copy the ID of the spreadsheet into the config as value of `sheets.options.spreadsheetId` property.
+- Setup Google Developer project and get credentials. ([everything in step 1 here](https://developers.google.com/sheets/api/quickstart/nodejs#step_1_turn_on_the_api_name))
+- Take a `client_secret` and put it into the config as value of `sheets.options.clientSecret` property.
+
 
 ```sh
 # run pwmetrics with config in package.json
