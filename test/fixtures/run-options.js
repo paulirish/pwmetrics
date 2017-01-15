@@ -7,16 +7,43 @@ exports.publicVariables = {
   opts: {}
 };
 
+exports.publicVariablesWithDisabledThrottling = {
+  url: url,
+  opts: {
+    flags: {
+      disableCpuThrottling: true
+    }
+  }
+};
+
 exports.startWithOneRun = {
   url: url,
   opts: {
-    runs: 1
+    flags: {
+      runs: 1
+    }
   }
 };
 
 exports.startWithMoreThenOneRun = {
   url: url,
   opts: {
-    runs: 2
+    flags: {
+      runs: 2
+    }
+  }
+};
+
+exports.publicVariablesWithExpectations = {
+  url: url,
+  opts: {
+    expectations: {}
+  }
+};
+
+exports.publicVariablesWithSheets = {
+  url: url,
+  opts: {
+    sheets: {}
   }
 };

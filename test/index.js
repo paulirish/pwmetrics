@@ -19,20 +19,37 @@ describe('PWMetrics', () => {
       expect(pwMetrics.runs).to.be.equal(1);
     });
 
-    it('should set 2 runs', () => {
-      const pwMetrics = new PWMetrics(runOptions.publicVariables.url, {runs: 2});
+    it('should set more then one run', () => {
+      let opts = Object.assign({}, runOptions.publicVariables.opts);
+      opts.flags = {};
+      opts.flags.runs = 2;
+      const pwMetrics = new PWMetrics(runOptions.publicVariables.url, opts);
       expect(pwMetrics.runs).to.be.equal(2);
     });
 
-    describe('options', () => {
+    describe('flags', () => {
       it('should have enabled CPU throttling property for lighthouse by default', () => {
-        const pwMetrics = new PWMetrics(runOptions.publicVariables.url, {});
-        expect(pwMetrics.opts.disableCpuThrottling).to.be.false;
+        const pwMetrics = new PWMetrics(runOptions.publicVariables.url, runOptions.publicVariables.opts);
+        expect(pwMetrics.flags.disableCpuThrottling).to.be.false;
       });
 
       it('should disable CPU throttling property for lighthouse', () => {
-        const pwMetrics = new PWMetrics(runOptions.publicVariables.url, {disableCpuThrottling: true});
-        expect(pwMetrics.opts.disableCpuThrottling).to.be.true;
+        const pwMetrics = new PWMetrics(runOptions.publicVariables.url, runOptions.publicVariablesWithDisabledThrottling.opts);
+        expect(pwMetrics.flags.disableCpuThrottling).to.be.true;
+      });
+    });
+
+    describe('expectations', () => {
+      it('should set expectations', () => {
+        const pwMetrics = new PWMetrics(runOptions.publicVariables.url, runOptions.publicVariablesWithExpectations.opts);
+        expect(pwMetrics.expectations).to.be.equal(runOptions.publicVariablesWithExpectations.opts.expectations);
+      });
+    });
+
+    describe('sheets', () => {
+      it('should set sheets', () => {
+        const pwMetrics = new PWMetrics(runOptions.publicVariables.url, runOptions.publicVariablesWithSheets.opts);
+        expect(pwMetrics.sheets).to.be.equal(runOptions.publicVariablesWithSheets.opts.sheets);
       });
     });
   });
