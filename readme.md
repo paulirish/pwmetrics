@@ -55,11 +55,15 @@ pwmetrics --config
 ##
 
 # --expectations  Assert metrics results against provides values. See _Defining expectations_ below.
-pwmetrics --expectations=your-own-file.js
+pwmetrics --expectations --config=your-own-file.js
 pwmetrics --expectations
 
+##
+## CLI options useful for submittiing data to services
+##
 
-# --submit       Submit results to [Google Sheets](https://www.google.com/sheets/about/). See _Defining submit_ below.
+# --submit       Submit results to Google Sheets. See _Defining submit_ below.
+pwmetrics --submit --config=your-own-file.js
 pwmetrics --submit
 
 
@@ -100,7 +104,7 @@ module.exports = {
   "flags": {
     // submit: true, // submit metrics
     // expectations: true // assert against the provided metric thresholds
-  }
+  },
   "sheets": {
     // sheets configuration
   },
@@ -165,6 +169,14 @@ module.exports = {
 
 ### Defining submit
 
+*Instructions:*
+
+- Copy [this spreadsheet](https://docs.google.com/spreadsheets/d/1k9ukQrxlnn8H8BB0tIJg5Q-_b4qhgB6dGxgc5d0Ibpo/edit).
+- Copy the ID of the spreadsheet into the config as value of `sheets.options.spreadsheetId` property.
+- Setup Google Developer project and get credentials. ([everything in step 1 here](https://developers.google.com/sheets/api/quickstart/nodejs#step_1_turn_on_the_api_name))
+- Take a `client_secret` and put it into the config as value of `sheets.options.clientSecret` property.
+
+
 ```sh
 # run pwmetrics with config in package.json
 pwmetrics --submit
@@ -174,13 +186,13 @@ pwmetrics --submit
 ```json
 ...
   "pwmetrics": {
-    url: 'http://example.com/',
-    sheets: {
-      type: 'GOOGLE_SHEETS', // sheets service type. Available types: GOOGLE_SHEETS
-      options: {
-        spreadsheetId: 'sheet-id',
-        tableName: 'my-sheeet-table-name',
-        clientSecret: {
+    "url": 'http://example.com/',
+    "sheets": {
+      "type": 'GOOGLE_SHEETS', // sheets service type. Available types: GOOGLE_SHEETS
+      "options": {
+        "spreadsheetId": "sheet-id",
+        "tableName": "my-sheeet-table-name",
+        "clientSecret": {
           // Data object. Can be get by (using everything in step 1 here)[https://developers.google.com/sheets/api/quickstart/nodejs#step_1_turn_on_the_api_name]
         }
       }
@@ -236,7 +248,65 @@ const PWMetrics = require('pwmetrics');
 
 const pwMetrics = new PWMetrics('http://example.com/', opts);
 pwMetrics.start(); // returns Promise
+
 ```
+
+#### Options Parameter
+
+**flags** [Object]
+
+Feature flags. These are equal to CLI options. 
+For example, if you want to get result in json format.
+
+```js
+const PWMetrics = require('pwmetrics');
+
+const pwMetrics = new PWMetrics('http://example.com/', { flags: { json: true } });
+pwMetrics.start();
+
+```
+ 
+*Default*: `{ disableCpuThrottling: false }`
+
+
+**expectations** [Object]
+
+Example: 
+
+```js
+const PWMetrics = require('pwmetrics');
+
+const pwMetrics = new PWMetrics('http://example.com/', { 
+  expectations: { 
+    // expecations data 
+  } 
+});
+pwMetrics.start();
+```
+
+See [Defining expectations](#defining-expectations) above.
+
+*Default*: `{}`
+
+
+**sheets** [Object]
+
+Example: 
+
+```js
+const PWMetrics = require('pwmetrics');
+
+const pwMetrics = new PWMetrics('http://example.com/', { 
+  sheets: { 
+    // sheets data 
+  } 
+});
+pwMetrics.start();
+```
+
+See [Defining submit](#defining-submit) above.
+
+*Default*: `{}`
 
 
 ### License
