@@ -17,9 +17,19 @@ argv
     flags[flagKey] = keyValue[1] || true;
   });
 
-const config = Object.assign({}, getConfigFromFile(flags.config), { flags: flags });
+let config = Object.assign({}, {flags: flags});
+const fileConfig = getConfigFromFile(flags.config);
+const url = fileConfig.url || argv.filter(f => !f.startsWith('-')).shift();
 
-const url = config.url || argv.filter(f => !f.startsWith('-')).shift();
+// get only allowed properties from file config
+Object.keys(fileConfig).forEach(configPropName => {
+  switch(configPropName) {
+    case 'expectations':
+    case 'sheets':
+      config[configPropName] = fileConfig[configPropName];
+      break;
+  }
+});
 
 if (!url || flags.help) {
   if (!flags.help) console.error(getMessageWithPrefix('ERROR', 'NO_URL'));
