@@ -77,7 +77,7 @@ pwmetrics --config
 ```
 
 `package.json`
-```json
+```
 ...
   "pwmetrics": {
     "url": "http://example.com/",
@@ -183,7 +183,7 @@ pwmetrics --submit
 ```
 
 `package.json`
-```json
+```
 ...
   "pwmetrics": {
     "url": 'http://example.com/',
