@@ -7,7 +7,7 @@
     "pwmetrics": "bin/cli.js"
   },
   "scripts": {
-    "test": "mocha"
+    "test": "mocha --require test/setup/common.js"
   },
   "author": "Paul Irish",
   "license": "Apache-2.0",
@@ -21,7 +21,8 @@
   "devDependencies": {
     "chai": "^3.5.0",
     "mocha": "^3.2.0",
-    "sinon": "^1.17.7"
+    "sinon": "^1.17.7",
+    "sinon-chai": "^2.8.0"
   },
   "repository": {
     "type": "git",

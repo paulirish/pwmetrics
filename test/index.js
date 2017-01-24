@@ -2,9 +2,6 @@
 // Licensed under the Apache License, Version 2.0. See LICENSE
 'use strict';
 
-const expect = require('chai').expect;
-const sinon = require('sinon');
-
 const PWMetrics = require('../lib');
 const runOptions = require('./fixtures/run-options');
 const dataMocks = require('./fixtures/mocks');
@@ -45,13 +42,6 @@ describe('PWMetrics', () => {
         expect(pwMetrics.expectations).to.be.equal(runOptions.publicVariablesWithExpectations.opts.expectations);
       });
     });
-
-    describe('sheets', () => {
-      it('should set sheets', () => {
-        const pwMetrics = new PWMetrics(runOptions.publicVariables.url, runOptions.publicVariablesWithSheets.opts);
-        expect(pwMetrics.sheets).to.be.equal(runOptions.publicVariablesWithSheets.opts.sheets);
-      });
-    });
   });
 
   describe('start method', () => {
@@ -74,7 +64,7 @@ describe('PWMetrics', () => {
       });
 
       it('should call "run" method', () => {
-        return pwMetrics.start().then(_ => {
+        return pwMetrics.start().then(() => {
           expect(runStub).to.have.been.calledOnce;
         });
       });
@@ -84,6 +74,12 @@ describe('PWMetrics', () => {
           expect(findMedianRunStub).to.not.have.been.called;
           expect(displayOutputStub).to.not.have.been.called;
         });
+      });
+
+      afterEach(() => {
+        runStub.restore();
+        findMedianRunStub.restore();
+        displayOutputStub.restore();
       });
     });
 
@@ -117,7 +113,7 @@ describe('PWMetrics', () => {
 
       it('should call "run" method', () => {
         return pwMetrics.start().then(_ => {
-          expect(runStub).to.have.been.calledOnce;
+          expect(runStub).to.have.been.calledTwice;
         });
       });
 
