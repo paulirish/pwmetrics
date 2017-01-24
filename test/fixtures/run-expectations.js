@@ -1,17 +1,17 @@
 module.exports = {
+  url: 'http://example.com/',
   expectations: {
-    url: 'http://example.com/',
     metrics: {
       ttfcp: {
         warn: '>=30',
-        error: '>=5000'
+        error: '>=500'
       },
       ttfmp: {
-        warn: '>=3000',
+        warn: '>=300',
         error: '>=50'
       },
       psi: {
-        warn: '>=1500',
+        warn: '>=150',
         error: '>=32'
       }
     }
