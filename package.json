@@ -7,7 +7,9 @@
     "pwmetrics": "bin/cli.js"
   },
   "scripts": {
-    "test": "mocha"
+    "test": "mocha",
+    "grunt-example": "grunt --gruntfile recipes/grunt/gruntfile.js",
+    "gulp-example": "gulp --gulpfile recipes/gulp/gulpfile.js --cwd recipes/gulp"
   },
   "author": "Paul Irish",
   "license": "Apache-2.0",
@@ -20,6 +22,10 @@
   },
   "devDependencies": {
     "chai": "^3.5.0",
+    "grunt": "^1.0.1",
+    "grunt-contrib-connect": "^1.0.2",
+    "gulp": "^3.9.1",
+    "gulp-connect": "^5.0.0",
     "mocha": "^3.2.0",
     "sinon": "^1.17.7"
   },
