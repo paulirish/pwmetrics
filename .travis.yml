@@ -12,5 +12,10 @@ before_install:
   - npm install -g yarn --cache-min 999999999
 install:
   - yarn install
+before_script:
+  - export DISPLAY=:99.0
+  - export LIGHTHOUSE_CHROMIUM_PATH="$(pwd)/chrome-linux/chrome"
+  - sh -e /etc/init.d/xvfb start
+  - ./node_modules/lighthouse/lighthouse-core/scripts/download-chrome.sh
 script:
   - yarn run test
