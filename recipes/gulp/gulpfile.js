@@ -1,8 +1,8 @@
-var gulp = require('gulp');
 // Copyright 2016 Google Inc. All Rights Reserved.
 // Licensed under the Apache License, Version 2.0. See LICENSE
 'use strict';
 
+const gulp = require('gulp');
 const connect = require('gulp-connect');
 const PWMetrics = require('../../lib/');
 const port = 8080;
@@ -19,7 +19,7 @@ function handleError(err) {
   process.exit(1);
 }
 
-gulp.task('pagespeed', function() {
+gulp.task('pwmetrics', function() {
   connectServer();
 
   const url = `http://localhost:${port}/index.html`;
@@ -49,4 +49,4 @@ gulp.task('pagespeed', function() {
     .catch(_ => handleError);
 });
 
-gulp.task('default', ['pagespeed']);
+gulp.task('default', ['pwmetrics']);
