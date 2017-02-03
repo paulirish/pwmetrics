@@ -18,4 +18,4 @@ before_script:
   - sh -e /etc/init.d/xvfb start
   - ./node_modules/lighthouse/lighthouse-core/scripts/download-chrome.sh
 script:
-  - yarn run test && yarn run grunt-example && yarn run gulp-example
+  - yarn run test && yarn run gulp-example
