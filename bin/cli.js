@@ -2,24 +2,48 @@
 // Copyright 2016 Google Inc. All Rights Reserved.
 // Licensed under the Apache License, Version 2.0. See LICENSE
 
+const sysPath = require('path');
+const fs = require('fs');
+const yargs = require('yargs');
+
 const PWMetrics = require('../lib/index');
 const { getConfigFromFile } = require('../lib/utils/fs');
 const { getMessageWithPrefix } = require('../lib/utils/messages');
 
-const argv = process.argv.slice(2);
+const cliFlags = yargs
+  .help('help')
+  .version(() => require('../package').version)
+  .showHelpOnFail(false, 'Specify --help for available options')
 
-const flags = {};
-argv
-  .filter(f => f.startsWith('-'))
-  .forEach(f => {
-    var keyValue = f.split('=');
-    const flagKey = keyValue[0].replace(/-*/, '');
-    flags[flagKey] = keyValue[1] || true;
-  });
+  .usage('$0 url')
 
-let config = Object.assign({}, {flags: flags});
-const fileConfig = getConfigFromFile(flags.config);
-const url = fileConfig.url || argv.filter(f => !f.startsWith('-')).shift();
+  .describe({
+    'json': 'Reports json details to stdout',
+    'runs': 'Does n runs (eg. 3, 5), and reports the median run\'s numbers.',
+    'expectations': 'Expectations from metrics results. Useful for CI. Config required.',
+    'submit': 'Submit metric results into sheets. Config required.',
+    'config': 'Read config form file.',
+    'disable-cpu-throttling': 'Disable CPU throttling',
+    'and more Lighthouse CLI options': 'Docs - https://github.com/GoogleChrome/lighthouse/#lighthouse-cli-options',
+  })
+  .default('disable-cpu-throttling', false)
+  .default('runs', 1)
+
+  // boolean values
+  .boolean([
+    'disable-cpu-throttling'
+  ])
+  .check(argv => {
+    if (argv._.length === 0)
+      throw new Error(getMessageWithPrefix('ERROR', 'NO_URL'));
+
+    return true;
+  })
+  .argv;
+
+const config = Object.assign({}, {flags: cliFlags});
+const fileConfig = getConfigFromFile(cliFlags.config);
+const url = fileConfig.url || cliFlags._[0];
 
 // get only allowed properties from file config
 Object.keys(fileConfig).forEach(configPropName => {
@@ -31,28 +55,26 @@ Object.keys(fileConfig).forEach(configPropName => {
   }
 });
 
-if (!url || flags.help) {
-  if (!flags.help) console.error(getMessageWithPrefix('ERROR', 'NO_URL'));
-  console.error('Usage:');
-  console.error('    pwmetrics http://example.com/');
-  console.error('    pwmetrics http://example.com/ --json  Reports json details to stdout.');
-  console.error('    pwmetrics http://example.com/ --runs=n  Does n runs (eg. 3, 5), and reports the median run\'s numbers.');
-  console.error('    pwmetrics --expectations  Expectations from metrics results. Useful for CI. Config required.');
-  console.error('    pwmetrics --submit  Submit metric results into sheets. Config required.');
-  console.error('    pwmetrics --config  Read config form file.');
+const write = function(fileName, data) {
+  const path = sysPath.join(process.cwd(), fileName);
+  fs.writeFile(path, data, err => {
+    if (err) throw err;
 
-  return;
-}
-
+    console.log(getMessageWithPrefix('SUCCESS', 'SAVED_TO_JSON', path));
+    process.exit(0);
+  });
+};
 
 const pwMetrics = new PWMetrics(url, config);
 pwMetrics.start()
   .then(data => {
-    if (flags.json) {
-      data = JSON.stringify(data, null, 2) + '\n';
+    data = JSON.stringify(data, null, 2) + '\n';
+    if (cliFlags.json && !cliFlags.json.length) {
       data && process.stdout.write(data);
+      process.exit(0);
+    } else if (cliFlags.json.length) {
+      write(cliFlags.json, data);
     }
-    process.exit(0);
   })
   .catch(err => {
     console.error(err);
