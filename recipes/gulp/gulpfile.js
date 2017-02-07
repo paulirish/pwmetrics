@@ -45,7 +45,10 @@ gulp.task('pwmetrics', function() {
     }
   });
   return pwMetrics.start()
-    .then(_ => { process.exit(0) })
+    .then(_ => {
+      connect.serverClose();
+      process.exit(0);
+    })
     .catch(_ => handleError);
 });
 
