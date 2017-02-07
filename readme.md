@@ -77,7 +77,7 @@ pwmetrics --config
 ```
 
 `package.json`
-```json
+```
 ...
   "pwmetrics": {
     "url": "http://example.com/",
@@ -183,7 +183,7 @@ pwmetrics --submit
 ```
 
 `package.json`
-```json
+```
 ...
   "pwmetrics": {
     "url": 'http://example.com/',
@@ -307,6 +307,11 @@ pwMetrics.start();
 See [Defining submit](#defining-submit) above.
 
 *Default*: `{}`
+
+### Recipes
+
+- [grunt](/recipes/grunt/gruntfile.js)
+- [gulp](/recipes/gulp/gulpfile.js)
 
 
 ### License

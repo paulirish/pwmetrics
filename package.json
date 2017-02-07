@@ -7,7 +7,8 @@
     "pwmetrics": "bin/cli.js"
   },
   "scripts": {
-    "test": "mocha --require test/setup/common.js"
+    "test": "mocha --require test/setup/common.js",
+    "gulp-example": "gulp --gulpfile recipes/gulp/gulpfile.js --cwd recipes/gulp"
   },
   "author": "Paul Irish",
   "license": "Apache-2.0",
@@ -20,6 +21,8 @@
   },
   "devDependencies": {
     "chai": "^3.5.0",
+    "gulp": "^3.9.1",
+    "gulp-connect": "^5.0.0",
     "mocha": "^3.2.0",
     "sinon": "^1.17.7",
     "sinon-chai": "^2.8.0"
