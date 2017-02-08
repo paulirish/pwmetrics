@@ -39,5 +39,8 @@
   "homepage": "https://github.com/paulirish/pwmetrics#readme",
   "engines": {
     "node": ">= 6"
+  },
+  "yargs": {
+    "camel-case-expansion": false
   }
 }
