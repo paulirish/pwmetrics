@@ -2,6 +2,7 @@ module.exports = {
   url: 'http://example.com/',
   flags: {
     expectations: true,
+    runs: 5,
   },
   expectations: {
     ttfmp: {
