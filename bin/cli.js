@@ -10,7 +10,6 @@ const yargs = require('yargs');
 const PWMetrics = require('../lib/index');
 const { getConfigFromFile } = require('../lib/utils/fs');
 const { getMessageWithPrefix } = require('../lib/utils/messages');
-const { mergeDeep } = require('../lib/utils/object');
 
 const cliFlags = yargs
   .help('help')
@@ -19,10 +18,11 @@ const cliFlags = yargs
   .wrap(yargs.terminalWidth())
   .usage('Usage: $0 <url>')
   .command('url', 'URL to test')
-  .option('json', {
-    'describe': 'JSON output defaults to stdout.',
-    'type': 'boolean',
-    'default': false,
+  .option('output', {
+    'describe': 'Specify the output format',
+    'type': 'string',
+    'choices': ['', 'json'],
+    'default': '',
     'group': 'Output:'
   })
   .option('output-path', {
@@ -49,7 +49,7 @@ const cliFlags = yargs
   .option('config', {
     'describe': 'Path to json config file',
     'coerce': (arg) => getConfigFromFile(arg),
-    'type': 'string'
+    'type': 'string',
   })
   .option('disable-cpu-throttling', {
     'describe': 'Disable CPU throttling',
@@ -59,26 +59,29 @@ const cliFlags = yargs
   .epilogue('For more Lighthouse CLI options see https://github.com/GoogleChrome/lighthouse/#lighthouse-cli-options')
   .check(argv => {
     //test possible url locations, first from cmd line then from config file
-    if (argv._.length !== 0 || (argv.config !== undefined && argv.config.url))
-      return true;
-
-    throw new Error(getMessageWithPrefix('ERROR', 'NO_URL'));
+    if (argv._.length === 0 && (argv.config === undefined || !argv.config.url)) {
+      throw new Error(getMessageWithPrefix('ERROR', 'NO_URL'));
+    }
+    return true;
   }).argv;
 
 //Get all explicitly terminal set options, does not include url because url has no default option
-const terminalOptions = Object.keys(yargs.getOptions().default).reduce((accum, prop) => {
+const flags = Object.keys(yargs.getOptions().default).reduce((accum, prop) => {
   if (cliFlags[prop] !== yargs.getOptions().default[prop])
     accum[prop] = cliFlags[prop];
+  else if (cliFlags.config && cliFlags.config.flags && cliFlags.config.flags[prop])
+    accum[prop] = cliFlags.config.flags[prop];
+  else accum[prop] = yargs.getOptions().default[prop];
   return accum;
 }, {});
 
 //Merge options from all sources. Order indicates precedence (last => most important)
-const options = mergeDeep(yargs.getOptions().default, cliFlags.config, terminalOptions);
+let options = Object.assign({}, cliFlags.config, { flags: flags });
 
 //Get url first from cmd line then from config file.
 options.url = cliFlags._[0] || options.url;
 
-const writeJSONtoDisk = function (fileName, data) {
+const writeToDisk = function (fileName, data) {
   return new Promise((resolve, reject) => {
     const path = sysPath.join(process.cwd(), fileName);
     fs.writeFile(path, data, err => {
@@ -92,9 +95,17 @@ const writeJSONtoDisk = function (fileName, data) {
 const pwMetrics = new PWMetrics(options.url, options);
 pwMetrics.start()
   .then(data => {
-    if (cliFlags.json) {
-      data = JSON.stringify(data, null, 2) + '\n';
-      if (cliFlags.json.length) return writeJSONtoDisk(cliFlags.json, data);
+    if (options.flags.output) {
+      //serialize accordingly
+      switch (options.flags.output) {
+        case 'json':
+          data = JSON.stringify(data, null, 2) + '\n';
+          break;
+        default:
+          break;
+      }
+      //output to file.
+      if (options.flags.outputPath.length) return writeToDisk(options.flags.outputPath, data);
       else data && process.stdout.write(data);
     }
   }).then(() => {
