@@ -41,9 +41,11 @@ exports.publicVariablesWithExpectations = {
   }
 };
 
-exports.publicVariablesWithSheets = {
-  url: url,
-  opts: {
-    sheets: {}
+exports.sheets = {
+  type: 'GOOGLE_SHEETS',
+  options: {
+    spreadsheetId: '123456',
+    tableName: 'data',
+    clientSecret: {}
   }
 };
