@@ -1,0 +1,64 @@
+{
+  "timings": [
+    {
+      "title": "First Contentful Paint",
+      "id": "ttfcp",
+      "timestamp": 233315741040,
+      "timing": 2298.977,
+      "color": "green"
+    },
+    {
+      "title": "First Meaningful Paint",
+      "id": "ttfmp",
+      "timestamp": 233315741055,
+      "timing": 2298.992,
+      "color": "green"
+    },
+    {
+      "title": "Perceptual Speed Index",
+      "id": "psi",
+      "timestamp": 233315758509,
+      "timing": 2316.446,
+      "color": "blue"
+    },
+    {
+      "title": "First Visual Change",
+      "id": "fv",
+      "timestamp": 233315758031,
+      "timing": 2315.968,
+      "color": "blue"
+    },
+    {
+      "title": "Visually Complete 85%",
+      "id": "vc85",
+      "timestamp": 233315758509,
+      "timing": 2316.446,
+      "color": "blue"
+    },
+    {
+      "title": "Visually Complete 100%",
+      "id": "vc100",
+      "timestamp": 233315758031,
+      "timing": 2315.968,
+      "color": "blue"
+    },
+    {
+      "title": "Time to Interactive",
+      "id": "tti",
+      "timestamp": 233315758509,
+      "timing": 2316.446,
+      "color": "yellow"
+    }
+  ],
+  "timestamps": [
+    {
+      "title": "Navigation Start",
+      "id": "navstart",
+      "timestamp": 233313442063
+    }
+  ],
+  "generatedTime": "2017-02-10T23:55:51.924Z",
+  "lighthouseVersion": "1.5.0",
+  "initialUrl": "http://example.com",
+  "url": "http://example.com/"
+}
