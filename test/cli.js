@@ -6,7 +6,15 @@ const childProcess = require('child_process');
 const expect = require('chai').expect;
 
 describe('CLI', function() {
-  it('fails if a url is not provided', () => {
-    expect(() => childProcess.execSync('node bin/cli.js')).to.throw('\u001b[31m✘\u001b[0m Error: \u001b[31mNo url entered..\u001b[0m\n\nSpecify --help for available options\n');
+
+  describe('url', () => {
+    it('should throw error if a url is not provided by cli', () => {
+      expect(() => childProcess.execSync('node bin/cli.js')).to.throw(Error, 'Error: No url entered.');
+    });
+
+    it('should throw error if a url is not provided either by config or by cli', () => {
+      expect(() => childProcess.execSync('node bin/cli.js --config=./test/fixtures/empty-config.js'))
+        .to.throw(Error, 'Error: No url entered.');
+    });
   });
 });

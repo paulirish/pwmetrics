@@ -9,7 +9,7 @@ const yargs = require('yargs');
 
 const PWMetrics = require('../lib/index');
 const { getConfigFromFile } = require('../lib/utils/fs');
-const { getMessageWithPrefix } = require('../lib/utils/messages');
+const { getMessageWithPrefix, getMessage } = require('../lib/utils/messages');
 
 const cliFlags = yargs
   .help('help')
@@ -46,7 +46,7 @@ const cliFlags = yargs
     'default': false
   })
   .option('config', {
-    'describe': 'Path to json config file',
+    'describe': 'Path to config file',
     'type': 'string',
   })
   .option('disable-cpu-throttling', {
@@ -55,24 +55,18 @@ const cliFlags = yargs
     'default': false
   })
   .epilogue('For more Lighthouse CLI options see https://github.com/GoogleChrome/lighthouse/#lighthouse-cli-options')
-  .check(argv => {
-    //test possible url locations, first from cmd line then from config file
-    if (argv._.length === 0 && (argv.config === undefined || !argv.config.url)) {
-      throw new Error(getMessageWithPrefix('ERROR', 'NO_URL'));
-    }
-    return true;
-  }).argv;
-
+  .argv;
 
 const config = cliFlags.config ? getConfigFromFile(cliFlags.config) : {};
 
-// For the config flags and URL, we'll allow CLI to override what's set in the config Object
-
 //Merge options from all sources. Order indicates precedence (last one wins)
-let options = Object.assign({}, config, {flags: cliFlags});
+let options = Object.assign({}, {flags: cliFlags}, config);
 
 //Get url first from cmd line then from config file.
 options.url = cliFlags._[0] || options.url;
+
+if (!options.url || !options.url.length)
+  throw new Error(getMessage('NO_URL'));
 
 const writeToDisk = function (fileName, data) {
   return new Promise((resolve, reject) => {
