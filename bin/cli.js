@@ -18,17 +18,16 @@ const cliFlags = yargs
   .wrap(yargs.terminalWidth())
   .usage('Usage: $0 <url>')
   .command('url', 'URL to test')
-  .option('output', {
-    'describe': 'Specify the output format',
-    'type': 'string',
-    'choices': ['', 'json'],
-    'default': '',
+  .option('json', {
+    'describe': 'Output as json',
+    'type': 'boolean',
+    'default': 'false',
     'group': 'Output:'
   })
   .option('output-path', {
     'describe': 'The file path to output the results',
     'type': 'string',
-    'default': '',
+    'default': 'stdout',
     'group': 'Output:'
   })
   .option('runs', {
@@ -48,7 +47,6 @@ const cliFlags = yargs
   })
   .option('config', {
     'describe': 'Path to json config file',
-    'coerce': (arg) => getConfigFromFile(arg),
     'type': 'string',
   })
   .option('disable-cpu-throttling', {
@@ -65,18 +63,13 @@ const cliFlags = yargs
     return true;
   }).argv;
 
-//Get all explicitly terminal set options, does not include url because url has no default option
-const flags = Object.keys(yargs.getOptions().default).reduce((accum, prop) => {
-  if (cliFlags[prop] !== yargs.getOptions().default[prop])
-    accum[prop] = cliFlags[prop];
-  else if (cliFlags.config && cliFlags.config.flags && cliFlags.config.flags[prop])
-    accum[prop] = cliFlags.config.flags[prop];
-  else accum[prop] = yargs.getOptions().default[prop];
-  return accum;
-}, {});
 
-//Merge options from all sources. Order indicates precedence (last => most important)
-let options = Object.assign({}, cliFlags.config, { flags: flags });
+const config = cliFlags.config ? getConfigFromFile(cliFlags.config) : {};
+
+// For the config flags and URL, we'll allow CLI to override what's set in the config Object
+
+//Merge options from all sources. Order indicates precedence (last one wins)
+let options = Object.assign({}, config, {flags: cliFlags});
 
 //Get url first from cmd line then from config file.
 options.url = cliFlags._[0] || options.url;
@@ -95,18 +88,15 @@ const writeToDisk = function (fileName, data) {
 const pwMetrics = new PWMetrics(options.url, options);
 pwMetrics.start()
   .then(data => {
-    if (options.flags.output) {
-      //serialize accordingly
-      switch (options.flags.output) {
-        case 'json':
-          data = JSON.stringify(data, null, 2) + '\n';
-          break;
-        default:
-          break;
-      }
-      //output to file.
-      if (options.flags.outputPath.length) return writeToDisk(options.flags.outputPath, data);
-      else data && process.stdout.write(data);
+    if (options.flags.json) {
+      // serialize accordingly
+      data = JSON.stringify(data, null, 2) + '\n';
+      // output to file.
+      if (options.flags.outputPath != 'stdout')
+        return writeToDisk(options.flags.outputPath, data);
+      // output to stdout
+      else if (data)
+        process.stdout.write(data);
     }
   }).then(() => {
     process.exit(0);
