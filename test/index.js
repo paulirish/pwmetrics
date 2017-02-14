@@ -12,7 +12,6 @@ describe('PWMetrics', () => {
       const pwMetrics = new PWMetrics(runOptions.publicVariables.url, runOptions.publicVariables.opts);
 
       expect(pwMetrics.url).to.be.equal(runOptions.publicVariables.url);
-      expect(pwMetrics.opts).to.be.equal(runOptions.publicVariables.opts);
       expect(pwMetrics.runs).to.be.equal(1);
     });
 
