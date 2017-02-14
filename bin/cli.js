@@ -1,61 +1,100 @@
 #!/usr/bin/env node
 // Copyright 2016 Google Inc. All Rights Reserved.
 // Licensed under the Apache License, Version 2.0. See LICENSE
+'use strict';
+
+const sysPath = require('path');
+const fs = require('fs');
+const yargs = require('yargs');
 
 const PWMetrics = require('../lib/index');
 const { getConfigFromFile } = require('../lib/utils/fs');
-const { getMessageWithPrefix } = require('../lib/utils/messages');
+const { getMessageWithPrefix, getMessage } = require('../lib/utils/messages');
 
-const argv = process.argv.slice(2);
+const cliFlags = yargs
+  .help('help')
+  .version(() => require('../package').version)
+  .showHelpOnFail(false, 'Specify --help for available options')
+  .wrap(yargs.terminalWidth())
+  .usage('Usage: $0 <url>')
+  .command('url', 'URL to test')
+  .option('json', {
+    'describe': 'Output as json',
+    'type': 'boolean',
+    'default': 'false',
+    'group': 'Output:'
+  })
+  .option('output-path', {
+    'describe': 'The file path to output the results',
+    'type': 'string',
+    'default': 'stdout',
+    'group': 'Output:'
+  })
+  .option('runs', {
+    'describe': 'Does n runs (eg. 3, 5), and reports the median run\'s numbers.',
+    'type': 'number',
+    'default': 1,
+  })
+  .option('expectations', {
+    'describe': 'Expectations from metrics results. Useful for CI. Config required.',
+    'type': 'boolean',
+    'default': false
+  })
+  .option('submit', {
+    'describe': 'Submit metric results into google sheets. Config required.',
+    'type': 'boolean',
+    'default': false
+  })
+  .option('config', {
+    'describe': 'Path to config file',
+    'type': 'string',
+  })
+  .option('disable-cpu-throttling', {
+    'describe': 'Disable CPU throttling',
+    'type': 'boolean',
+    'default': false
+  })
+  .epilogue('For more Lighthouse CLI options see https://github.com/GoogleChrome/lighthouse/#lighthouse-cli-options')
+  .argv;
 
-const flags = {};
-argv
-  .filter(f => f.startsWith('-'))
-  .forEach(f => {
-    var keyValue = f.split('=');
-    const flagKey = keyValue[0].replace(/-*/, '');
-    flags[flagKey] = keyValue[1] || true;
+const config = cliFlags.config ? getConfigFromFile(cliFlags.config) : {};
+
+//Merge options from all sources. Order indicates precedence (last one wins)
+let options = Object.assign({}, {flags: cliFlags}, config);
+
+//Get url first from cmd line then from config file.
+options.url = cliFlags._[0] || options.url;
+
+if (!options.url || !options.url.length)
+  throw new Error(getMessage('NO_URL'));
+
+const writeToDisk = function (fileName, data) {
+  return new Promise((resolve, reject) => {
+    const path = sysPath.join(process.cwd(), fileName);
+    fs.writeFile(path, data, err => {
+      if (err) reject(err);
+      console.log(getMessageWithPrefix('SUCCESS', 'SAVED_TO_JSON', path));
+      resolve();
+    });
   });
+};
 
-let config = Object.assign({}, {flags: flags});
-const fileConfig = getConfigFromFile(flags.config);
-const url = fileConfig.url || argv.filter(f => !f.startsWith('-')).shift();
-
-// get only allowed properties from file config
-Object.keys(fileConfig).forEach(configPropName => {
-  switch(configPropName) {
-    case 'expectations':
-    case 'sheets':
-      config[configPropName] = fileConfig[configPropName];
-      break;
-  }
-});
-
-if (!url || flags.help) {
-  if (!flags.help) console.error(getMessageWithPrefix('ERROR', 'NO_URL'));
-  console.error('Usage:');
-  console.error('    pwmetrics http://example.com/');
-  console.error('    pwmetrics http://example.com/ --json  Reports json details to stdout.');
-  console.error('    pwmetrics http://example.com/ --runs=n  Does n runs (eg. 3, 5), and reports the median run\'s numbers.');
-  console.error('    pwmetrics --expectations  Expectations from metrics results. Useful for CI. Config required.');
-  console.error('    pwmetrics --submit  Submit metric results into sheets. Config required.');
-  console.error('    pwmetrics --config  Read config form file.');
-
-  return;
-}
-
-
-const pwMetrics = new PWMetrics(url, config);
+const pwMetrics = new PWMetrics(options.url, options);
 pwMetrics.start()
   .then(data => {
-    if (flags.json) {
+    if (options.flags.json) {
+      // serialize accordingly
       data = JSON.stringify(data, null, 2) + '\n';
-      data && process.stdout.write(data);
+      // output to file.
+      if (options.flags.outputPath != 'stdout')
+        return writeToDisk(options.flags.outputPath, data);
+      // output to stdout
+      else if (data)
+        process.stdout.write(data);
     }
+  }).then(() => {
     process.exit(0);
-  })
-  .catch(err => {
+  }).catch(err => {
     console.error(err);
-    return process.exit(1);
+    process.exit(1);
   });
-
