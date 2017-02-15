@@ -17,7 +17,7 @@
     "google-auth-library": "^0.10.0",
     "googleapis": "^16.0.0",
     "lighthouse": "1.5.0",
-    "median": "^0.0.2"
+    "median": "^0.0.2",
     "yargs": "^6.6.0"
   },
   "devDependencies": {
