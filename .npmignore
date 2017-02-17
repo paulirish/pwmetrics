@@ -3,4 +3,10 @@ recipes
 yarn.lock
 .editorconfig
 .gitignore
+.DS_Store
+npm-debug.log
 gsheets.config.js
+
+# Typescript built files
+lib/sheets.js
+types/types.js

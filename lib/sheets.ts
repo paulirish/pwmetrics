@@ -2,6 +2,9 @@
 // Licensed under the Apache License, Version 2.0. See LICENSE
 'use strict';
 
+import { SheetsConfig, MetricsResults } from '../types/types';
+
+// @todo make it 'import' after moving all stuff to typescript
 const { getMessage } = require('./utils/messages');
 const gsheets = require('./gsheets/gsheets');
 const metricsIds = require('./metrics').ids;
@@ -11,13 +14,11 @@ const SHEET_TYPES = {
 };
 
 class Sheets {
-  constructor(config) {
+  constructor(public config: SheetsConfig) {
     this.validateOptions(config);
-
-    this.config = config;
   }
 
-  validateOptions(config) {
+  validateOptions(config: SheetsConfig) {
     if (!config || !Object.keys(config).length)
       throw new Error(getMessage('NO_GOOGLE_SHEET_OPTIONS'));
 
@@ -36,17 +37,17 @@ class Sheets {
     }
   }
 
-  appendResults(results) {
+  appendResults(results: Array<MetricsResults>) {
     switch (this.config.type) {
       case SHEET_TYPES.GOOGLE_SHEETS:
         return this.appendResultsToGSheets(results);
     }
   }
 
-  appendResultsToGSheets(results) {
-    let valuesToAppend = [];
+  appendResultsToGSheets(results: Array<MetricsResults>): Promise<any[]> {
+    let valuesToAppend: Array<Object> = [];
     results.forEach(data => {
-      const getTiming = key => data.timings.find(t => t.id === key).timing;
+      const getTiming = (key:string) => data.timings.find(t => t.id === key).timing;
       const dateObj = new Date(data.generatedTime);
 
       // order matters
@@ -64,10 +65,10 @@ class Sheets {
       ]);
     });
 
-    return gsheets.authenticate(this.config.options.clientSecret).then(auth =>
+    return gsheets.authenticate(this.config.options.clientSecret).then((auth:any) =>
       gsheets.appendResults(auth, valuesToAppend, this.config.options)
-    ).catch(e => {
-      console.error(e);
+    ).catch((error: string) => {
+      throw new Error(error);
     });
   }
 }
