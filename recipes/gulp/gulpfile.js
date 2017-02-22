@@ -29,16 +29,16 @@ gulp.task('pwmetrics', function() {
     },
     expectations: {
         ttfcp: {
-          warn: '>=3000',
-          error: '>=5000'
+          warn: '>=300',
+          error: '>=500'
         },
         ttfmp: {
           warn: '>=300',
           error: '>=50'
         },
         psi: {
-          warn: '>=1500',
-          error: '>=3200'
+          warn: '>=150',
+          error: '>=320'
       }
     }
   });

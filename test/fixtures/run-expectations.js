@@ -2,12 +2,12 @@ module.exports = {
   url: 'http://example.com/',
   flags: {
     expectations: true,
-    runs: 5,
+    runs: 2,
   },
   expectations: {
     ttfmp: {
-      warn: '>=3000',
-      error: '>=5000',
+      warn: '>=300',
+      error: '>=50'
     },
     tti: {
       warn: '>=5000',

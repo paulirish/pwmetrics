@@ -1363,9 +1363,9 @@ liftoff@^2.1.0:
     rechoir "^0.6.2"
     resolve "^1.1.7"
 
-lighthouse@1.5.0:
-  version "1.5.0"
-  resolved "https://registry.yarnpkg.com/lighthouse/-/lighthouse-1.5.0.tgz#ff7f1227333653c0611d37c90f930b90235aab90"
+lighthouse@1.5.1:
+  version "1.5.1"
+  resolved "https://registry.yarnpkg.com/lighthouse/-/lighthouse-1.5.1.tgz#26db5b0db71e8a451121ef14140c980d707a1b54"
   dependencies:
     axe-core "2.1.7"
     chrome-devtools-frontend "1.0.422034"
