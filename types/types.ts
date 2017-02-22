@@ -8,14 +8,26 @@ interface SheetsConfig {
 }
 
 interface MetricsResults {
-  timestamps: Array<any>;
-  timings: Array<any>;
+  timestamps: Array<Timestamps>;
+  timings: Array<Timings>;
   generatedTime: string;
   lighthouseVersion: string;
   url: string;
   initialUrl: string;
 }
 
+interface Timestamps {
+  title: string;
+  name: string;
+  value: number;
+}
+
+interface Timings {
+  title: string,
+  name: string;
+  value: number;
+  color: string;
+}
 export {
   SheetsConfig,
   MetricsResults

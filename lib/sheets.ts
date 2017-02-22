@@ -4,7 +4,7 @@
 
 import { SheetsConfig, MetricsResults } from '../types/types';
 
-// @todo make it 'import' after moving all stuff to typescript
+// @todo add 'import' after moving all stuff to typescript
 const { getMessage } = require('./utils/messages');
 const gsheets = require('./gsheets/gsheets');
 const metricsIds = require('./metrics').ids;
@@ -65,7 +65,7 @@ class Sheets {
       ]);
     });
 
-    return gsheets.authenticate(this.config.options.clientSecret).then((auth:any) =>
+    return gsheets.authenticate(this.config.options.clientSecret).then((auth: any) =>
       gsheets.appendResults(auth, valuesToAppend, this.config.options)
     ).catch((error: string) => {
       throw new Error(error);
