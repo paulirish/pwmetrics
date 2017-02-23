@@ -6,12 +6,12 @@ module.exports = {
   },
   expectations: {
     ttfmp: {
-      warn: '>=300',
-      error: '>=50'
+      warn: '>=3000',
+      error: '>=2000'
     },
     tti: {
-      warn: '>=5000',
-      error: '>=15000',
+      warn: '>=3000',
+      error: '>=5000',
     },
     ttfcp: {
       warn: '>=1500',
