@@ -10,6 +10,7 @@ const port = 8080;
 const connectServer = function() {
   return connect.server({
     root: '../public',
+    livereload: true,
     port: port
   });
 };
@@ -28,19 +29,17 @@ gulp.task('pwmetrics', function() {
       expectations: true
     },
     expectations: {
-      metrics: {
-        ttfcp: {
-          warn: '>=3000',
-          error: '>=5000'
-        },
-        ttfmp: {
-          warn: '>=300',
-          error: '>=50'
-        },
-        psi: {
-          warn: '>=1500',
-          error: '>=3200'
-        }
+      ttfmp: {
+        warn: '>=1000',
+        error: '>=2000'
+      },
+      tti: {
+        warn: '>=2000',
+        error: '>=3000'
+      },
+      ttfcp: {
+        warn: '>=1500',
+        error: '>=2000'
       }
     }
   });

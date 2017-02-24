@@ -127,15 +127,13 @@ pwmetrics --expectations
   "pwmetrics": {
     "url": "http://example.com/",
     "expectations": {
-      "metrics": {
-        "ttfmp": {
-          "warn": ">=3000",
-          "error": ">=5000"
-        },
-        "psi": {
-          "warn": ">=1500",
-          "error": ">=3200"
-        }
+      "ttfmp": {
+        "warn": ">=3000",
+        "error": ">=5000"
+      },
+      "psi": {
+        "warn": ">=1500",
+        "error": ">=3200"
       }
     }
   }
@@ -153,15 +151,13 @@ pwmetrics --expectations --config=your-own-file.js
 module.exports = {
   url: 'http://example.com/',
   expectations: {
-    metrics: {
-      ttfmp: {
-        warn: '>=3000',
-        error: '>=5000'
-      },
-      psi: {
-        warn: '>=1500',
-        error: '>=3200'
-      }
+    ttfmp: {
+      warn: '>=3000',
+      error: '>=5000'
+    },
+    psi: {
+      warn: '>=1500',
+      error: '>=3200'
     }
   }
 }
