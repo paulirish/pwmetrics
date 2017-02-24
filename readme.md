@@ -1,10 +1,10 @@
 
-
-# pwmetrics
-
-> Progressive web metrics at your fingertipz. 💅
-
-CLI tool and lib to gather performance metrics via [Lighthouse](https://github.com/GoogleChrome/lighthouse/). _IN BETA_.
+<h1 align="center">pwmetrics</h1>
+<p align="center">
+  <img title="Progressive web metrics" src='https://cloud.githubusercontent.com/assets/6231516/22849188/6f84c038-f003-11e6-8990-b14f3b916e54.png' />
+</p>
+<p align="center">Progressive web metrics at your fingertipz. 💅</p>
+<p align="center">CLI tool and lib to gather performance metrics via <a href="https://github.com/GoogleChrome/lighthouse/">Lighthouse</a>. <i>IN BETA</i>.</p>
 
 ![image](https://cloud.githubusercontent.com/assets/39191/19417867/7aead922-93af-11e6-88ec-917dad6e89d2.png)
 
@@ -307,6 +307,10 @@ pwMetrics.start();
 See [Defining submit](#defining-submit) above.
 
 *Default*: `{}`
+
+### Recipes
+
+- [gulp](/recipes/gulp/gulpfile.js)
 
 
 ### License
