@@ -18,14 +18,15 @@ interface MetricsResults {
 
 interface Timestamps {
   title: string;
-  name: string;
-  value: number;
+  id: string;
+  timestamp: number;
 }
 
 interface Timings {
   title: string,
-  name: string;
-  value: number;
+  id: string;
+  timestamp: number;
+  timing: number;
   color: string;
 }
 export {
