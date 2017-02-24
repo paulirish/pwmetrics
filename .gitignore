@@ -1,2 +1,9 @@
 node_modules
+.DS_Store
+npm-debug.log
+
 gsheets.config.js
+
+# Typescript built files
+lib/sheets.js
+types/types.js
