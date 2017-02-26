@@ -186,8 +186,8 @@ pwmetrics --submit
     "sheets": {
       "type": 'GOOGLE_SHEETS', // sheets service type. Available types: GOOGLE_SHEETS
       "options": {
-        "spreadsheetId": "sheet-id",
-        "tableName": "my-sheeet-table-name",
+        "spreadsheetId": "sheet_id",
+        "tableName": "data",
         "clientSecret": {
           // Data object. Can be get by (using everything in step 1 here)[https://developers.google.com/sheets/api/quickstart/nodejs#step_1_turn_on_the_api_name]
         }
@@ -210,8 +210,8 @@ module.exports = {
   sheets: {
     type: 'GOOGLE_SHEETS', // sheets service type. Available types: GOOGLE_SHEETS
     options: {
-      spreadsheetId: 'sheet-id',
-      tableName: 'my-sheeet-table-name',
+      spreadsheetId: 'sheet_id',
+      tableName: 'data',
       clientSecret: {
         // Follow step 1 of https://developers.google.com/sheets/api/quickstart/nodejs#step_1_turn_on_the_api_name
         // Then paste resulting JSON payload as this clientSecret value

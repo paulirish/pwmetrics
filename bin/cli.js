@@ -57,7 +57,7 @@ const cliFlags = yargs
   .epilogue('For more Lighthouse CLI options see https://github.com/GoogleChrome/lighthouse/#lighthouse-cli-options')
   .argv;
 
-const config = cliFlags.config ? getConfigFromFile(cliFlags.config) : {};
+const config = getConfigFromFile(cliFlags.config);
 
 //Merge options from all sources. Order indicates precedence (last one wins)
 let options = Object.assign({}, {flags: cliFlags}, config);
