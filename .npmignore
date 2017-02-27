@@ -8,5 +8,4 @@ npm-debug.log
 gsheets.config.js
 
 # Typescript built files
-lib/sheets.js
 types/types.js

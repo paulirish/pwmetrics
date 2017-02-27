@@ -19,4 +19,5 @@ before_script:
   - ./node_modules/lighthouse/lighthouse-core/scripts/download-chrome.sh
 script:
   - yarn run test && yarn run gulp-example
-email: false
+notifications:
+  email: false
