@@ -10,6 +10,7 @@ const yargs = require('yargs');
 const PWMetrics = require('../lib/index');
 const { getConfigFromFile } = require('../lib/utils/fs');
 const { getMessageWithPrefix, getMessage } = require('../lib/utils/messages');
+let config;
 
 const cliFlags = yargs
   .help('help')
@@ -47,9 +48,7 @@ const cliFlags = yargs
   })
   .option('config', {
     'describe': 'Path to config file',
-    'type': 'string',
-    //equivalent to: cliFlags.config = getConfigFromFile(cliFlags.config);
-    'coerce': getConfigFromFile 
+    'type': 'string'    
   })
   .option('disable-cpu-throttling', {
     'describe': 'Disable CPU throttling',
@@ -58,7 +57,9 @@ const cliFlags = yargs
   })
   .check((argv) => {
     // Make sure pwmetrics has been passed a url, either from cli or config file
-    if (argv._.length === 0 && (argv.config === undefined || !argv.config.url))
+    if(argv.config) config = getConfigFromFile(argv.config);
+
+    if (argv._.length === 0 && (config === undefined || !config.url))
         throw new Error(getMessageWithPrefix('ERROR', 'NO_URL'));
 
     return true;
@@ -67,7 +68,7 @@ const cliFlags = yargs
   .argv;
 
 //Merge options from all sources. Order indicates precedence (last one wins)
-let options = Object.assign({}, { flags: cliFlags }, cliFlags.config);
+let options = Object.assign({}, { flags: cliFlags }, config);
 
 //Get url first from cmd line then from config file.
 options.url = cliFlags._[0] || options.url;
