@@ -2,12 +2,14 @@
 // Licensed under the Apache License, Version 2.0. See LICENSE
 'use strict';
 
-import { SheetsConfig, MetricsResults } from '../types/types';
+import { SheetsConfig, MetricsResults, AuthorizeCredentials, GSheetsValuesToAppend } from '../../types/types';
+
+import { authenticate } from '../outh/google-outh';
+import { appendResults as gSheetsAppendResults }  from './gsheets';
 
 // @todo add 'import' after moving all stuff to typescript
-const { getMessage } = require('./utils/messages');
-const gsheets = require('./gsheets/gsheets');
-const metricsIds = require('./metrics').ids;
+const { getMessage } = require('../utils/messages');
+const metricsIds = require('../metrics').ids;
 
 const SHEET_TYPES = {
   'GOOGLE_SHEETS': 'GOOGLE_SHEETS'
@@ -44,12 +46,11 @@ class Sheets {
     }
   }
 
-  appendResultsToGSheets(results: Array<MetricsResults>): Promise<any[]> {
-    let valuesToAppend: Array<Object> = [];
+  async appendResultsToGSheets(results: Array<MetricsResults>): Promise<any> {
+    let valuesToAppend: Array<GSheetsValuesToAppend> = [];
     results.forEach(data => {
       const getTiming = (key:string) => data.timings.find(t => t.id === key).timing;
       const dateObj = new Date(data.generatedTime);
-
       // order matters
       valuesToAppend.push([
         data.lighthouseVersion,
@@ -65,11 +66,12 @@ class Sheets {
       ]);
     });
 
-    return gsheets.authenticate(this.config.options.clientSecret).then((auth: any) =>
-      gsheets.appendResults(auth, valuesToAppend, this.config.options)
-    ).catch((error: string) => {
-      throw new Error(error);
-    });
+    try {
+      const auth:AuthorizeCredentials = await authenticate(this.config.options.clientSecret);
+      await gSheetsAppendResults(auth, valuesToAppend, this.config.options);
+    } catch(error) {
+      throw error;
+    }
   }
 }
 
