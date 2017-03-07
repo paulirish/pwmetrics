@@ -54,7 +54,7 @@ const cliFlags = yargs
     'type': 'boolean',
     'default': false
   })
-  .option('desiredMetric', {
+  .option('desiredMetrics', {
     'describe': 'Array of metrics to be obtained',
     'type': 'array',
     'deafult': false
