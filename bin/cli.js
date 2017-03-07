@@ -73,6 +73,9 @@ let options = Object.assign({}, { flags: cliFlags }, config);
 //Get url first from cmd line then from config file.
 options.url = cliFlags._[0] || options.url;
 
+if (!options.url || !options.url.length)
+  throw new Error(getMessage('NO_URL'));
+
 const writeToDisk = function (fileName, data) {
   return new Promise((resolve, reject) => {
     const path = sysPath.join(process.cwd(), fileName);
