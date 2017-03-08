@@ -28,6 +28,9 @@ pwmetrics http://example.com/ --runs=3
 # --submit     Submits results to a google spreadsheet (requires some setup)
 pwmetrics http://goat.com --submit
 
+# --desiredMetrics <list of metrics> Outputs the values of user requested metrics, see Available metrics
+pwmetrics http://goat.com --desiredMetrics tti ttfmp vc85 vc100
+
 # --json       Reports json details to stdout.
 pwmetrics --json http://example.com/
 
