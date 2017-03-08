@@ -10,6 +10,7 @@ const yargs = require('yargs');
 const PWMetrics = require('../lib/index');
 const { getConfigFromFile } = require('../lib/utils/fs');
 const { getMessageWithPrefix, getMessage } = require('../lib/utils/messages');
+let config;
 
 const cliFlags = yargs
   .help('help')
@@ -47,20 +48,27 @@ const cliFlags = yargs
   })
   .option('config', {
     'describe': 'Path to config file',
-    'type': 'string',
+    'type': 'string'
   })
   .option('disable-cpu-throttling', {
     'describe': 'Disable CPU throttling',
     'type': 'boolean',
     'default': false
   })
+  .check( (argv) => {
+    // Make sure pwmetrics has been passed a url, either from cli or config file
+    if(argv.config) config = getConfigFromFile(argv.config);
+
+    if (argv._.length === 0 && (config === undefined || !config.url))
+        throw new Error(getMessageWithPrefix('ERROR', 'NO_URL'));
+
+    return true;
+  })
   .epilogue('For more Lighthouse CLI options see https://github.com/GoogleChrome/lighthouse/#lighthouse-cli-options')
   .argv;
 
-const config = getConfigFromFile(cliFlags.config);
-
 //Merge options from all sources. Order indicates precedence (last one wins)
-let options = Object.assign({}, {flags: cliFlags}, config);
+let options = Object.assign({}, { flags: cliFlags }, config);
 
 //Get url first from cmd line then from config file.
 options.url = cliFlags._[0] || options.url;
