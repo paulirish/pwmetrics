@@ -22,81 +22,88 @@ self.setImmediate = function(callback:any) {
   return 0;
 };
 
-// If modifying these scopes, delete your previously saved credentials
-// at ~/.credentials/sheets.googleapis.com-nodejs-pwmetrics.json
-const SCOPES = ['https://www.googleapis.com/auth/spreadsheets'];
-const TOKEN_DIR = path.join((process.env.HOME || process.env.HOMEPATH || process.env.USERPROFILE), '/.credentials/');
-const TOKEN_PATH = path.join(TOKEN_DIR, 'sheets.googleapis.com-nodejs-pwmetrics.json');
 const EEXIST = 'EEXIST';
 
-async function authenticate(clientSecret:AuthorizeCredentials): Promise<any> {
-  try {
-    return await authorize(clientSecret);
-  } catch(error) {
-    return Promise.reject(error);
+class GoogleOuth {
+  scopes: Array<string>;
+  tokenDir: string;
+  tokenPath: string;
+
+  constructor() {
+    // If modifying these this.scopes, delete your previously saved credentials
+    // at ~/.credentials/sheets.googleapis.com-nodejs-pwmetrics.json
+    this.scopes = ['https://www.googleapis.com/auth/spreadsheets'];
+    this.tokenDir = path.join((process.env.HOME || process.env.HOMEPATH || process.env.USERPROFILE), '/.credentials/');
+    this.tokenPath = path.join(this.tokenDir, 'sheets.googleapis.com-nodejs-pwmetrics.json');
   }
-}
 
-async function authorize(credentials:AuthorizeCredentials): Promise<any> {
-  const clientSecret = credentials.installed.client_secret;
-  const clientId = credentials.installed.client_id;
-  const redirectUrl = credentials.installed.redirect_uris[0];
-  const auth = new GoogleAuth();
-  const oauth2Client = new auth.OAuth2(clientId, clientSecret, redirectUrl);
-
-  try {
-    const token = await fsReadFile(TOKEN_PATH, 'utf8');
-    oauth2Client.credentials = typeof token === 'string' ? JSON.parse(token) : token;
-    return oauth2Client;
-  } catch(error) {
-    return await getNewToken(oauth2Client);
-  }
-}
-
-async function getNewToken(oauth2Client:any): Promise<any> {
-  try {
-    const authUrl = oauth2Client.generateAuthUrl({
-      access_type: 'offline',
-      scope: SCOPES
-    });
-
-    console.log('Authorize this app by visiting this url: ', authUrl);
-
-    const code = readlineSync.question('Enter the code from that page here: ', {
-      hideEchoBack: true
-    });
-    const token:any = await getOauth2ClientToken(oauth2Client, code);
-    oauth2Client.credentials = token;
-    await storeToken(token);
-    return oauth2Client;
-  } catch (error) {
-    throw new Error(`Error while trying to retrieve access token,  ${error.message}`);
-  }
-}
-
-function getOauth2ClientToken(oauth2Client:any, code:any): Promise<any> {
-  return new Promise((resolve:Function, reject:Function) => {
-    oauth2Client.getToken(code, (error:Object, token:Object) => {
-      if (error)
-        return reject(error);
-      else
-        return resolve(token);
-    });
-  });
-}
-
-async function storeToken(token:string): Promise<any> {
-  try {
-    fs.mkdirSync(TOKEN_DIR);
-  } catch (error) {
-    if (error.code !== EEXIST) {
-      throw error;
+  async authenticate(clientSecret:AuthorizeCredentials): Promise<any> {
+    try {
+      return await this.authorize(clientSecret);
+    } catch(error) {
+      return Promise.reject(error);
     }
   }
-  await fsWriteFile(TOKEN_PATH, JSON.stringify(token));
-  console.log('Token stored to ' + TOKEN_PATH);
+
+  async authorize(credentials:AuthorizeCredentials): Promise<any> {
+    const clientSecret = credentials.installed.client_secret;
+    const clientId = credentials.installed.client_id;
+    const redirectUrl = credentials.installed.redirect_uris[0];
+    const auth = new GoogleAuth();
+    const oauth2Client = new auth.OAuth2(clientId, clientSecret, redirectUrl);
+
+    try {
+      const token = await fsReadFile(this.tokenPath, 'utf8');
+      oauth2Client.credentials = typeof token === 'string' ? JSON.parse(token) : token;
+      return oauth2Client;
+    } catch(error) {
+      return await this.getNewToken(oauth2Client);
+    }
+  }
+
+  async getNewToken(oauth2Client:any): Promise<any> {
+    try {
+      const authUrl = oauth2Client.generateAuthUrl({
+        access_type: 'offline',
+        scope: this.scopes
+      });
+
+      console.log('Authorize this app by visiting this url: ', authUrl);
+
+      const code = readlineSync.question('Enter the code from that page here: ', {
+        hideEchoBack: true
+      });
+      const token:any = await this.getOauth2ClientToken(oauth2Client, code);
+      oauth2Client.credentials = token;
+      await this.storeToken(token);
+      return oauth2Client;
+    } catch (error) {
+      throw new Error(`Error while trying to retrieve access token,  ${error.message}`);
+    }
+  }
+
+  getOauth2ClientToken(oauth2Client:any, code:any): Promise<any> {
+    return new Promise((resolve:Function, reject:Function) => {
+      oauth2Client.getToken(code, (error:Object, token:Object) => {
+        if (error)
+          return reject(error);
+        else
+          return resolve(token);
+      });
+    });
+  }
+
+  async storeToken(token:string): Promise<any> {
+    try {
+      fs.mkdirSync(this.tokenDir);
+    } catch (error) {
+      if (error.code !== EEXIST) {
+        throw error;
+      }
+    }
+    await fsWriteFile(this.tokenPath, JSON.stringify(token));
+    console.log('Token stored to ' + this.tokenPath);
+  }
 }
 
-export {
-  authenticate
-};
+export default GoogleOuth;

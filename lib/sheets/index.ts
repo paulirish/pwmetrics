@@ -4,7 +4,7 @@
 
 import { SheetsConfig, MetricsResults, AuthorizeCredentials, GSheetsValuesToAppend } from '../../types/types';
 
-import { authenticate } from '../outh/google-outh';
+import GoogleOuth from '../outh/google-outh';
 import { appendResults as gSheetsAppendResults }  from './gsheets';
 
 // @todo add 'import' after moving all stuff to typescript
@@ -67,7 +67,8 @@ class Sheets {
     });
 
     try {
-      const auth:AuthorizeCredentials = await authenticate(this.config.options.clientSecret);
+      const googleOuth = new GoogleOuth();
+      const auth:AuthorizeCredentials = await googleOuth.authenticate(this.config.options.clientSecret);
       await gSheetsAppendResults(auth, valuesToAppend, this.config.options);
     } catch(error) {
       throw error;
