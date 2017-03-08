@@ -57,7 +57,7 @@ const cliFlags = yargs
   .option('desiredMetrics', {
     'describe': 'Array of metrics to be obtained',
     'type': 'array',
-    'deafult': false
+    'default': false
   })
   .epilogue('For more Lighthouse CLI options see https://github.com/GoogleChrome/lighthouse/#lighthouse-cli-options')
   .argv;
