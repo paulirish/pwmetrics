@@ -48,14 +48,14 @@ const cliFlags = yargs
   })
   .option('config', {
     'describe': 'Path to config file',
-    'type': 'string'    
+    'type': 'string'
   })
   .option('disable-cpu-throttling', {
     'describe': 'Disable CPU throttling',
     'type': 'boolean',
     'default': false
   })
-  .check((argv) => {
+  .check( (argv) => {
     // Make sure pwmetrics has been passed a url, either from cli or config file
     if(argv.config) config = getConfigFromFile(argv.config);
 
