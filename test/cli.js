@@ -6,7 +6,6 @@ const childProcess = require('child_process');
 const expect = require('chai').expect;
 
 describe('CLI', function() {
-
   describe('url', () => {
     it('should throw error if a url is not provided by cli', () => {
       expect(() => childProcess.execSync('node bin/cli.js')).to.throw(Error, 'Error: No url entered.');
