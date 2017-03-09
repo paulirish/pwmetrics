@@ -44,7 +44,10 @@ describe('PWMetrics', () => {
   });
 
   describe('start method', () => {
-    let pwMetrics, runStub, findMedianRunStub, displayOutputStub;
+    let pwMetrics;
+    let runStub;
+    let findMedianRunStub;
+    let displayOutputStub;
 
     describe('with one run', () => {
       beforeEach(() => {

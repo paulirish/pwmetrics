@@ -12,7 +12,7 @@ module.exports = {
       "SwitchCase": 1,
       "VariableDeclarator": 2
     }],
-    "max-len": [2, 100, {
+    "max-len": [1, 120, {
       "ignoreComments": true,
       "ignoreUrls": true,
       "tabWidth": 2
@@ -25,7 +25,7 @@ module.exports = {
       "number": true,
       "string": true
     }],
-    "no-unused-expressions": [2, {
+    "no-unused-expressions": [1, {
       "allowShortCircuit": true,
       "allowTernary": false
     }],
@@ -44,6 +44,10 @@ module.exports = {
     "valid-jsdoc": 0,
     "comma-dangle": 0,
     "arrow-parens": 0,
+    "no-undef": 1,
+    "no-console": 1,
+    "no-invalid-this": 1,
+    "prefer-rest-params": 1,
   },
   "parserOptions": {
     "ecmaVersion": 6,
