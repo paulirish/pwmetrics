@@ -10,7 +10,7 @@
     "prepublish": "npm run build",
     "build": "tsc",
     "dev": "tsc -w",
-    "test": "npm run build && mocha --require test/setup/common.js",
+    "test": "./test-runner.sh",
     "gulp-example": "gulp --gulpfile recipes/gulp/gulpfile.js --cwd recipes/gulp"
   },
   "author": "Paul Irish",

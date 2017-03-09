@@ -22,5 +22,3 @@ before_script:
   - export LIGHTHOUSE_CHROMIUM_PATH="$(pwd)/chrome-linux/chrome"
   - sh -e /etc/init.d/xvfb start
   - ./node_modules/lighthouse/lighthouse-core/scripts/download-chrome.sh
-script:
-  - if [[ $RUN_RECIPES = "1" ]]; then yarn run gulp-example; else yarn run test; fi
