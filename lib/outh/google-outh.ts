@@ -53,12 +53,16 @@ class GoogleOuth {
     const oauth2Client = new auth.OAuth2(clientId, clientSecret, redirectUrl);
 
     try {
-      const token = await fsReadFile(this.tokenPath, 'utf8');
+      const token = this.getToken();
       oauth2Client.credentials = typeof token === 'string' ? JSON.parse(token) : token;
       return oauth2Client;
     } catch(error) {
       return await this.getNewToken(oauth2Client);
     }
+  }
+
+  async getToken() {
+    await fsReadFile(this.tokenPath, 'utf8');
   }
 
   async getNewToken(oauth2Client:any): Promise<any> {
@@ -70,9 +74,7 @@ class GoogleOuth {
 
       console.log('Authorize this app by visiting this url: ', authUrl);
 
-      const code = readlineSync.question('Enter the code from that page here: ', {
-        hideEchoBack: true
-      });
+      const code = this.readline();
       const token:any = await this.getOauth2ClientToken(oauth2Client, code);
       oauth2Client.credentials = token;
       await this.storeToken(token);
@@ -80,6 +82,12 @@ class GoogleOuth {
     } catch (error) {
       throw new Error(`Error while trying to retrieve access token,  ${error.message}`);
     }
+  }
+
+  readline() {
+    return readlineSync.question('Enter the code from that page here: ', {
+      hideEchoBack: true
+    });
   }
 
   getOauth2ClientToken(oauth2Client:any, code:any): Promise<any> {
@@ -106,4 +114,4 @@ class GoogleOuth {
   }
 }
 
-export default GoogleOuth;
+module.exports = GoogleOuth;

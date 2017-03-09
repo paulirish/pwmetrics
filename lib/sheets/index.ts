@@ -4,7 +4,7 @@
 
 import { SheetsConfig, MetricsResults, AuthorizeCredentials, GSheetsValuesToAppend } from '../../types/types';
 
-import GoogleOuth from '../outh/google-outh';
+const GoogleOuth = require('../outh/google-outh');
 import { appendResults as gSheetsAppendResults }  from './gsheets';
 
 // @todo add 'import' after moving all stuff to typescript
