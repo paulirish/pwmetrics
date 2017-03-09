@@ -8,6 +8,8 @@ const GoogleAuth = require('google-auth-library');
 const promisify = require('micro-promisify');
 const readlineSync = require('readline-sync');
 
+const { getMessage } = require('../utils/messages');
+
 import { AuthorizeCredentials } from '../../types/types';
 
 const fsReadFile = promisify(require('fs').readFile);
@@ -41,7 +43,7 @@ class GoogleOuth {
     try {
       return await this.authorize(clientSecret);
     } catch(error) {
-      return Promise.reject(error);
+      throw new Error(error);
     }
   }
 
@@ -53,7 +55,7 @@ class GoogleOuth {
     const oauth2Client = new auth.OAuth2(clientId, clientSecret, redirectUrl);
 
     try {
-      const token = this.getToken();
+      const token = await this.getToken();
       oauth2Client.credentials = typeof token === 'string' ? JSON.parse(token) : token;
       return oauth2Client;
     } catch(error) {
@@ -62,7 +64,7 @@ class GoogleOuth {
   }
 
   async getToken() {
-    await fsReadFile(this.tokenPath, 'utf8');
+    return await fsReadFile(this.tokenPath, 'utf8');
   }
 
   async getNewToken(oauth2Client:any): Promise<any> {
@@ -72,7 +74,7 @@ class GoogleOuth {
         scope: this.scopes
       });
 
-      console.log('Authorize this app by visiting this url: ', authUrl);
+      console.log(getMessage('G_OUTH_WITH_URL', authUrl));
 
       const code = this.readline();
       const token:any = await this.getOauth2ClientToken(oauth2Client, code);
@@ -80,12 +82,12 @@ class GoogleOuth {
       await this.storeToken(token);
       return oauth2Client;
     } catch (error) {
-      throw new Error(`Error while trying to retrieve access token,  ${error.message}`);
+      throw getMessage('G_OUTH_ACCESS_ERROR',  error.message);
     }
   }
 
   readline() {
-    return readlineSync.question('Enter the code from that page here: ', {
+    return readlineSync.question(getMessage('G_OUTH_ENTER_CODE'), {
       hideEchoBack: true
     });
   }
@@ -110,7 +112,7 @@ class GoogleOuth {
       }
     }
     await fsWriteFile(this.tokenPath, JSON.stringify(token));
-    console.log('Token stored to ' + this.tokenPath);
+    console.log(getMessage('G_OUTH_STORED_TOKEN', this.tokenPath));
   }
 }
 

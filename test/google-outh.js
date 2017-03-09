@@ -59,6 +59,7 @@ describe('GoogleOuth', () => {
       });
 
       afterEach(() => {
+        googleOuth.getToken.restore();
         googleOuth.getNewToken.restore();
       });
 

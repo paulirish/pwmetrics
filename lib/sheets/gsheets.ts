@@ -5,6 +5,8 @@
 const google = require('googleapis');
 const promisify = require('micro-promisify');
 
+const { getMessage } = require('../utils/messages');
+
 import { AuthorizeCredentials, GSheetsAppendResultsOptions, GSheetsValuesToAppend } from '../../types/types';
 
 async function getRange(auth: AuthorizeCredentials, range: number, spreadsheetId: string): Promise<any> {
@@ -17,7 +19,7 @@ async function getRange(auth: AuthorizeCredentials, range: number, spreadsheetId
     });
     return response.values;
   } catch(error) {
-    console.log('The API returned an error: ' + error);
+    console.log(getMessage('G_SHEETS_API_ERROR', error));
     throw new Error(error);
   }
 }
@@ -34,7 +36,7 @@ async function appendResults(auth:AuthorizeCredentials, valuesToAppend: Array<GS
     const sheets = google.sheets('v4');
     // clone values to append
     const values = Object.assign([], valuesToAppend);
-    console.log(`Appending...\n${formatValues(valuesToAppend)}`);
+    console.log(getMessage('G_SHEETS_APPENDING', formatValues(valuesToAppend)));
 
     const response = await promisify(sheets.spreadsheets.values.append)({
       auth: auth,
@@ -46,10 +48,9 @@ async function appendResults(auth:AuthorizeCredentials, valuesToAppend: Array<GS
       },
     });
     const rangeValues = await getRange(auth, response.updates.updatedRange, options.spreadsheetId);
-    console.log('Appended:');
-    console.log(formatValues(rangeValues));
+    console.log(getMessage('G_SHEETS_APPENDED', formatValues(rangeValues)));
   } catch(error) {
-    console.log('The API returned an error: ' + error);
+    console.log(getMessage('G_SHEETS_API_ERROR', error));
     throw new Error(error);
   }
 }
