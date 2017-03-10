@@ -5,15 +5,11 @@
 const fs = require('fs');
 const path = require('path');
 const GoogleAuth = require('google-auth-library');
-const promisify = require('micro-promisify');
 const readlineSync = require('readline-sync');
 
 const { getMessage } = require('../utils/messages');
 
 import { AuthorizeCredentials } from '../../types/types';
-
-const fsReadFile = promisify(require('fs').readFile);
-const fsWriteFile = promisify(require('fs').writeFile);
 
 /* improve the bad polyfill that devtools-frontend did */
 //@todo remove after https://github.com/GoogleChrome/lighthouse/issues/1535 will be closed
@@ -55,7 +51,7 @@ class GoogleOuth {
     const oauth2Client = new auth.OAuth2(clientId, clientSecret, redirectUrl);
 
     try {
-      const token = await this.getToken();
+      const token = this.getToken();
       oauth2Client.credentials = typeof token === 'string' ? JSON.parse(token) : token;
       return oauth2Client;
     } catch(error) {
@@ -63,8 +59,8 @@ class GoogleOuth {
     }
   }
 
-  async getToken() {
-    return await fsReadFile(this.tokenPath, 'utf8');
+  getToken() {
+    return fs.readFileSync(this.tokenPath, 'utf8');
   }
 
   async getNewToken(oauth2Client:any): Promise<any> {
@@ -111,7 +107,7 @@ class GoogleOuth {
         throw error;
       }
     }
-    await fsWriteFile(this.tokenPath, JSON.stringify(token));
+    fs.writeFileSync(this.tokenPath, JSON.stringify(token));
     console.log(getMessage('G_OUTH_STORED_TOKEN', this.tokenPath));
   }
 }
