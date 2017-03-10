@@ -8,8 +8,8 @@ const fs = require('fs');
 const yargs = require('yargs');
 
 const PWMetrics = require('../lib/index');
-const { getConfigFromFile } = require('../lib/utils/fs');
-const { getMessageWithPrefix, getMessage } = require('../lib/utils/messages');
+const {getConfigFromFile} = require('../lib/utils/fs');
+const {getMessageWithPrefix, getMessage} = require('../lib/utils/messages');
 let config;
 
 const cliFlags = yargs
@@ -65,23 +65,23 @@ const cliFlags = yargs
     if(argv.config) config = getConfigFromFile(argv.config);
 
     if (argv._.length === 0 && (config === undefined || !config.url))
-        throw new Error(getMessageWithPrefix('ERROR', 'NO_URL'));
+      throw new Error(getMessageWithPrefix('ERROR', 'NO_URL'));
 
     return true;
   })
   .epilogue('For more Lighthouse CLI options see https://github.com/GoogleChrome/lighthouse/#lighthouse-cli-options')
   .argv;
 
-//Merge options from all sources. Order indicates precedence (last one wins)
-let options = Object.assign({}, { flags: cliFlags }, config);
+// Merge options from all sources. Order indicates precedence (last one wins)
+const options = Object.assign({}, {flags: cliFlags}, config);
 
-//Get url first from cmd line then from config file.
+// Get url first from cmd line then from config file.
 options.url = cliFlags._[0] || options.url;
 
 if (!options.url || !options.url.length)
   throw new Error(getMessage('NO_URL'));
 
-const writeToDisk = function (fileName, data) {
+const writeToDisk = function(fileName, data) {
   return new Promise((resolve, reject) => {
     const path = sysPath.join(process.cwd(), fileName);
     fs.writeFile(path, data, err => {
