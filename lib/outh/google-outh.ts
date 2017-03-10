@@ -63,10 +63,7 @@ class GoogleOuth {
         access_type: 'offline',
         scope: SCOPES
       });
-
-      console.log(getMessage('G_OUTH_WITH_URL', authUrl));
-
-      const code: string = this.readline();
+      const code: string = this.readline(authUrl);
       const token: any = await this.getOauth2ClientToken(oauth2Client, code);
       oauth2Client.credentials = token;
       this.storeToken(token);
@@ -76,8 +73,8 @@ class GoogleOuth {
     }
   }
 
-  private readline(): string {
-    return readlineSync.question(getMessage('G_OUTH_ENTER_CODE'), {
+  private readline(authUrl: string): string {
+    return readlineSync.question(getMessage('G_OUTH_ENTER_CODE', authUrl), {
       hideEchoBack: true
     });
   }
