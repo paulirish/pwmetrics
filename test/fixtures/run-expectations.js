@@ -1,3 +1,5 @@
+'use strict';
+
 module.exports = {
   url: 'http://example.com/',
   flags: {
@@ -26,4 +28,4 @@ module.exports = {
       error: '>=5000',
     }
   },
-}
+};
