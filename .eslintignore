@@ -1,5 +1,9 @@
 # Ignore js files inside local chromium download on Travis.
-node_modules
+**/chrome-linux/**
+**/chrome-win32/**
+
+**/node_modules/**
+
 tmp
 .DS_Store
 npm-debug.log
