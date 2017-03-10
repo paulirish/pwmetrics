@@ -2,7 +2,7 @@
 // Licensed under the Apache License, Version 2.0. See LICENSE
 'use strict';
 
-import { SheetsConfig, MetricsResults, AuthorizeCredentials, GSheetsValuesToAppend } from '../../types/types';
+import { SheetsConfig, MetricsResults, Oauth2Client, GSheetsValuesToAppend } from '../../types/types';
 
 const GoogleOuth = require('../outh/google-outh');
 import { appendResults as gSheetsAppendResults }  from './gsheets';
@@ -68,7 +68,7 @@ class Sheets {
 
     try {
       const googleOuth = new GoogleOuth();
-      const auth:AuthorizeCredentials = await googleOuth.authenticate(this.config.options.clientSecret);
+      const auth: Oauth2Client = await googleOuth.authenticate(this.config.options.clientSecret);
       await gSheetsAppendResults(auth, valuesToAppend, this.config.options);
     } catch(error) {
       throw error;

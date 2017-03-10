@@ -38,6 +38,12 @@ interface AuthorizeCredentials {
   }
 }
 
+interface Oauth2Client {
+  generateAuthUrl: Function;
+  getToken: Function;
+  credentials: any;
+}
+
 interface GSheetsValuesToAppend {
   0: string; // lighthouseVersion
   1: string; // url
@@ -59,6 +65,7 @@ interface GSheetsAppendResultsOptions {
 export {
   SheetsConfig,
   AuthorizeCredentials,
+  Oauth2Client,
   MetricsResults,
   GSheetsValuesToAppend,
   GSheetsAppendResultsOptions

@@ -9,33 +9,27 @@ const readlineSync = require('readline-sync');
 
 const { getMessage } = require('../utils/messages');
 
-import { AuthorizeCredentials } from '../../types/types';
+import { AuthorizeCredentials, Oauth2Client } from '../../types/types';
 
 /* improve the bad polyfill that devtools-frontend did */
 //@todo remove after https://github.com/GoogleChrome/lighthouse/issues/1535 will be closed
-const globalAny:any = global;
+const globalAny: any = global;
 const self = globalAny.self || this;
 self.setImmediate = function(callback:any) {
   Promise.resolve().then(_ => callback.apply(null, [...arguments].slice(1)));
   return 0;
 };
 
-const EEXIST = 'EEXIST';
+// If modifying these this.scopes, delete your previously saved credentials
+// at ~/.credentials/sheets.googleapis.com-nodejs-pwmetrics.json
+const SCOPES: Array<string> = ['https://www.googleapis.com/auth/spreadsheets'];
+const EEXIST: string = 'EEXIST';
 
 class GoogleOuth {
-  scopes: Array<string>;
-  tokenDir: string;
-  tokenPath: string;
+  private tokenDir: string = path.join((process.env.HOME || process.env.HOMEPATH || process.env.USERPROFILE), '/.credentials/');
+  private tokenPath: string = path.join(this.tokenDir, 'sheets.googleapis.com-nodejs-pwmetrics.json');
 
-  constructor() {
-    // If modifying these this.scopes, delete your previously saved credentials
-    // at ~/.credentials/sheets.googleapis.com-nodejs-pwmetrics.json
-    this.scopes = ['https://www.googleapis.com/auth/spreadsheets'];
-    this.tokenDir = path.join((process.env.HOME || process.env.HOMEPATH || process.env.USERPROFILE), '/.credentials/');
-    this.tokenPath = path.join(this.tokenDir, 'sheets.googleapis.com-nodejs-pwmetrics.json');
-  }
-
-  async authenticate(clientSecret:AuthorizeCredentials): Promise<any> {
+  async authenticate(clientSecret:AuthorizeCredentials): Promise<Oauth2Client> {
     try {
       return await this.authorize(clientSecret);
     } catch(error) {
@@ -43,12 +37,12 @@ class GoogleOuth {
     }
   }
 
-  async authorize(credentials:AuthorizeCredentials): Promise<any> {
+  private async authorize(credentials:AuthorizeCredentials): Promise<Oauth2Client> {
     const clientSecret = credentials.installed.client_secret;
     const clientId = credentials.installed.client_id;
     const redirectUrl = credentials.installed.redirect_uris[0];
     const auth = new GoogleAuth();
-    const oauth2Client = new auth.OAuth2(clientId, clientSecret, redirectUrl);
+    const oauth2Client: Oauth2Client = new auth.OAuth2(clientId, clientSecret, redirectUrl);
 
     try {
       const token = this.getToken();
@@ -59,36 +53,36 @@ class GoogleOuth {
     }
   }
 
-  getToken() {
+  private getToken(): string|object {
     return fs.readFileSync(this.tokenPath, 'utf8');
   }
 
-  async getNewToken(oauth2Client:any): Promise<any> {
+  private async getNewToken(oauth2Client:Oauth2Client): Promise<Oauth2Client> {
     try {
       const authUrl = oauth2Client.generateAuthUrl({
         access_type: 'offline',
-        scope: this.scopes
+        scope: SCOPES
       });
 
       console.log(getMessage('G_OUTH_WITH_URL', authUrl));
 
-      const code = this.readline();
-      const token:any = await this.getOauth2ClientToken(oauth2Client, code);
+      const code: string = this.readline();
+      const token: any = await this.getOauth2ClientToken(oauth2Client, code);
       oauth2Client.credentials = token;
-      await this.storeToken(token);
+      this.storeToken(token);
       return oauth2Client;
     } catch (error) {
       throw getMessage('G_OUTH_ACCESS_ERROR',  error.message);
     }
   }
 
-  readline() {
+  private readline(): string {
     return readlineSync.question(getMessage('G_OUTH_ENTER_CODE'), {
       hideEchoBack: true
     });
   }
 
-  getOauth2ClientToken(oauth2Client:any, code:any): Promise<any> {
+  private getOauth2ClientToken(oauth2Client:Oauth2Client, code: string): Promise<any> {
     return new Promise((resolve:Function, reject:Function) => {
       oauth2Client.getToken(code, (error:Object, token:Object) => {
         if (error)
@@ -99,7 +93,7 @@ class GoogleOuth {
     });
   }
 
-  async storeToken(token:string): Promise<any> {
+  private storeToken(token:string): void {
     try {
       fs.mkdirSync(this.tokenDir);
     } catch (error) {
