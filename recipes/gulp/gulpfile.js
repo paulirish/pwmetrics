@@ -15,8 +15,7 @@ const connectServer = function() {
   });
 };
 
-function handleError(err) {
-  console.log(err.toString());
+function handleError() {
   process.exit(1);
 }
 

@@ -1,0 +1,13 @@
+# Ignore js files inside local chromium download on Travis.
+**/chrome-linux/**
+**/chrome-win32/**
+
+**/node_modules/**
+**/third_party/**
+
+**/closure/*/*
+coverage/**
+
+# Typescript compiled
+lib/sheets.js
+types/*.js

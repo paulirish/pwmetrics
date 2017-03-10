@@ -3,7 +3,7 @@
 'use strict';
 
 const Sheets = require('../lib/sheets');
-const { getMessage } = require('../lib/utils/messages');
+const {getMessage} = require('../lib/utils/messages');
 
 const runOptions = require('./fixtures/run-options');
 
@@ -14,7 +14,7 @@ describe('Sheets', () => {
     sheets = new Sheets(runOptions.sheets);
   });
 
-  describe('validateOptions',  () => {
+  describe('validateOptions', () => {
     it('should throw an Error if config was not passed as parameter', () => {
       expect((_ => sheets.validateOptions()))
         .to.throw(getMessage('NO_GOOGLE_SHEET_OPTIONS'));
@@ -26,7 +26,7 @@ describe('Sheets', () => {
     });
 
     it('should throw an Error if type is wrong', () => {
-      expect((_ => sheets.validateOptions( { type: 'WRONG_TYPE', options: runOptions.sheets.options } )))
+      expect((_ => sheets.validateOptions( {type: 'WRONG_TYPE', options: runOptions.sheets.options} )))
         .to.throw(getMessage('NO_SHEET_TYPE', 'WRONG_TYPE'));
     });
 
@@ -54,7 +54,7 @@ describe('Sheets', () => {
           tableName: 'data',
         }
       }))).to.throw(getMessage('NO_GOOGLE_SHEET_OPTIONS'));
-    })
+    });
   });
 
   describe('appendResults', () => {
@@ -69,7 +69,7 @@ describe('Sheets', () => {
 
     afterEach(() => {
       sheets.appendResultsToGSheets.restore();
-    })
+    });
   });
 
   describe('appendResultsToGSheets', () => {

@@ -5,15 +5,13 @@
 const childProcess = require('child_process');
 const expect = require('chai').expect;
 
-describe('CLI', function () {
-
-  describe('url', () => { 
-
+describe('CLI', function() {
+  describe('url', () => {
     it('should throw error if a url is not provided by cli', () => {
       try {
         childProcess.execSync('node bin/cli.js');
       } catch (e) {
-        expect(e.message).to.contain("No url entered..");
+        expect(e.message).to.contain('No url entered..');
       }
     });
 
@@ -21,7 +19,7 @@ describe('CLI', function () {
       try {
         childProcess.execSync('node bin/cli.js --config=./test/fixtures/empty-config.js');
       } catch (e) {
-        expect(e.message).to.contain("No url entered..");
+        expect(e.message).to.contain('No url entered..');
       }
     });
   });

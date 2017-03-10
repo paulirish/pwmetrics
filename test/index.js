@@ -16,7 +16,7 @@ describe('PWMetrics', () => {
     });
 
     it('should set more then one run', () => {
-      let opts = Object.assign({}, runOptions.publicVariables.opts);
+      const opts = Object.assign({}, runOptions.publicVariables.opts);
       opts.flags = {};
       opts.flags.runs = 2;
       const pwMetrics = new PWMetrics(runOptions.publicVariables.url, opts);
@@ -44,7 +44,10 @@ describe('PWMetrics', () => {
   });
 
   describe('start method', () => {
-    let pwMetrics, runStub, findMedianRunStub, displayOutputStub;
+    let pwMetrics;
+    let runStub;
+    let findMedianRunStub;
+    let displayOutputStub;
 
     describe('with one run', () => {
       beforeEach(() => {
@@ -55,7 +58,7 @@ describe('PWMetrics', () => {
       });
 
       it('should calculate results', () => {
-        const expected = { runs: [ { timings: [] } ] };
+        const expected = {runs: [{timings: []}]};
 
         return pwMetrics.start().then(data => {
           expect(data).to.be.deep.equal(expected);
@@ -83,7 +86,8 @@ describe('PWMetrics', () => {
     });
 
     describe('with more then one run', () => {
-      let medianResults, runResult;
+      let medianResults;
+      let runResult;
 
       beforeEach(() => {
         const medianResult = dataMocks.metricsResult;
@@ -100,7 +104,7 @@ describe('PWMetrics', () => {
 
         pwMetrics = new PWMetrics(runOptions.startWithOneRun.url, runOptions.startWithMoreThenOneRun.opts);
         runStub = sinon.stub(pwMetrics, 'run', () => Promise.resolve(runResult));
-        findMedianRunStub = sinon.stub(pwMetrics, 'findMedianRun',  () => medianResult);
+        findMedianRunStub = sinon.stub(pwMetrics, 'findMedianRun', () => medianResult);
         displayOutputStub = sinon.stub(pwMetrics, 'displayOutput');
       });
 

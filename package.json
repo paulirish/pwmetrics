@@ -10,7 +10,8 @@
     "prepublish": "npm run build",
     "build": "tsc",
     "dev": "tsc -w",
-    "test": "./test-runner.sh",
+    "lint": "[ \"$CI\" = true ] && eslint --quiet -f codeframe . || eslint .",
+    "test": "npm run lint && ./test-runner.sh",
     "gulp-example": "gulp --gulpfile recipes/gulp/gulpfile.js --cwd recipes/gulp"
   },
   "author": "Paul Irish",
@@ -33,7 +34,9 @@
     "mocha": "^3.2.0",
     "sinon": "^1.17.7",
     "sinon-chai": "^2.8.0",
-    "typescript": "^2.0.3"
+    "typescript": "^2.0.3",
+    "eslint": "^3.12.0",
+    "eslint-config-google": "^0.7.1"
   },
   "repository": {
     "type": "git",
