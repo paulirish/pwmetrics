@@ -1,13 +1,14 @@
 # Ignore js files inside local chromium download on Travis.
-**/chrome-linux/**
-**/chrome-win32/**
+node_modules
+tmp
+.DS_Store
+npm-debug.log
 
-**/node_modules/**
-**/third_party/**
+gsheets.config.js
 
-**/closure/*/*
-coverage/**
+# Typescript built files
+lib/sheets/*.js
+lib/outh/*.js
+types/types.js
 
-# Typescript compiled
-lib/sheets.js
-types/*.js
+test/google-outh.js
