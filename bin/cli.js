@@ -57,8 +57,7 @@ const cliFlags = yargs
   })
   .option('desiredMetrics', {
     'describe': 'Array of metrics to be obtained',
-    'type': 'array',
-    'default': false
+    'type': 'array'
   })
   .check( (argv) => {
     // Make sure pwmetrics has been passed a url, either from cli or config file
