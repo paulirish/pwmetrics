@@ -45,7 +45,7 @@ class Sheets {
     }
   }
 
-  async appendResultsToGSheets(results: Array<MetricsResults>): Promise<any> {
+  async appendResultsToGSheets(results: Array<MetricsResults>) {
     let valuesToAppend: Array<GSheetsValuesToAppend> = [];
     results.forEach(data => {
       const getTiming = (key:string) => data.timings.find(t => t.id === key).timing;
