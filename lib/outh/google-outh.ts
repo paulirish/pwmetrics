@@ -22,8 +22,8 @@ self.setImmediate = function(callback:any) {
 
 // If modifying these this.scopes, delete your previously saved credentials
 // at ~/.credentials/sheets.googleapis.com-nodejs-pwmetrics.json
-const SCOPES: Array<string> = ['https://www.googleapis.com/auth/spreadsheets'];
-const EEXIST: string = 'EEXIST';
+const SCOPES = ['https://www.googleapis.com/auth/spreadsheets'];
+const EEXIST = 'EEXIST';
 
 class GoogleOuth {
   private tokenDir: string = path.join((process.env.HOME || process.env.HOMEPATH || process.env.USERPROFILE), '/.credentials/');
