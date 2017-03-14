@@ -33,7 +33,7 @@ class GoogleOuth {
     try {
       return await this.authorize(clientSecret);
     } catch(error) {
-      throw new Error(error);
+      throw error;
     }
   }
 
@@ -69,7 +69,7 @@ class GoogleOuth {
       this.storeToken(token);
       return oauth2Client;
     } catch (error) {
-      throw getMessage('G_OUTH_ACCESS_ERROR',  error.message);
+      throw new Error(getMessage('G_OUTH_ACCESS_ERROR',  error.message));
     }
   }
 
