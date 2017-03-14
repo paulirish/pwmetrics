@@ -1,8 +1,9 @@
 // Copyright 2016 Google Inc. All Rights Reserved.
 // Licensed under the Apache License, Version 2.0. See LICENSE
 
-const fs = require('fs');
-const path = require('path');
+import * as fs from 'fs';
+import * as path from 'path';
+
 const GoogleAuth = require('google-auth-library');
 const readlineSync = require('readline-sync');
 
