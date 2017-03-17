@@ -11,19 +11,21 @@
     "build": "tsc",
     "dev": "tsc -w",
     "lint": "[ \"$CI\" = true ] && eslint --quiet -f codeframe . || eslint .",
-    "test": "npm run lint && npm run build && mocha --require test/setup/common.js",
+    "test": "npm run lint && ./test-runner.sh",
     "gulp-example": "gulp --gulpfile recipes/gulp/gulpfile.js --cwd recipes/gulp"
   },
   "author": "Paul Irish",
   "license": "Apache-2.0",
   "dependencies": {
+    "@types/node": "^6.0.45",
     "charm": "^1.0.2",
     "google-auth-library": "^0.10.0",
     "googleapis": "^16.0.0",
     "lighthouse": "1.6.0",
     "median": "^0.0.2",
-    "yargs": "^6.6.0",
-    "@types/node": "^6.0.45"
+    "micro-promisify": "^0.1.1",
+    "readline-sync": "^1.4.6",
+    "yargs": "^6.6.0"
   },
   "devDependencies": {
     "chai": "^3.5.0",

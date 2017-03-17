@@ -1,9 +1,11 @@
 node_modules
+tmp
 .DS_Store
 npm-debug.log
 
 gsheets.config.js
 
 # Typescript built files
-lib/sheets.js
+lib/sheets/*.js
+lib/outh/*.js
 types/types.js

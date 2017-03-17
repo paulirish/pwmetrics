@@ -3,11 +3,16 @@
 **/chrome-win32/**
 
 **/node_modules/**
-**/third_party/**
 
-**/closure/*/*
-coverage/**
+tmp
+.DS_Store
+npm-debug.log
 
-# Typescript compiled
-lib/sheets.js
-types/*.js
+gsheets.config.js
+
+# Typescript built files
+lib/sheets/*.js
+lib/outh/*.js
+types/types.js
+
+test/google-outh.js

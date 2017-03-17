@@ -130,3 +130,15 @@ exports.metricsResults = [
   }
 ];
 
+
+module.exports.googleOuthCredentials = {
+  installed: {
+    client_secret: '0123456789',
+    client_id: '0123456789',
+    redirect_uris: []
+  }
+};
+
+module.exports.googleOuthToken = {
+  token: '0123456789'
+};
