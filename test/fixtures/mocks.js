@@ -142,3 +142,26 @@ module.exports.googleOuthCredentials = {
 module.exports.googleOuthToken = {
   token: '0123456789'
 };
+
+module.exports.normalizedExpectations = {
+  ttfmp: {
+    warn: 3000,
+    error: 2000
+  },
+  tti: {
+    warn: 3000,
+    error: 5000,
+  },
+  ttfcp: {
+    warn: 1500,
+    error: 3000,
+  },
+  psi: {
+    warn: 3000,
+    error: 6000,
+  },
+  vc85: {
+    warn: 3000,
+    error: 5000,
+  }
+};
