@@ -1,10 +1,10 @@
 // Copyright 2016 Google Inc. All Rights Reserved.
 // Licensed under the Apache License, Version 2.0. See LICENSE
-'use strict';
 
+import {Timings, ExpectationMetrics, NormalizedExpectationMetrics} from '../types/types';
 const {getAssertionMessage, getMessageWithPrefix} = require('./utils/messages');
 
-function validateMetrics(metrics) {
+function validateMetrics(metrics: ExpectationMetrics) {
   const metricsKeys = Object.keys(metrics);
 
   if (!metrics || !metricsKeys.length) {
@@ -20,17 +20,18 @@ function validateMetrics(metrics) {
   });
 }
 
-function normalizeMetrics(metrics) {
+function normalizeMetrics(metrics: ExpectationMetrics) {
+  let normalizedMetrics: NormalizedExpectationMetrics = {};
   Object.keys(metrics).forEach(key => {
-    const metric = metrics[key];
-    metric.warn = metric.warn.replace('>=', '');
-    metric.error = metric.error.replace('>=', '');
+    normalizedMetrics[key] = {
+      warn: parseInt(metrics[key].warn.replace('>=', ''), 10),
+      error: parseInt(metrics[key].error.replace('>=', ''), 10)
+    };
   });
-
-  return metrics;
+  return normalizedMetrics;
 }
 
-function checkExpectations(metricsData, expectationMetrics) {
+function checkExpectations(metricsData: Array<Timings>, expectationMetrics: NormalizedExpectationMetrics) {
   metricsData.forEach(metric => {
     const metricName = metric.id;
     const expectationValue = expectationMetrics[metricName];
@@ -45,13 +46,14 @@ function checkExpectations(metricsData, expectationMetrics) {
       msg = getAssertionMessage('WARNING', metricName, expectationValue.warn, metricValue);
     }
 
-    if (msg)
+    if (msg) {
       console.log(msg);
+    }
   });
 }
 
 module.exports = {
-  checkExpectations,
-  validateMetrics,
-  normalizeMetrics
+  validateMetrics: validateMetrics,
+  normalizeMetrics: normalizeMetrics,
+  checkExpectations: checkExpectations
 };

@@ -65,11 +65,28 @@ interface GSheetsAppendResultsOptions {
   tableName: string;
 }
 
+interface ExpectationMetrics {
+  [key: string]: {
+    warn: string;
+    error: string;
+  }
+}
+
+interface NormalizedExpectationMetrics {
+  [key: string]: {
+    warn: number;
+    error: number;
+  }
+}
+
 export {
+  Timings,
   SheetsConfig,
   AuthorizeCredentials,
   Oauth2Client,
   MetricsResults,
   GSheetsValuesToAppend,
-  GSheetsAppendResultsOptions
+  GSheetsAppendResultsOptions,
+  ExpectationMetrics,
+  NormalizedExpectationMetrics
 };

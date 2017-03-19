@@ -13,6 +13,7 @@ gsheets.config.js
 # Typescript built files
 lib/sheets/*.js
 lib/outh/*.js
+lib/expectations.js
 types/types.js
 
 test/google-outh.js
