@@ -74,7 +74,6 @@ describe('PWMetrics', () => {
       it('should not call methods for calculating median results', () => {
         return pwMetrics.start().then(_ => {
           expect(findMedianRunStub).to.not.have.been.called;
-          expect(displayOutputStub).to.not.have.been.called;
         });
       });
 
