@@ -12,7 +12,7 @@ function validateMetrics(metrics: ExpectationMetrics) {
     process.exit(0);
   }
 
-  metricsKeys.forEach((key: string) => {
+  metricsKeys.forEach(key => {
     if (!metrics[key] || !metrics[key].warn || !metrics[key].error) {
       console.error(getMessageWithPrefix('ERROR', 'NO_EXPECTATION_ERROR', key));
       process.exit(0);
@@ -22,7 +22,7 @@ function validateMetrics(metrics: ExpectationMetrics) {
 
 function normalizeMetrics(metrics: ExpectationMetrics) {
   let normalizedMetrics: NormalizedExpectationMetrics = {};
-  Object.keys(metrics).forEach((key: string) => {
+  Object.keys(metrics).forEach(key => {
     normalizedMetrics[key] = {
       warn: parseInt(metrics[key].warn.replace('>=', ''), 10),
       error: parseInt(metrics[key].error.replace('>=', ''), 10)
