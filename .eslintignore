@@ -14,6 +14,7 @@ gsheets.config.js
 lib/sheets/*.js
 lib/outh/*.js
 lib/expectations.js
+lib/metrics.js
 types/types.js
 
 test/google-outh.js

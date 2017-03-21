@@ -1,6 +1,19 @@
 // Copyright 2016 Google Inc. All Rights Reserved.
 // Licensed under the Apache License, Version 2.0. See LICENSE
 
+//@todo remove stuff after https://github.com/GoogleChrome/lighthouse/pull/1882 be merged and version released
+import {Results, AuditResult} from 'lighthouse/lighthouse-cli/types/types';
+
+interface LighthouseResults extends Results {
+  generatedTime: string;
+  initialUrl: string;
+  audits: LighthouseAudits;
+}
+
+interface LighthouseAudits {
+  [audits: string]: AuditResult;
+}
+
 interface SheetsConfig {
   type: string;
   options: {
@@ -17,6 +30,12 @@ interface MetricsResults {
   lighthouseVersion: string;
   url: string;
   initialUrl: string;
+}
+
+interface MetricsDefinitions {
+  name: string;
+  id: string;
+  getTs(audits: any): number;
 }
 
 interface Timestamps {
@@ -81,10 +100,14 @@ interface NormalizedExpectationMetrics {
 
 export {
   Timings,
+  Timestamps,
   SheetsConfig,
   AuthorizeCredentials,
   Oauth2Client,
+  MetricsDefinitions,
   MetricsResults,
+  LighthouseResults,
+  LighthouseAudits,
   GSheetsValuesToAppend,
   GSheetsAppendResultsOptions,
   ExpectationMetrics,

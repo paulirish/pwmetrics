@@ -1,8 +1,9 @@
 // Copyright 2016 Google Inc. All Rights Reserved.
 // Licensed under the Apache License, Version 2.0. See LICENSE
-'use strict';
 
 const metricsDefinitions = require('lighthouse/lighthouse-core/lib/traces/pwmetrics-events.js').metricsDefinitions;
+
+import {MetricsResults, MetricsDefinitions, Timings, Timestamps, LighthouseResults, LighthouseAudits} from '../types/types';
 
 const metricsIds = {
   NAVSTART: 'navstart',
@@ -26,14 +27,14 @@ module.exports = {
   prepareData
 };
 
-const checkAudits = audits => Object.keys(audits).forEach(key => {
+const checkAudits = (audits: LighthouseAudits) => Object.keys(audits).forEach(key => {
   const debugString = audits[key].debugString;
   if (audits[key].debugString)
     throw new Error(`${debugString} Audit key: ${key}`);
 });
 
-function prepareData(res) {
-  const audits = res.audits;
+function prepareData(res: LighthouseResults): MetricsResults {
+  const audits: LighthouseAudits = res.audits;
 
   checkAudits(audits);
 
@@ -41,34 +42,29 @@ function prepareData(res) {
   const colorP2 = 'green';
   const colorVisual = 'blue';
 
-  const timings = [];
-  const navStart = metricsDefinitions.find(def => def.id === metricsIds.NAVSTART);
-  const timestamps = [{
+  const timings: Array<Timings> = [];
+  const navStart = metricsDefinitions.find((def: MetricsDefinitions) => def.id === metricsIds.NAVSTART);
+  const timestamps: Array<Timestamps> = [{
     title: navStart.name,
     id: navStart.id,
     timestamp: navStart.getTs(audits)
   }];
 
   metricsDefinitions
-    .filter(def => def.id !== metricsIds.NAVSTART)
-    .forEach(metric => {
-      const resolvedMetric = {
+    .filter((def: MetricsDefinitions) => def.id !== metricsIds.NAVSTART)
+    .forEach((metric: MetricsDefinitions) => {
+      const resolvedMetric: Timings = {
         title: metric.name,
         id: metric.id,
         timestamp: metric.getTs(audits),
-        timing: (metric.getTs(audits) - navStart.getTs(audits)) / 1000
+        timing: (metric.getTs(audits) - navStart.getTs(audits)) / 1000,
+        color: colorVisual
       };
 
       switch (metric.id) {
         case metricsIds.TTFCP:
         case metricsIds.TTFMP:
           resolvedMetric.color = colorP2;
-          break;
-        case metricsIds.PSI:
-        case metricsIds.FV:
-        case metricsIds.VC85:
-        case metricsIds.VC100:
-          resolvedMetric.color = colorVisual;
           break;
         case metricsIds.TTI:
           resolvedMetric.color = colorP0;
