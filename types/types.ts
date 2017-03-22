@@ -79,6 +79,40 @@ interface NormalizedExpectationMetrics {
   }
 }
 
+type MessageType =
+    'NO_URL'
+    |'LAUNCHING_CHROME'
+    | 'CLOSING_CHROME'
+    | 'CRI_TIMEOUT_RELAUNCH'
+    | 'CRI_TIMEOUT_REJECT'
+    | 'MEDIAN_RUN'
+    | 'SAVED_TO_JSON'
+    | 'NO_METRICS'
+    | 'NO_EXPECTATION_ERROR'
+    | 'NO_EXPECTATIONS_FOUND'
+    | 'NO_SHEET_TYPE'
+    | 'NO_GOOGLE_SHEET_OPTIONS'
+    | 'NO_MESSAGE_PREFIX_TYPE'
+    | 'METRIC_IS_UNAVAILABLE'
+    | 'ttfcp'
+    | 'ttfmp'
+    | 'psi'
+    | 'fv'
+    | 'vc'
+    | 'tti'
+    | 'vc85'
+    | 'SUCCESS_RUN'
+    | 'FAILED_RUN'
+    | 'G_OUTH_ACCESS_ERROR'
+    | 'G_OUTH_ENTER_CODE'
+    | 'G_OUTH_STORED_TOKEN'
+    | 'G_SHEETS_APPENDING'
+    | 'G_SHEETS_APPENDED'
+    | 'G_SHEETS_API_ERROR';
+
+    type MessageLevel = 
+    'ERROR' | 'WARNING' | 'SUCCESS';
+
 export {
   Timings,
   SheetsConfig,
@@ -88,5 +122,7 @@ export {
   GSheetsValuesToAppend,
   GSheetsAppendResultsOptions,
   ExpectationMetrics,
-  NormalizedExpectationMetrics
+  NormalizedExpectationMetrics,
+  MessageType,
+  MessageLevel
 };
