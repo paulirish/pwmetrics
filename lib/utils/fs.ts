@@ -1,7 +1,7 @@
 // Copyright 2016 Google Inc. All Rights Reserved.
 // Licensed under the Apache License, Version 2.0. See LICENSE
 
-const path = require('path');
+import * as path from 'path';
 
 function getConfigFromFile(fileName: string = 'package.json') {
   let resolved: string;

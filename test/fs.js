@@ -3,29 +3,27 @@
 'use strict';
 
 const {getConfigFromFile} = require('../lib/utils/fs');
+const packageJSON = require('../package.json');
+const expectations = require('./fixtures/run-expectations');
 
 describe('Config', () => {
-  const packageJSON = require('../package.json');
-  const expectations = require('./fixtures/run-expectations');
-
   describe('validate input', () => {
     context('from package.json', () => {
-      it('should return pwmetrics property of package.json', () => {
-        before(() => {
-          packageJSON.pwmetrics = expectations;
-        });
-
-        it('', () => {
-          expect(getConfigFromFile()).to.be.deep.equal(expectations);
-        });
-
-        after(() => {
-          delete packageJSON.pwmetrics;
-        });
-      });
-
       it('should return empty object if pwmetrics property not defined', () => {
         expect(getConfigFromFile()).to.be.deep.equal({});
+      });
+    });
+    describe('with pwmetrics property defined', () => {
+      before(() => {
+        packageJSON.pwmetrics = expectations;
+      });
+
+      it('should return the pwmetrics data', () => {
+        expect(getConfigFromFile()).to.be.deep.equal(expectations);
+      });
+
+      after(() => {
+        delete packageJSON.pwmetrics;
       });
     });
 

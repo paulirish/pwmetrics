@@ -88,5 +88,5 @@ export {
   GSheetsValuesToAppend,
   GSheetsAppendResultsOptions,
   ExpectationMetrics,
-  NormalizedExpectationMetrics,
+  NormalizedExpectationMetrics
 };
