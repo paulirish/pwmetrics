@@ -1,3 +1,5 @@
+// Copyright 2016 Google Inc. All Rights Reserved.
+// Licensed under the Apache License, Version 2.0. See LICENSE
 
 const path = require('path');
 
@@ -10,9 +12,12 @@ function getConfigFromFile(fileName: string = 'package.json') {
     resolved = require.resolve(cwdPath);
   }
   const config = require(resolved);
-  if (resolved.endsWith('package.json'))
-    return config.pwmetrics || {};
-  else return config;
+  if(config !== null && typeof config === 'object') {
+    if (resolved.endsWith('package.json'))
+      return config.pwmetrics || {};
+    else return config;
+  } else throw new Error(`Invalid config from ${fileName}`);
+  
 }
 
 module.exports = { getConfigFromFile };
