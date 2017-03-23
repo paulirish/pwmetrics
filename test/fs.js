@@ -2,7 +2,7 @@
 // Licensed under the Apache License, Version 2.0. See LICENSE
 'use strict';
 
-const { getConfigFromFile } = require('../lib/utils/fs');
+const {getConfigFromFile} = require('../lib/utils/fs');
 
 describe('Config', () => {
   const packageJSON = require('../package.json');
