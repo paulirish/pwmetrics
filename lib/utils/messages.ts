@@ -1,8 +1,6 @@
 // Copyright 2016 Google Inc. All Rights Reserved.
 // Licensed under the Apache License, Version 2.0. See LICENSE
 
-import { MessageLevel } from '../../types/types';
-
 const GREEN = '\x1B[32m';
 const YELLOW = '\x1b[33m';
 const RED = '\x1B[31m';
@@ -79,7 +77,7 @@ const getMessage = function (messageType: string, ...args: string[]) {
     }
 };
 
-const getAssertionMessage = function (assertionLevel: MessageLevel, messageType: string, expectedValue: number, actualValue: number) {
+const getAssertionMessage = function (assertionLevel: string, messageType: string, expectedValue: number, actualValue: number) {
     const message = getMessageWithPrefix(assertionLevel, messageType);
     const colorizer = assertionLevel === 'ERROR' ? redify : yellowify;
 
@@ -88,7 +86,7 @@ const getAssertionMessage = function (assertionLevel: MessageLevel, messageType:
     return `${message} Expected ${expectedStr}, but found ${actualStr}.`;
 };
 
-const getMessageWithPrefix = function (assertionLevel: MessageLevel, messageType: string, ...args: string[]) {
+const getMessageWithPrefix = function (assertionLevel: string, messageType: string, ...args: string[]) {
     let prefix;
     const message = getMessage(messageType, ...args);
 

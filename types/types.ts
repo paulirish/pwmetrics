@@ -79,9 +79,6 @@ interface NormalizedExpectationMetrics {
   }
 }
 
-type MessageLevel =
-  'ERROR' | 'WARNING' | 'SUCCESS';
-
 export {
   Timings,
   SheetsConfig,
@@ -92,5 +89,4 @@ export {
   GSheetsAppendResultsOptions,
   ExpectationMetrics,
   NormalizedExpectationMetrics,
-  MessageLevel
 };
