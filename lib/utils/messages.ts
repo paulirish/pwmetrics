@@ -12,7 +12,7 @@ const redify = (str: string) => `${RED}${str}${RESET}`;
 const yellowify = (str: string) => `${YELLOW}${str}${RESET}`;
 const boldify = (str: string) => `${BOLD}${str}${RESET}`;
 
-const getMessage = function (messageType: string, ...args: string[]) {
+const getMessage = function (messageType: string, ...args: any[]) {
   switch (messageType) {
     case 'NO_URL':
       return 'No url entered.';
@@ -86,7 +86,7 @@ const getAssertionMessage = function (assertionLevel: string, messageType: strin
   return `${message} Expected ${expectedStr}, but found ${actualStr}.`;
 };
 
-const getMessageWithPrefix = function (assertionLevel: string, messageType: string, ...args: string[]) {
+const getMessageWithPrefix = function (assertionLevel: string, messageType: string, ...args: any[]) {
   let prefix;
   const message = getMessage(messageType, ...args);
 

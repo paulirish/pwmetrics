@@ -13,7 +13,7 @@ describe('Config', () => {
         expect(getConfigFromFile()).to.be.deep.equal({});
       });
     });
-    describe('with pwmetrics property defined', () => {
+    context('with pwmetrics property defined', () => {
       before(() => {
         packageJSON.pwmetrics = expectations;
       });
