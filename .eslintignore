@@ -15,5 +15,5 @@ lib/sheets/*.js
 lib/outh/*.js
 lib/expectations.js
 types/types.js
-
+lib/utils/*.js
 test/google-outh.js

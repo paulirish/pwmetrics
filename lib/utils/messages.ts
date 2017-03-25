@@ -1,6 +1,5 @@
 // Copyright 2016 Google Inc. All Rights Reserved.
 // Licensed under the Apache License, Version 2.0. See LICENSE
-'use strict';
 
 const GREEN = '\x1B[32m';
 const YELLOW = '\x1b[33m';
@@ -8,12 +7,12 @@ const RED = '\x1B[31m';
 const RESET = '\x1B[0m';
 const BOLD = '\x1b[1m';
 
-const greenify = str => `${GREEN}${str}${RESET}`;
-const redify = str => `${RED}${str}${RESET}`;
-const yellowify = str => `${YELLOW}${str}${RESET}`;
-const boldify = str => `${BOLD}${str}${RESET}`;
+const greenify = (str: string) => `${GREEN}${str}${RESET}`;
+const redify = (str: string) => `${RED}${str}${RESET}`;
+const yellowify = (str: string) => `${YELLOW}${str}${RESET}`;
+const boldify = (str: string) => `${BOLD}${str}${RESET}`;
 
-const getMessage = function(messageType, ...args) {
+const getMessage = function (messageType: string, ...args: any[]) {
   switch (messageType) {
     case 'NO_URL':
       return 'No url entered.';
@@ -26,7 +25,7 @@ const getMessage = function(messageType, ...args) {
     case 'CRI_TIMEOUT_REJECT':
       return 'CRI_TIMEOUT error. Giving up running Lighthouse';
     case 'MEDIAN_RUN':
-      return '                ☆  Median run  ☆';
+      return '        ☆  Median run  ☆';
     case 'SAVED_TO_JSON':
       return `Data was saved into file ${args[0]}`;
     case 'NO_METRICS':
@@ -78,16 +77,16 @@ const getMessage = function(messageType, ...args) {
   }
 };
 
-const getAssertionMessage = function(assertionLevel, messageType, expectedValue, actualValue) {
+const getAssertionMessage = function (assertionLevel: string, messageType: string, expectedValue: number, actualValue: number) {
   const message = getMessageWithPrefix(assertionLevel, messageType);
   const colorizer = assertionLevel === 'ERROR' ? redify : yellowify;
 
-  const expectedStr = boldify(expectedValue + 'ms');
-  const actualStr = boldify(colorizer(actualValue + 'ms'));
+  const expectedStr = boldify(`${expectedValue} ms`);
+  const actualStr = boldify(colorizer(`${actualValue} ms`));
   return `${message} Expected ${expectedStr}, but found ${actualStr}.`;
 };
 
-const getMessageWithPrefix = function(assertionLevel, messageType, ...args) {
+const getMessageWithPrefix = function (assertionLevel: string, messageType: string, ...args: any[]) {
   let prefix;
   const message = getMessage(messageType, ...args);
 
@@ -108,14 +107,12 @@ const getMessageWithPrefix = function(assertionLevel, messageType, ...args) {
   return `${prefix}${message}.${RESET}`;
 };
 
-
 const GREEN_CHECK = greenify('✓');
 const YELLOW_FLAG = yellowify('⚑');
 const RED_X = redify('✘');
-const getErrorPrefix = _ => `  ${RED_X} Error: ${RED}`;
-const getWarningPrefix = _ => `  ${YELLOW_FLAG} Warning: ${YELLOW}`;
-const getSuccessPrefix = _ => `  ${GREEN_CHECK} Success: ${GREEN}`;
-
+const getErrorPrefix = () => `  ${RED_X} Error: ${RED}`;
+const getWarningPrefix = () => `  ${YELLOW_FLAG} Warning: ${YELLOW}`;
+const getSuccessPrefix = () => `  ${GREEN_CHECK} Success: ${GREEN}`;
 
 module.exports = {
   getMessage,
