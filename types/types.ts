@@ -79,6 +79,9 @@ interface NormalizedExpectationMetrics {
   }
 }
 
+interface DriveResponse {
+  id: string
+}
 export {
   Timings,
   SheetsConfig,
@@ -87,6 +90,7 @@ export {
   MetricsResults,
   GSheetsValuesToAppend,
   GSheetsAppendResultsOptions,
+  DriveResponse,
   ExpectationMetrics,
   NormalizedExpectationMetrics
 };

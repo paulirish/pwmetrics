@@ -8,5 +8,7 @@ gsheets.config.js
 # Typescript built files
 lib/sheets/*.js
 lib/outh/*.js
+lib/drive/*.js
 lib/expectations.js
+lib/timeline-viewer.js
 types/types.js
