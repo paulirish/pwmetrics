@@ -9,6 +9,7 @@ gsheets.config.js
 lib/sheets/*.js
 lib/outh/*.js
 lib/drive/*.js
+lib/utils/*.js
 lib/expectations.js
 lib/timeline-viewer.js
 types/types.js
