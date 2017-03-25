@@ -1,7 +1,7 @@
 // Copyright 2016 Google Inc. All Rights Reserved.
 // Licensed under the Apache License, Version 2.0. See LICENSE
 
-import { SheetsConfig, MetricsResults, Oauth2Client, GSheetsValuesToAppend } from '../../types/types';
+import { SheetsConfig, MetricsResults, Oauth2Client, AuthorizeCredentials, GSheetsValuesToAppend } from '../../types/types';
 
 const GoogleOuth = require('../outh/google-outh');
 import * as gsheets  from './gsheets';
@@ -15,11 +15,11 @@ const SHEET_TYPES = {
 };
 
 class Sheets {
-  constructor(public config: SheetsConfig) {
-    this.validateOptions(config);
+  constructor(public config: SheetsConfig, public clientSecret: AuthorizeCredentials) {
+    this.validateOptions(config, clientSecret);
   }
 
-  validateOptions(config: SheetsConfig) {
+  validateOptions(config: SheetsConfig, clientSecret: AuthorizeCredentials) {
     if (!config || !Object.keys(config).length)
       throw new Error(getMessage('NO_GOOGLE_SHEET_OPTIONS'));
 
@@ -30,7 +30,7 @@ class Sheets {
 
     switch (sheetType) {
       case SHEET_TYPES.GOOGLE_SHEETS:
-        if (!config.options.spreadsheetId || !config.options.tableName || !config.options.clientSecret)
+        if (!config.options.spreadsheetId || !config.options.tableName || !clientSecret)
           throw new Error(getMessage('NO_GOOGLE_SHEET_OPTIONS'));
         break;
       default:
@@ -67,7 +67,7 @@ class Sheets {
 
     try {
       const googleOuth = new GoogleOuth();
-      const auth: Oauth2Client = await googleOuth.authenticate(this.config.options.clientSecret);
+      const auth: Oauth2Client = await googleOuth.authenticate(this.clientSecret);
       await gsheets.appendResults(auth, valuesToAppend, this.config.options);
     } catch(error) {
       throw error;

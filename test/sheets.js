@@ -11,7 +11,7 @@ describe('Sheets', () => {
   let sheets;
 
   beforeEach(() => {
-    sheets = new Sheets(runOptions.sheets);
+    sheets = new Sheets(runOptions.sheets, runOptions.clientSecret);
   });
 
   describe('validateOptions', () => {
@@ -34,17 +34,17 @@ describe('Sheets', () => {
       expect((_ => sheets.validateOptions({
         type: runOptions.sheets.type,
         options: {
-          tableName: 'data',
-          clientSecret: {}
-        }
+          tableName: 'data'
+        },
+        clientSecret: {}
       }))).to.throw(getMessage('NO_GOOGLE_SHEET_OPTIONS'));
 
       expect((_ => sheets.validateOptions({
         type: runOptions.sheets.type,
         options: {
-          spreadsheetId: '123456',
-          clientSecret: {}
-        }
+          spreadsheetId: '123456'
+        },
+        clientSecret: {}
       }))).to.throw(getMessage('NO_GOOGLE_SHEET_OPTIONS'));
 
       expect((_ => sheets.validateOptions({
