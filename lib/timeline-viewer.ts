@@ -4,8 +4,8 @@
 const opn = require('opn');
 const {prepareAssets} = require('lighthouse/lighthouse-core/lib/asset-saver');
 
-import { AuthorizeCredentials, DriveResponse} from '../types/types';
-import { sendToDrive } from './drive/gdrive';
+import { AuthorizeCredentials } from '../types/types';
+const GDrive = require('./drive/gdrive');
 
 const shareWithTimelineViewer = async function(metricsData: any, clientSecret: AuthorizeCredentials) {
   try {
@@ -14,7 +14,8 @@ const shareWithTimelineViewer = async function(metricsData: any, clientSecret: A
       return data.traceData;
     });
     const fileName = `lighthouse-results-${Date.now()}`;
-    const driveResponse: DriveResponse = await sendToDrive(clientSecret, trace[0], fileName);
+    const gDrive = new GDrive(clientSecret);
+    const driveResponse = await gDrive.sendToDrive(trace[0], fileName);
     opn(`https://chromedevtools.github.io/timeline-viewer/?loadTimelineFromURL=https://drive.google.com/file/d//${driveResponse.id}/view?usp=drivesdk`);
   } catch(error) {
     throw error;
