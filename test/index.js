@@ -86,32 +86,16 @@ describe('PWMetrics', () => {
     });
 
     describe('with more then one run', () => {
-      let medianResults;
       let runResult;
 
       beforeEach(() => {
         const medianResult = dataMocks.metricsResult;
-        const run1Result = dataMocks.metricsResult;
-        const run2Result = dataMocks.metricsResult;
         runResult = dataMocks.metricsResult;
-
-        medianResults = {
-          median: medianResult,
-          runs: [
-            run1Result, run2Result
-          ]
-        };
 
         pwMetrics = new PWMetrics(runOptions.startWithOneRun.url, runOptions.startWithMoreThenOneRun.opts);
         runStub = sinon.stub(pwMetrics, 'run', () => Promise.resolve(runResult));
         findMedianRunStub = sinon.stub(pwMetrics, 'findMedianRun', () => medianResult);
         displayOutputStub = sinon.stub(pwMetrics, 'displayOutput');
-      });
-
-      it('should calculate median results', () => {
-        return pwMetrics.start().then(data => {
-          expect(data).to.be.deep.equal(medianResults);
-        });
       });
 
       it('should call "run" method', () => {
@@ -125,6 +109,23 @@ describe('PWMetrics', () => {
           expect(findMedianRunStub).to.have.been.calledOnce;
           expect(displayOutputStub).to.have.been.calledOnce;
         });
+      });
+    });
+
+    describe('findMedianRun', () => {
+      const pwMetrics = new PWMetrics(runOptions.startWithOneRun.url, runOptions.startWithMoreThenOneRun.opts);
+      const runs = dataMocks.metricsResults;
+
+      it('for 1 run, return only element', () => {
+        expect(pwMetrics.findMedianRun([runs[0]])).to.be.deep.equal(runs[0]);
+      });
+
+      it('for even runs, return n/2+1 element', () => {
+        expect(pwMetrics.findMedianRun([runs[0], runs[1]])).to.be.deep.equal(runs[1]);
+      });
+
+      it('for odd number of runs, return middle element of sorted array', () => {
+        expect(pwMetrics.findMedianRun(runs)).to.be.deep.equal(runs[1]);
       });
     });
   });
