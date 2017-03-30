@@ -29,7 +29,7 @@ const SCOPES = [
 ];
 const EEXIST = 'EEXIST';
 
-class GoogleOuth {
+class GoogleOauth {
   private tokenDir: string = path.join((process.env.HOME || process.env.HOMEPATH || process.env.USERPROFILE), '/.credentials/');
   private tokenPath: string = path.join(this.tokenDir, 'sheets.googleapis.com-nodejs-pwmetrics.json');
 
@@ -73,12 +73,12 @@ class GoogleOuth {
       this.storeToken(token);
       return oauth2Client;
     } catch (error) {
-      throw new Error(getMessage('G_OUTH_ACCESS_ERROR',  error.message));
+      throw new Error(getMessage('G_OAUTH_ACCESS_ERROR',  error.message));
     }
   }
 
   private readline(authUrl: string): string {
-    return readlineSync.question(getMessage('G_OUTH_ENTER_CODE', authUrl), {
+    return readlineSync.question(getMessage('G_OAUTH_ENTER_CODE', authUrl), {
       hideEchoBack: true
     });
   }
@@ -103,8 +103,8 @@ class GoogleOuth {
       }
     }
     fs.writeFileSync(this.tokenPath, JSON.stringify(token));
-    console.log(getMessage('G_OUTH_STORED_TOKEN', this.tokenPath));
+    console.log(getMessage('G_OAUTH_STORED_TOKEN', this.tokenPath));
   }
 }
 
-module.exports = GoogleOuth;
+module.exports = GoogleOauth;

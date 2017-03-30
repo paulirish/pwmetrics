@@ -5,19 +5,19 @@ const google = require('googleapis');
 const promisify = require('micro-promisify');
 
 import { Oauth2Client, AuthorizeCredentials, DriveResponse } from '../../types/types';
-const GoogleOuth = require('../outh/google-outh');
+const GoogleOauth = require('../oauth/google-oauth');
 
 class GDrive {
-  private outh: Oauth2Client;
+  private oauth: Oauth2Client;
 
   constructor(public clientSecret: AuthorizeCredentials) {}
 
-  async getOuth(): Promise<Oauth2Client> {
+  async getOauth(): Promise<Oauth2Client> {
     try {
-      if (this.outh) return this.outh;
+      if (this.oauth) return this.oauth;
 
-      const googleOuth = new GoogleOuth();
-      return this.outh = await googleOuth.authenticate(this.clientSecret);
+      const googleOauth = new GoogleOauth();
+      return this.oauth = await googleOauth.authenticate(this.clientSecret);
     }catch (error) {
       throw error;
     }
@@ -27,7 +27,7 @@ class GDrive {
     try {
       const drive = google.drive({
         version: 'v3',
-        auth: await this.getOuth()
+        auth: await this.getOauth()
       });
 
       const body = {
@@ -53,7 +53,7 @@ class GDrive {
     try {
       const drive = google.drive({
         version: 'v3',
-        auth: await this.getOuth()
+        auth: await this.getOauth()
       });
 
       const body = {
