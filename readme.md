@@ -233,7 +233,7 @@ module.exports = {
 
 ```sh
 # run pwmetrics with config in package.json
-pwmetrics --shareWithTimelineViewer
+pwmetrics --upload
 ```
 
 `package.json`
@@ -251,7 +251,7 @@ pwmetrics --shareWithTimelineViewer
 
 ```sh
 # run pwmetrics with config in your-own-file.js
-pwmetrics --shareWithTimelineViewer --config=your-own-file.js
+pwmetrics --upload --config=your-own-file.js
 ```
 
 `your-own-file.js`
