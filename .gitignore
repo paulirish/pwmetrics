@@ -10,4 +10,5 @@ lib/sheets/*.js
 lib/outh/*.js
 lib/utils/*.js
 lib/expectations.js
+lib/metrics.js
 types/types.js
