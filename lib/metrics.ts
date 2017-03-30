@@ -1,9 +1,10 @@
 // Copyright 2016 Google Inc. All Rights Reserved.
 // Licensed under the Apache License, Version 2.0. See LICENSE
 
-const metricsDefinitions = require('lighthouse/lighthouse-core/lib/traces/pwmetrics-events.js').metricsDefinitions;
 
-import {MetricsResults, MetricsDefinitions, Timings, Timestamps, LighthouseResults, LighthouseAudits} from '../types/types';
+import {MetricsResults, MetricsDefinition, Timing, Timestamp, LighthouseResults, LighthouseAudits} from '../types/types';
+
+const metricsDefinitions: MetricsDefinition[] = require('lighthouse/lighthouse-core/lib/traces/pwmetrics-events.js').metricsDefinitions;
 
 const metricsIds = {
   NAVSTART: 'navstart',
@@ -42,18 +43,18 @@ function prepareData(res: LighthouseResults): MetricsResults {
   const colorP2 = 'green';
   const colorVisual = 'blue';
 
-  const timings: Array<Timings> = [];
-  const navStart = metricsDefinitions.find((def: MetricsDefinitions) => def.id === metricsIds.NAVSTART);
-  const timestamps: Array<Timestamps> = [{
+  const timings: Timing[] = [];
+  const navStart = metricsDefinitions.find((def) => def.id === metricsIds.NAVSTART);
+  const timestamps: Timestamp[] = [{
     title: navStart.name,
     id: navStart.id,
     timestamp: navStart.getTs(audits)
   }];
 
   metricsDefinitions
-    .filter((def: MetricsDefinitions) => def.id !== metricsIds.NAVSTART)
-    .forEach((metric: MetricsDefinitions) => {
-      const resolvedMetric: Timings = {
+    .filter((def) => def.id !== metricsIds.NAVSTART)
+    .forEach((metric) => {
+      const resolvedMetric: Timing = {
         title: metric.name,
         id: metric.id,
         timestamp: metric.getTs(audits),

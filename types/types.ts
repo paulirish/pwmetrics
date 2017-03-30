@@ -24,27 +24,27 @@ interface SheetsConfig {
 }
 
 interface MetricsResults {
-  timestamps: Array<Timestamps>;
-  timings: Array<Timings>;
+  timestamps: Timestamp[];
+  timings: Timing[];
   generatedTime: string;
   lighthouseVersion: string;
   url: string;
   initialUrl: string;
 }
 
-interface MetricsDefinitions {
+interface MetricsDefinition {
   name: string;
   id: string;
-  getTs(audits: any): number;
+  getTs(audits: LighthouseAudits): number;
 }
 
-interface Timestamps {
+interface Timestamp {
   title: string;
   id: string;
   timestamp: number;
 }
 
-interface Timings {
+interface Timing {
   title: string,
   id: string;
   timestamp: number;
@@ -99,12 +99,12 @@ interface NormalizedExpectationMetrics {
 }
 
 export {
-  Timings,
-  Timestamps,
+  Timing,
+  Timestamp,
   SheetsConfig,
   AuthorizeCredentials,
   Oauth2Client,
-  MetricsDefinitions,
+  MetricsDefinition,
   MetricsResults,
   LighthouseResults,
   LighthouseAudits,

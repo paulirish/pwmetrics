@@ -48,7 +48,7 @@ class Sheets {
   async appendResultsToGSheets(results: Array<MetricsResults>) {
     let valuesToAppend: Array<GSheetsValuesToAppend> = [];
     results.forEach(data => {
-      const getTiming = (key:string) => data.timings.find(t => t.id === key).timing;
+      const getTiming = (key: string) => data.timings.find(t => t.id === key).timing;
       const dateObj = new Date(data.generatedTime);
       // order matters
       valuesToAppend.push([
