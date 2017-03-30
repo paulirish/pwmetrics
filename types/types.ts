@@ -101,6 +101,11 @@ interface NormalizedExpectationMetrics {
 interface DriveResponse {
   id: string
 }
+
+interface PreparedAssets {
+  traceData: Array<any>
+}
+
 export {
   Timing,
   Timestamp,
@@ -115,5 +120,6 @@ export {
   GSheetsAppendResultsOptions,
   DriveResponse,
   ExpectationMetrics,
-  NormalizedExpectationMetrics
+  NormalizedExpectationMetrics,
+  PreparedAssets
 };

@@ -23,7 +23,7 @@ class GDrive {
     }
   }
 
-  async sendToDrive(data: any, fileName: string): Promise<DriveResponse> {
+  async uploadToDrive(data: any, fileName: string): Promise<DriveResponse> {
     try {
       const drive = google.drive({
         version: 'v3',
@@ -42,14 +42,14 @@ class GDrive {
       };
 
       const driveResponse: DriveResponse = await promisify(drive.files.create)(body);
-      await this.shareFile(driveResponse.id);
+      await this.setSharingPermissions(driveResponse.id);
       return driveResponse;
     } catch (error) {
       throw new Error(error);
     }
   }
 
-  async shareFile(fileId: string): Promise<any> {
+  async setSharingPermissions(fileId: string): Promise<any> {
     try {
       const drive = google.drive({
         version: 'v3',

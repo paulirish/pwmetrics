@@ -15,7 +15,7 @@ lib/sheets/*.js
 lib/drive/*.js
 lib/oauth/*.js
 lib/expectations.js
-lib/timeline-viewer.js
+lib/upload.js
 lib/metrics.js
 types/types.js
 lib/utils/*.js
