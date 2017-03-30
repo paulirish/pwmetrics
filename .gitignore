@@ -12,4 +12,5 @@ lib/drive/*.js
 lib/utils/*.js
 lib/expectations.js
 lib/timeline-viewer.js
+lib/metrics.js
 types/types.js

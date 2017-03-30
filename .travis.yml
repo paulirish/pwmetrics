@@ -14,7 +14,7 @@ cache:
   directories:
     - node_modules
 before_install:
-  - npm install -g yarn --cache-min 999999999
+  - npm install -g yarn@v0.22.0
 install:
   - yarn install
 before_script:

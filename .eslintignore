@@ -16,6 +16,7 @@ lib/drive/*.js
 lib/outh/*.js
 lib/expectations.js
 lib/timeline-viewer.js
+lib/metrics.js
 types/types.js
 lib/utils/*.js
 test/google-outh.js
