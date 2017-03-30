@@ -11,7 +11,7 @@ interface LighthouseResults extends Results {
 }
 
 interface LighthouseAudits {
-  [audits: string]: AuditResult;
+  [metric: string]: AuditResult;
 }
 
 interface SheetsConfig {

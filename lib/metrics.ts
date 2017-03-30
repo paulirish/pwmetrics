@@ -35,7 +35,7 @@ const checkAudits = (audits: LighthouseAudits) => Object.keys(audits).forEach(ke
 });
 
 function prepareData(res: LighthouseResults): MetricsResults {
-  const audits: LighthouseAudits = res.audits;
+  const audits = res.audits;
 
   checkAudits(audits);
 
@@ -44,7 +44,7 @@ function prepareData(res: LighthouseResults): MetricsResults {
   const colorVisual = 'blue';
 
   const timings: Timing[] = [];
-  const navStart = metricsDefinitions.find((def) => def.id === metricsIds.NAVSTART);
+  const navStart = metricsDefinitions.find(def => def.id === metricsIds.NAVSTART);
   const timestamps: Timestamp[] = [{
     title: navStart.name,
     id: navStart.id,
@@ -52,8 +52,8 @@ function prepareData(res: LighthouseResults): MetricsResults {
   }];
 
   metricsDefinitions
-    .filter((def) => def.id !== metricsIds.NAVSTART)
-    .forEach((metric) => {
+    .filter(def => def.id !== metricsIds.NAVSTART)
+    .forEach(metric => {
       const resolvedMetric: Timing = {
         title: metric.name,
         id: metric.id,
