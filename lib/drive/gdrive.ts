@@ -33,10 +33,10 @@ class GDrive {
       const body = {
         resource: {
           name: fileName,
-          mimeType: 'text/plain',
+          mimeType: 'application/json',
         },
         media: {
-          mimeType: 'text/plain',
+          mimeType: 'application/json',
           body: JSON.stringify(data)
         }
       };

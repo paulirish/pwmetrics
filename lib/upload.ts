@@ -13,7 +13,7 @@ const upload = async function(metricsData: LighthouseResults, clientSecret: Auth
     const trace = assets.map(data => {
       return data.traceData;
     });
-    const fileName = `lighthouse-results-${Date.now()}`;
+    const fileName = `lighthouse-results-${Date.now()}.json`;
     const gDrive = new GDrive(clientSecret);
     const driveResponse = await gDrive.uploadToDrive(trace[0], fileName);
     opn(`https://chromedevtools.github.io/timeline-viewer/?loadTimelineFromURL=https://drive.google.com/file/d//${driveResponse.id}/view?usp=drivesdk`);
