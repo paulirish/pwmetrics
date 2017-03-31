@@ -60,11 +60,11 @@ const getMessage = function (messageType: string, ...args: any[]) {
       return `Run ${args[0] + 1} of ${args[1]} finished successfully`;
     case 'FAILED_RUN':
       return `Unable to complete run ${args[0] + 1} of ${args[1]} due to ${args[2]}`;
-    case 'G_OUTH_ACCESS_ERROR':
+    case 'G_OAUTH_ACCESS_ERROR':
       return `Error while trying to retrieve access token, ${args[0]}`;
-    case 'G_OUTH_ENTER_CODE':
+    case 'G_OAUTH_ENTER_CODE':
       return `Authorize this app by visiting this url: ${args[0]}\nEnter the code from that page here: `;
-    case 'G_OUTH_STORED_TOKEN':
+    case 'G_OAUTH_STORED_TOKEN':
       return `Token stored to ${args[0]}`;
     case 'G_SHEETS_APPENDING':
       return `Appending...\n${args[0]}`;
