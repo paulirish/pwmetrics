@@ -50,6 +50,11 @@ const cliFlags = yargs
     'describe': 'Path to config file',
     'type': 'string'
   })
+  .option('upload', {
+    'describe': 'Upload trace to Google Drive, then open in timeline-viewer (https://chromedevtools.github.io/timeline-viewer/)',
+    'type': 'boolean',
+    'default': false
+  })
   .option('disable-cpu-throttling', {
     'describe': 'Disable CPU throttling',
     'type': 'boolean',

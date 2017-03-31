@@ -170,7 +170,7 @@ module.exports = {
 - Copy [this spreadsheet](https://docs.google.com/spreadsheets/d/1k9ukQrxlnn8H8BB0tIJg5Q-_b4qhgB6dGxgc5d0Ibpo/edit).
 - Copy the ID of the spreadsheet into the config as value of `sheets.options.spreadsheetId` property.
 - Setup Google Developer project and get credentials. ([everything in step 1 here](https://developers.google.com/sheets/api/quickstart/nodejs#step_1_turn_on_the_api_name))
-- Take a `client_secret` and put it into the config as value of `sheets.options.clientSecret` property.
+- Take a `client_secret` and put it into the config as value of `clientSecret` property.
 
 
 ```sh
@@ -187,11 +187,11 @@ pwmetrics --submit
       "type": 'GOOGLE_SHEETS', // sheets service type. Available types: GOOGLE_SHEETS
       "options": {
         "spreadsheetId": "sheet_id",
-        "tableName": "data",
-        "clientSecret": {
-          // Data object. Can be get by (using everything in step 1 here)[https://developers.google.com/sheets/api/quickstart/nodejs#step_1_turn_on_the_api_name]
-        }
+        "tableName": "data"
       }
+    }
+    "clientSecret": {
+      // Data object. Can be get by (using everything in step 1 here)[https://developers.google.com/sheets/api/quickstart/nodejs#step_1_turn_on_the_api_name]
     }
   }
 ...
@@ -211,12 +211,56 @@ module.exports = {
     type: 'GOOGLE_SHEETS', // sheets service type. Available types: GOOGLE_SHEETS
     options: {
       spreadsheetId: 'sheet_id',
-      tableName: 'data',
-      clientSecret: {
-        // Follow step 1 of https://developers.google.com/sheets/api/quickstart/nodejs#step_1_turn_on_the_api_name
-        // Then paste resulting JSON payload as this clientSecret value
-      }
+      tableName: 'data'
     }
+  },
+  clientSecret: {
+    // Follow step 1 of https://developers.google.com/sheets/api/quickstart/nodejs#step_1_turn_on_the_api_name
+    // Then paste resulting JSON payload as this clientSecret value
+  }
+}
+```
+
+### Share Lighthouse traces with timeline-viewer
+
+[timeline-viewer](https://chromedevtools.github.io/timeline-viewer/) - Shareable URLs for your Chrome DevTools Timeline traces.
+
+*Instructions:*
+
+- Setup Google Developer project and get credentials. ([everything in step 1 here](https://developers.google.com/drive/v3/web/quickstart/nodejs))
+- Take a `client_secret` and put it into the config as value of `clientSecret` property.
+
+
+```sh
+# run pwmetrics with config in package.json
+pwmetrics --upload
+```
+
+`package.json`
+```
+...
+  "pwmetrics": {
+    "url": 'http://example.com/',
+    "clientSecret": {
+      // Data object. Can be get by (using everything in step 1 here)[https://developers.google.com/sheets/api/quickstart/nodejs#step_1_turn_on_the_api_name]
+    }
+  }
+...
+```
+
+
+```sh
+# run pwmetrics with config in your-own-file.js
+pwmetrics --upload --config=your-own-file.js
+```
+
+`your-own-file.js`
+```js
+module.exports = {
+  url: 'http://example.com/',
+  clientSecret: {
+    // Follow step 1 of https://developers.google.com/sheets/api/quickstart/nodejs#step_1_turn_on_the_api_name
+    // Then paste resulting JSON payload as this clientSecret value
   }
 }
 ```

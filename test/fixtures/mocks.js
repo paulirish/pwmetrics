@@ -131,7 +131,7 @@ exports.metricsResults = [
 ];
 
 
-module.exports.googleOuthCredentials = {
+module.exports.googleOauthCredentials = {
   installed: {
     client_secret: '0123456789',
     client_id: '0123456789',
@@ -139,7 +139,7 @@ module.exports.googleOuthCredentials = {
   }
 };
 
-module.exports.googleOuthToken = {
+module.exports.googleOauthToken = {
   token: '0123456789'
 };
 

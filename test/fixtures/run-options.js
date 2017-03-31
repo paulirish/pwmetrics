@@ -45,7 +45,8 @@ exports.sheets = {
   type: 'GOOGLE_SHEETS',
   options: {
     spreadsheetId: '123456',
-    tableName: 'data',
-    clientSecret: {}
+    tableName: 'data'
   }
 };
+
+exports.clientSecret = {};

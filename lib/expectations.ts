@@ -1,8 +1,8 @@
 // Copyright 2016 Google Inc. All Rights Reserved.
 // Licensed under the Apache License, Version 2.0. See LICENSE
 
-import {Timings, ExpectationMetrics, NormalizedExpectationMetrics} from '../types/types';
-const {getAssertionMessage, getMessageWithPrefix} = require('./utils/messages');
+import { Timing, ExpectationMetrics, NormalizedExpectationMetrics } from '../types/types';
+const { getAssertionMessage, getMessageWithPrefix } = require('./utils/messages');
 
 function validateMetrics(metrics: ExpectationMetrics) {
   const metricsKeys = Object.keys(metrics);
@@ -31,7 +31,7 @@ function normalizeMetrics(metrics: ExpectationMetrics) {
   return normalizedMetrics;
 }
 
-function checkExpectations(metricsData: Array<Timings>, expectationMetrics: NormalizedExpectationMetrics) {
+function checkExpectations(metricsData: Timing[], expectationMetrics: NormalizedExpectationMetrics) {
   metricsData.forEach(metric => {
     const metricName = metric.id;
     const expectationValue = expectationMetrics[metricName];
