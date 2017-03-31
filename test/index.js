@@ -120,12 +120,16 @@ describe('PWMetrics', () => {
         expect(pwMetrics.findMedianRun([runs[0]])).to.be.deep.equal(runs[0]);
       });
 
-      it('for even runs, return n/2+1 element', () => {
+      it('for 2 runs, return largest element', () => {
         expect(pwMetrics.findMedianRun([runs[0], runs[1]])).to.be.deep.equal(runs[1]);
       });
 
       it('for odd number of runs, return middle element of sorted array', () => {
-        expect(pwMetrics.findMedianRun(runs)).to.be.deep.equal(runs[1]);
+        expect(pwMetrics.findMedianRun([runs[0], runs[1], runs[2]])).to.be.deep.equal(runs[1]);
+      });
+
+      it('for even runs, return n/2+1 element element of sorted array', () => {
+        expect(pwMetrics.findMedianRun(runs)).to.be.deep.equal(runs[2]);
       });
     });
   });

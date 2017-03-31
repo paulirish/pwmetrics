@@ -184,6 +184,63 @@ exports.metricsResults = [
     'lighthouseVersion': '1.4.1',
     'initialUrl': 'http://example.com',
     'url': 'http://example.com/'
+  },
+  {
+    'timings': [
+      {
+        'title': 'First Contentful Paint',
+        'id': 'ttfcp',
+        'timing': 598.468,
+        'color': 'green'
+      },
+      {
+        'title': 'First Meaningful Paint',
+        'id': 'ttfmp',
+        'timing': 598.5,
+        'color': 'green'
+      },
+      {
+        'title': 'Perceptual Speed Index',
+        'id': 'psi',
+        'timing': 650,
+        'color': 'blue'
+      },
+      {
+        'title': 'First Visual Change',
+        'id': 'fv',
+        'timing': 649,
+        'color': 'blue'
+      },
+      {
+        'title': 'Visually Complete 100%',
+        'id': 'vc',
+        'timing': 649,
+        'color': 'blue'
+      },
+      {
+        'title': 'Time to Interactive',
+        'id': 'tti',
+        'timing': 655.9,
+        'color': 'yellow'
+      },
+      {
+        'title': 'Visually Complete 85%',
+        'id': 'vc85',
+        'timing': 635.872,
+        'color': 'blue'
+      }
+    ],
+    'timestamps': [
+      {
+        'title': 'Navigation Start',
+        'id': 'navstart',
+        'timing': 85880196188
+      }
+    ],
+    'generatedTime': '2017-01-24T23:29:54.465Z',
+    'lighthouseVersion': '1.4.1',
+    'initialUrl': 'http://example.com',
+    'url': 'http://example.com/'
   }
 ];
 
