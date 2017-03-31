@@ -51,7 +51,12 @@ const cliFlags = yargs
     'type': 'string'
   })
   .option('upload', {
-    'describe': 'Upload trace to Google Drive, then open in timeline-viewer (https://chromedevtools.github.io/timeline-viewer/)',
+    'describe': 'Upload trace to Google Drive',
+    'type': 'boolean',
+    'default': false
+  })
+  .option('view', {
+    'describe': 'Open trace uploaded to Google Drive in timeline-viewer (https://chromedevtools.github.io/timeline-viewer/)',
     'type': 'boolean',
     'default': false
   })

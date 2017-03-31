@@ -221,9 +221,7 @@ module.exports = {
 }
 ```
 
-### Share Lighthouse traces with timeline-viewer
-
-[timeline-viewer](https://chromedevtools.github.io/timeline-viewer/) - Shareable URLs for your Chrome DevTools Timeline traces.
+### Upload Lighthouse traces to Google Drive
 
 *Instructions:*
 
@@ -242,7 +240,7 @@ pwmetrics --upload
   "pwmetrics": {
     "url": 'http://example.com/',
     "clientSecret": {
-      // Data object. Can be get by (using everything in step 1 here)[https://developers.google.com/sheets/api/quickstart/nodejs#step_1_turn_on_the_api_name]
+      // Data object. Can be get by (using everything in step 1 here)[https://developers.google.com/drive/v3/web/quickstart/nodejs]
     }
   }
 ...
@@ -259,7 +257,50 @@ pwmetrics --upload --config=your-own-file.js
 module.exports = {
   url: 'http://example.com/',
   clientSecret: {
-    // Follow step 1 of https://developers.google.com/sheets/api/quickstart/nodejs#step_1_turn_on_the_api_name
+    // Follow step 1 of https://developers.google.com/drive/v3/web/quickstart/nodejs
+    // Then paste resulting JSON payload as this clientSecret value
+  }
+}
+```
+
+### View Lighthouse traces in timeline-viewer
+
+Show Lighthouse traces in timeline-viewer.
+
+> Required to use `upload` flag
+
+[timeline-viewer](https://chromedevtools.github.io/timeline-viewer/) - Shareable URLs for your Chrome DevTools Timeline traces.
+
+
+```sh
+# run pwmetrics with config in package.json
+pwmetrics --upload --view
+```
+
+`package.json`
+```
+...
+  "pwmetrics": {
+    "url": 'http://example.com/',
+    "clientSecret": {
+      // Data object. Can be get by (using everything in step 1 here)[https://developers.google.com/drive/v3/web/quickstart/nodejs]
+    }
+  }
+...
+```
+
+
+```sh
+# run pwmetrics with config in your-own-file.js
+pwmetrics --upload --config=your-own-file.js
+```
+
+`your-own-file.js`
+```js
+module.exports = {
+  url: 'http://example.com/',
+  clientSecret: {
+    // Follow step 1 of https://developers.google.com/drive/v3/web/quickstart/nodejs
     // Then paste resulting JSON payload as this clientSecret value
   }
 }

@@ -1,7 +1,6 @@
 // Copyright 2016 Google Inc. All Rights Reserved.
 // Licensed under the Apache License, Version 2.0. See LICENSE
 
-const opn = require('opn');
 const { prepareAssets } = require('lighthouse/lighthouse-core/lib/asset-saver');
 
 import { AuthorizeCredentials, LighthouseResults, PreparedAssets } from '../types/types';
@@ -15,8 +14,7 @@ const upload = async function(metricsData: LighthouseResults, clientSecret: Auth
     });
     const fileName = `lighthouse-results-${Date.now()}.json`;
     const gDrive = new GDrive(clientSecret);
-    const driveResponse = await gDrive.uploadToDrive(trace[0], fileName);
-    opn(`https://chromedevtools.github.io/timeline-viewer/?loadTimelineFromURL=https://drive.google.com/file/d//${driveResponse.id}/view?usp=drivesdk`);
+    return await gDrive.uploadToDrive(trace[0], fileName);
   } catch(error) {
     throw error;
   }
