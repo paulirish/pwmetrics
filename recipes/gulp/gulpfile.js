@@ -22,7 +22,7 @@ function handleError() {
 gulp.task('pwmetrics', function() {
   connectServer();
 
-  const url = `http://localhost:${port}/index.html`;
+  const url = `https://airhorner.com`;
   const pwMetrics = new PWMetrics(url, {
     flags: {
       expectations: true
@@ -45,7 +45,6 @@ gulp.task('pwmetrics', function() {
   return pwMetrics.start()
     .then(_ => {
       connect.serverClose();
-      process.exit(0);
     })
     .catch(_ => handleError);
 });
