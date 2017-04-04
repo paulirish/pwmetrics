@@ -29,8 +29,7 @@ const stopServer = function() {
  * Run pwmetrics
  */
 const runPwmetrics = function() {
-  const url = 'http://example.com';
-  // `http://localhost:${PORT}/index.html`;
+  const url = `http://localhost:${PORT}/index.html`;
   return new PWMetrics(url, {
     flags: {
       expectations: true
