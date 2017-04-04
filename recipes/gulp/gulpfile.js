@@ -22,7 +22,7 @@ function handleError() {
 gulp.task('pwmetrics', function() {
   connectServer();
 
-  const url = `https://airhorner.com`;
+  const url = `http://localhost:${port}/index.html`;
   const pwMetrics = new PWMetrics(url, {
     flags: {
       expectations: true
