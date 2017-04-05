@@ -23,6 +23,21 @@ interface SheetsConfig {
   };
 }
 
+interface MainOptions {
+  flags?: FeatureFlags;
+  sheets?: Object;
+  expectations?: ExpectationMetrics;
+  clientSecret?: AuthorizeCredentials;
+}
+
+interface FeatureFlags {
+  runs: number;
+  submit: Boolean;
+  upload: Boolean;
+  view: Boolean;
+  disableCpuThrottling: Boolean;
+}
+
 interface MetricsResults {
   timestamps: Timestamp[];
   timings: Timing[];
@@ -106,6 +121,12 @@ interface PreparedAssets {
   traceData: Array<any>
 }
 
+//@todo after closing https://github.com/DefinitelyTyped/DefinitelyTyped/issues/13508
+interface TermWritableStream extends NodeJS.WritableStream  {
+  columns: number;
+  rows: number;
+}
+
 export {
   Timing,
   Timestamp,
@@ -121,5 +142,8 @@ export {
   DriveResponse,
   ExpectationMetrics,
   NormalizedExpectationMetrics,
-  PreparedAssets
+  PreparedAssets,
+  MainOptions,
+  FeatureFlags,
+  TermWritableStream
 };
