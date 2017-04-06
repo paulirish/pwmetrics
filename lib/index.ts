@@ -32,7 +32,7 @@ class PWMetrics {
     this.flags = opts.flags || {};
     // @todo remove when new lighthouse version be released, because -https://github.com/GoogleChrome/lighthouse/pull/1778
     this.flags.disableCpuThrottling = this.flags.disableCpuThrottling || false;
-    this.runs = opts.flags.runs || 1;
+    this.runs = this.flags.runs || 1;
     this.sheets = opts.sheets;
     this.expectations = opts.expectations || false;
     this.clientSecret = opts.clientSecret;
@@ -69,7 +69,7 @@ class PWMetrics {
       }
     }
 
-    results = results.filter(r => !(r instanceof Error));
+    const ret = {runs: results.filter(r => !(r instanceof Error))};
     if (this.runs > 1 && !this.flags.submit) {
       const median = this.findMedianRun(results);
       console.log(messages.getMessage('MEDIAN_RUN'));
@@ -78,7 +78,7 @@ class PWMetrics {
       const sheets = new Sheets(this.sheets, this.clientSecret);
       return sheets.appendResults(results).then(() => results);
     }
-    return results;
+    return ret;
   }
 
   async run(): Promise<MetricsResults> {
