@@ -46,103 +46,107 @@ class PWMetrics {
     }
   }
 
-  start() {
-    let results: MetricsResults[] = new Array(Number(this.runs)).fill(false);
+  async start() {
+    const runs = Array.apply(null, {length: this.runs}).map(Number.call, Number);
+    let results: MetricsResults[] = [];
 
     // Kill spawned Chrome process in case of ctrl-C.
-    process.on(_SIGINT, () => {
+    process.on(_SIGINT, async () => {
       if (this.launcher) {
-        this.launcher.kill().then(() => process.exit(_SIGINT_EXIT_CODE), console.log(messages.getMessage('CLOSING_CHROME')));
+        await this.launcher.kill();
+        process.exit(_SIGINT_EXIT_CODE);
+        console.log(messages.getMessage('CLOSING_CHROME'));
       }
     });
 
-    // do our runs in sequence
-    const allDone = results.reduce((chain, run, index) => {
-      return chain.then(() => {
-        return this.run().then(data => {
-          console.log(messages.getMessageWithPrefix('SUCCESS', 'SUCCESS_RUN', index, results.length));
-          results[index] = data;
-        }).catch(error => {
-          console.error(messages.getMessageWithPrefix('ERROR', 'FAILED_RUN', index, results.length, error.message));
-          results[index] = error;
-        });
-      });
-    }, Promise.resolve());
-
-    return allDone.then(() => {
-      results = results.filter(r => !(r instanceof Error));
-      if (this.runs > 1 && !this.flags.submit) {
-        const median = this.findMedianRun(results);
-        console.log(messages.getMessage('MEDIAN_RUN'));
-        this.displayOutput(median);
-      } else if (this.flags.submit) {
-        const sheets = new Sheets(this.sheets, this.clientSecret);
-        return sheets.appendResults(results).then(() => results);
+    for (let runIndex of runs) {
+      try {
+        results[runIndex] = await this.run();
+        console.log(messages.getMessageWithPrefix('SUCCESS', 'SUCCESS_RUN', runIndex, runs.length));
+      } catch(error) {
+        results[runIndex] = error;
+        console.error(messages.getMessageWithPrefix('ERROR', 'FAILED_RUN', runIndex, runs.length, error.message));
       }
-      return results;
-    });
+    }
+
+    results = results.filter(r => !(r instanceof Error));
+    if (this.runs > 1 && !this.flags.submit) {
+      const median = this.findMedianRun(results);
+      console.log(messages.getMessage('MEDIAN_RUN'));
+      this.displayOutput(median);
+    } else if (this.flags.submit) {
+      const sheets = new Sheets(this.sheets, this.clientSecret);
+      return sheets.appendResults(results).then(() => results);
+    }
+    return results;
   }
 
-  run(): Promise<MetricsResults> {
-    return this.launchChrome()
-      .then(() => {
-        if (process.env.CI) {
-          // handling CRI_TIMEOUT issue - https://github.com/GoogleChrome/lighthouse/issues/833
-          this.tryLighthouseCounter = 0;
-          return this.runLighthouseOnCI();
-        } else {
-          return lighthouse(this.url, this.flags);
-        }
-      })
-      .then((data: LighthouseResults) => {
-        return this.recordLighthouseTrace(data);
-      })
-      .then((data: MetricsResults) => {
-        return this.launcher.kill().then(() => data);
-      })
-      .catch((error: any) => {
-        throw new Error(error);
-      });
+  async run(): Promise<MetricsResults> {
+    try {
+      let lhResults: LighthouseResults;
+      await this.launchChrome();
+
+      if (process.env.CI) {
+        // handling CRI_TIMEOUT issue - https://github.com/GoogleChrome/lighthouse/issues/833
+        this.tryLighthouseCounter = 0;
+        lhResults = await this.runLighthouseOnCI();
+      } else {
+        lhResults = await lighthouse(this.url, this.flags);
+      }
+
+      const metricsResults: MetricsResults = await this.recordLighthouseTrace(lhResults);
+      await this.launcher.kill();
+
+      return metricsResults;
+    } catch (error) {
+      throw new Error(error);
+    }
   }
 
-  runLighthouseOnCI() {
-    return new Promise((resolve, reject) => {
-      return lighthouse(this.url, this.flags, perfConfig)
-        .then(resolve)
-        .catch((error: any) => {
-          if (error.code === 'CRI_TIMEOUT' && this.tryLighthouseCounter <= _MAX_LIGHTHOUSE_TRIES) {
-            this.tryLighthouseCounter++;
-            console.log(messages.getMessage('CRI_TIMEOUT_RELAUNCH'));
-            return this.runLighthouseOnCI().catch(error => {
-              console.error(error.message);
-              console.error(messages.getMessage('CLOSING_CHROME'));
-              return this.launcher.kill();
-            });
-          }
-          if (this.tryLighthouseCounter > _MAX_LIGHTHOUSE_TRIES) {
-            return reject(new Error(messages.getMessage('CRI_TIMEOUT_REJECT')));
-          }
-        });
-    });
+  async runLighthouseOnCI(): Promise<LighthouseResults> {
+    try {
+      return await lighthouse(this.url, this.flags, perfConfig);
+    } catch(error) {
+      if (error.code === 'CRI_TIMEOUT' && this.tryLighthouseCounter <= _MAX_LIGHTHOUSE_TRIES) {
+        return await this.retryLighthouseOnCI();
+      }
+
+      if (this.tryLighthouseCounter > _MAX_LIGHTHOUSE_TRIES) {
+        throw new Error(messages.getMessage('CRI_TIMEOUT_REJECT'));
+      }
+    }
   }
 
-  launchChrome() {
-    this.launcher = new (ChromeLauncher.ChromeLauncher || ChromeLauncher)();
-    return this.launcher.isDebuggerReady()
-      .catch(() => {
-        console.log(messages.getMessage('LAUNCHING_CHROME'));
-        return this.launcher.run();
-      });
+  async retryLighthouseOnCI(): Promise<LighthouseResults> {
+    this.tryLighthouseCounter++;
+    console.log(messages.getMessage('CRI_TIMEOUT_RELAUNCH'));
+
+    try {
+      return await this.runLighthouseOnCI();
+    } catch(error) {
+      console.error(error.message);
+      console.error(messages.getMessage('CLOSING_CHROME'));
+      return this.launcher.kill();
+    }
   }
 
-  recordLighthouseTrace(data: LighthouseResults): Promise<MetricsResults> {
+  async launchChrome() {
+    try {
+      this.launcher = new (ChromeLauncher.ChromeLauncher || ChromeLauncher)();
+      await this.launcher.isDebuggerReady();
+    } catch(e) {
+      console.log(messages.getMessage('LAUNCHING_CHROME'));
+      return this.launcher.run();
+    }
+  }
+
+  async recordLighthouseTrace(data: LighthouseResults): Promise<MetricsResults> {
     try {
       const preparedData = metrics.prepareData(data);
 
       if (this.flags.upload) {
-        return upload(data, this.clientSecret)
-          .then((driveResponse: DriveResponse) => this.view(driveResponse.id))
-          .then(() => preparedData);
+        const driveResponse: DriveResponse = await upload(data, this.clientSecret);
+        this.view(driveResponse.id);
       }
 
       if (!this.flags.submit && this.runs <= 1) {
@@ -153,9 +157,9 @@ class PWMetrics {
         expectations.checkExpectations(preparedData.timings, this.expectations);
       }
 
-      return Promise.resolve(preparedData);
+      return preparedData;
     } catch (error) {
-      return Promise.reject(error);
+      throw error;
     }
   }
 
