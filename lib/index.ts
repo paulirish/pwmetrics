@@ -82,7 +82,7 @@ class PWMetrics {
 
     let results: PWMetricsResults = {runs: metricsResults.filter(r => !(r instanceof Error))};
     if (this.runs > 1 && !this.flags.submit) {
-      results.median = this.findMedianRun(metricsResults);
+      results.median = this.findMedianRun(results.runs);
       console.log(messages.getMessage('MEDIAN_RUN'));
       this.displayOutput(results.median);
     } else if (this.flags.submit) {
