@@ -13,7 +13,7 @@ const expectations = require('./expectations');
 const {upload} = require('./upload');
 const messages = require('./utils/messages');
 
-import {MainOptions, FeatureFlags, AuthorizeCredentials, LighthouseResults, MetricsResults, DriveResponse, TermWritableStream, PWMetricsResults, SheetsConfig, ExpectationMetrics} from '../types/types';
+import {MainOptions, FeatureFlags, AuthorizeCredentials, LighthouseResults, MetricsResults, TermWritableStream, PWMetricsResults, SheetsConfig, ExpectationMetrics} from '../types/types';
 
 const MAX_LIGHTHOUSE_TRIES = 2;
 const SIGINT = 'SIGINT';
@@ -162,7 +162,7 @@ class PWMetrics {
       const preparedData = metrics.prepareData(data);
 
       if (this.flags.upload) {
-        const driveResponse: DriveResponse = await upload(data, this.clientSecret);
+        const driveResponse = await upload(data, this.clientSecret);
         this.view(driveResponse.id);
       }
 
