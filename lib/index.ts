@@ -42,6 +42,7 @@ class PWMetrics {
     this.flags = Object.assign({}, this.flags, opts.flags);
     this.runs = this.flags.runs;
     this.sheets = opts.sheets;
+    this.expectations = opts.expectations;
     this.clientSecret = opts.clientSecret;
     this.tryLighthouseCounter = 0;
 
