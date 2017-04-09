@@ -6,6 +6,7 @@ const promisify = require('micro-promisify');
 
 import { Oauth2Client, AuthorizeCredentials, DriveResponse } from '../../types/types';
 const GoogleOauth = require('../oauth/google-oauth');
+const messages = require('../utils/messages');
 
 class GDrive {
   private oauth: Oauth2Client;
@@ -25,6 +26,7 @@ class GDrive {
 
   async uploadToDrive(data: any, fileName: string): Promise<DriveResponse> {
     try {
+      console.log(messages.getMessage('G_DRIVE_UPLOADING'));
       const drive = google.drive({
         version: 'v3',
         auth: await this.getOauth()
@@ -43,6 +45,7 @@ class GDrive {
 
       const driveResponse: DriveResponse = await promisify(drive.files.create)(body);
       await this.setSharingPermissions(driveResponse.id);
+      console.log(messages.getMessage('G_DRIVE_UPLOADED'));
       return driveResponse;
     } catch (error) {
       throw new Error(error);
