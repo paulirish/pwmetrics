@@ -72,6 +72,10 @@ const getMessage = function (messageType: string, ...args: any[]) {
       return `Appended\n${args[0]}`;
     case 'G_SHEETS_API_ERROR':
       return `The API returned an error: ${args[0]}`;
+    case 'G_DRIVE_UPLOADING':
+      return 'Uploading trace to Google Drive...';
+    case 'G_DRIVE_UPLOADED':
+      return 'Trace uploaded to Google Drive...';
     default:
       throw new Error(`No matching message ID: ${messageType}`);
   }
