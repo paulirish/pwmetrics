@@ -13,6 +13,8 @@ exports.metricsResult = {
   url: url
 };
 
+exports.failedMetricResult = new Error('The content scroll size is 416px, whereas the viewport size is 412px. Audit key: content-width');
+
 exports.metricsResults = [
   {
     'timings': [
@@ -243,7 +245,6 @@ exports.metricsResults = [
     'url': 'http://example.com/'
   }
 ];
-
 
 module.exports.googleOauthCredentials = {
   installed: {
