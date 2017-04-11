@@ -13,7 +13,7 @@ exports.metricsResult = {
   url: url
 };
 
-exports.failedMetricResult = new Error('The content scroll size is 416px, whereas the viewport size is 412px. Audit key: content-width');
+exports.failedMetricResult = new Error('Failed run');
 
 exports.metricsResults = [
   {
