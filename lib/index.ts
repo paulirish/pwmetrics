@@ -104,7 +104,7 @@ class PWMetrics {
         this.tryLighthouseCounter = 0;
         lhResults = await this.runLighthouseOnCI();
       } else {
-        lhResults = await lighthouse(this.url, this.flags);
+        lhResults = await lighthouse(this.url, this.flags, perfConfig);
       }
 
       const metricsResults: MetricsResults = await this.recordLighthouseTrace(lhResults);
