@@ -1752,8 +1752,8 @@ liftoff@^2.1.0:
     rechoir "^0.6.2"
     resolve "^1.1.7"
 
-lighthouse@1.6.0:
-  version "1.6.0"
+lighthouse@1.6.3:
+  version "1.6.3"
   resolved "https://registry.yarnpkg.com/lighthouse/-/lighthouse-1.6.0.tgz#dbecd6c3b08ab8610f3f41dec548236372c311f6"
   dependencies:
     axe-core "2.1.7"
