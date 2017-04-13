@@ -105,7 +105,7 @@ class PWMetrics {
         lhResults = await this.runLighthouseOnCI().then((lhResults:LighthouseResults) => {
           // fix for https://github.com/paulirish/pwmetrics/issues/63
           return new Promise(resolve => {
-            console.log('waiting...');
+            console.log(messages.getMessage('WAITING'));
             setTimeout(_ => {
               return resolve(lhResults);
             }, 2000);
