@@ -23,6 +23,7 @@ const startServer = function() {
  */
 const stopServer = function() {
   connect.serverClose();
+  process.exit(0);
 };
 
 /**
@@ -57,7 +58,8 @@ const runPwmetrics = function() {
  */
 const handleOk = function(results) {
   stopServer();
-  return results;
+  console.log(results);
+  process.exit(0);
 };
 
 /**
@@ -66,7 +68,7 @@ const handleOk = function(results) {
 const handleError = function(e) {
   stopServer();
   console.error(e); // eslint-disable-line no-console
-  throw e; // Throw to exit process with status 1.
+  process.exit(1);
 };
 
 gulp.task('pwmetrics', function() {
