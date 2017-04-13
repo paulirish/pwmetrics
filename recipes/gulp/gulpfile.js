@@ -23,7 +23,6 @@ const startServer = function() {
  */
 const stopServer = function() {
   connect.serverClose();
-  process.exit(0);
 };
 
 /**
