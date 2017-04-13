@@ -25,11 +25,12 @@ $ npm install --save pwmetrics
 #              Median run selected by run with the median TTI.
 pwmetrics http://example.com/ --runs=3
 
-# --submit     Submits results to a google spreadsheet (requires some setup)
-pwmetrics http://goat.com --submit
-
 # --json       Reports json details to stdout.
-pwmetrics --json http://example.com/
+pwmetrics http://example.com/ --json
+
+# --output-path       File path to save results.
+pwmetrics http://example.com/ --output-path='pathToFile/file.json'
+
 
 # returns...
 # {runs: [{
@@ -46,25 +47,28 @@ pwmetrics --json http://example.com/
 
 
 # --config        Provide configuration. See _Defining config_ below.
-pwmetrics --config=your-own-file.js
+pwmetrics --config=pwmetrics-config.js
 pwmetrics --config
 
+# --submit       Submit results to Google Sheets. See _Defining submit_ below.
+pwmetrics --submit --config=pwmetrics-config.js
+pwmetrics --submit
+
+# --upload       Upload Lighthouse traces to Google Drive. See _Defining upload_ below.
+pwmetrics --upload --config=pwmetrics-config.js
+pwmetrics --upload
+
+# --view       View Lighthouse traces, which were uploaded to Google Drive, in DevTools. See _Defining view_ below.
+pwmetrics --view --config=pwmetrics-config.js
+pwmetrics --view
 
 ##
 ## CLI options useful for CI
 ##
 
 # --expectations  Assert metrics results against provides values. See _Defining expectations_ below.
-pwmetrics --expectations --config=your-own-file.js
+pwmetrics --expectations --config=pwmetrics-config.js
 pwmetrics --expectations
-
-##
-## CLI options useful for submittiing data to services
-##
-
-# --submit       Submit results to Google Sheets. See _Defining submit_ below.
-pwmetrics --submit --config=your-own-file.js
-pwmetrics --submit
 
 
 ```
@@ -81,40 +85,89 @@ pwmetrics --config
 ...
   "pwmetrics": {
     "url": "http://example.com/",
-    "sheets": {
-      // sheets configurations
-    },
-    "expectations": {
-      // expectations configurations
-    }
+    // other configuration options
   }
 ...
 ```
 
 ```sh
-# run pwmetrics with config in your-own-file.js
-pwmetrics --config=your-own-file.js
+# run pwmetrics with config in pwmetrics-config.js
+pwmetrics --config=pwmetrics-config.js
 ```
 
-`your-own-file.js`
+`pwmetrics-config.js`
 
 ```js
 module.exports = {
-  "url": "http://example.com/",
-  "flags": {
-    // submit: true, // submit metrics
-    // expectations: true // assert against the provided metric thresholds
+  url: 'http://example.com/',
+   // other configuration options. Read _All available configuration options_
+}
+```
+
+### All available configuration options
+
+`pwmetrics-config.js`
+
+```js
+module.exports = {
+  url: 'http://example.com/',
+  flags: { // AKA feature flags 
+    runs: '3', // number or runs
+    json: true, // print all data in json format to console
+    outputPath: 'pathToFile/fileName.json', //path to file where results will be saved
+    submit: true, // trurn on submitting to Google Sheets
+    upload: true, // trurn on uploading to Google Drive
+    view: true, // open uploaded traces to Google Drive in DevTools    
+    expectations: true // trurn on assertation metrics results against provides values   
   },
-  "sheets": {
-    // sheets configuration
+  expectations: {
+    // these expectations values are examples, for your cases set your own
+    // it's not required to use all metrics, you can use just a few of them
+    // Read _Available metrics_ where all keys are defined
+    ttfcp: {
+      warn: '>=1500',
+      error: '>=2000'
+    },
+    ttfmp: {
+      warn: '>=2000',
+      error: '>=3000'
+    },
+    fv: {
+      ...
+    },
+    psi: {
+      ...
+    },
+    vc85: {
+      ...
+    },
+    vs100: {
+      ...
+    },
+    tti: {
+      ...
+    }
   },
-  "expectations": {
-    // expectations configuration
+  sheets: {
+    type: 'GOOGLE_SHEETS', // sheets service type. Available types: GOOGLE_SHEETS
+    options: {
+      spreadsheetId: 'sheet_id',
+      tableName: 'data'
+    }
+  },
+  clientSecret: {
+    // Data object. Can be get 
+    // eithr 
+    // by (using everything in step 1 here)[https://developers.google.com/sheets/api/quickstart/nodejs#step_1_turn_on_the_api_name]
+    // or
+    // by (using everything in step 1 here)[https://developers.google.com/drive/v3/web/quickstart/nodejs]
   }
 }
 ```
 
 ### Defining expectations
+
+> [Recipes](/recipes) for using with CI
 
 ```sh
 # run pwmetrics with config in package.json
@@ -126,15 +179,11 @@ pwmetrics --expectations
 ...
   "pwmetrics": {
     "url": "http://example.com/",
+    "flags": {
+      "expectations": true
+    }
     "expectations": {
-      "ttfmp": {
-        "warn": ">=3000",
-        "error": ">=5000"
-      },
-      "psi": {
-        "warn": ">=1500",
-        "error": ">=3200"
-      }
+      ...
     }
   }
 ...
@@ -150,20 +199,18 @@ pwmetrics --expectations --config=your-own-file.js
 ```js
 module.exports = {
   url: 'http://example.com/',
+  flags: {
+    expectations: true
+  },
   expectations: {
-    ttfmp: {
-      warn: '>=3000',
-      error: '>=5000'
-    },
-    psi: {
-      warn: '>=1500',
-      error: '>=3200'
-    }
+    ...
   }
 }
 ```
 
 ### Defining submit
+
+Submit results to Google Sheets
 
 *Instructions:*
 
@@ -182,16 +229,12 @@ pwmetrics --submit
 ```
 ...
   "pwmetrics": {
-    "url": 'http://example.com/',
+    "url": "http://example.com/",
     "sheets": {
-      "type": 'GOOGLE_SHEETS', // sheets service type. Available types: GOOGLE_SHEETS
-      "options": {
-        "spreadsheetId": "sheet_id",
-        "tableName": "data"
-      }
+      ...
     }
     "clientSecret": {
-      // Data object. Can be get by (using everything in step 1 here)[https://developers.google.com/sheets/api/quickstart/nodejs#step_1_turn_on_the_api_name]
+      ...
     }
   }
 ...
@@ -208,20 +251,17 @@ pwmetrics --submit --config=your-own-file.js
 module.exports = {
   url: 'http://example.com/',
   sheets: {
-    type: 'GOOGLE_SHEETS', // sheets service type. Available types: GOOGLE_SHEETS
-    options: {
-      spreadsheetId: 'sheet_id',
-      tableName: 'data'
-    }
+    ...
   },
   clientSecret: {
-    // Follow step 1 of https://developers.google.com/sheets/api/quickstart/nodejs#step_1_turn_on_the_api_name
-    // Then paste resulting JSON payload as this clientSecret value
+    ...
   }
 }
 ```
 
-### Upload Lighthouse traces to Google Drive
+### Defining upload
+
+Upload Lighthouse traces to Google Drive
 
 *Instructions:*
 
@@ -238,9 +278,9 @@ pwmetrics --upload
 ```
 ...
   "pwmetrics": {
-    "url": 'http://example.com/',
+    "url": "http://example.com/",
     "clientSecret": {
-      // Data object. Can be get by (using everything in step 1 here)[https://developers.google.com/drive/v3/web/quickstart/nodejs]
+      ...
     }
   }
 ...
@@ -257,8 +297,7 @@ pwmetrics --upload --config=your-own-file.js
 module.exports = {
   url: 'http://example.com/',
   clientSecret: {
-    // Follow step 1 of https://developers.google.com/drive/v3/web/quickstart/nodejs
-    // Then paste resulting JSON payload as this clientSecret value
+    ...
   }
 }
 ```
@@ -283,7 +322,7 @@ pwmetrics --upload --view
   "pwmetrics": {
     "url": 'http://example.com/',
     "clientSecret": {
-      // Data object. Can be get by (using everything in step 1 here)[https://developers.google.com/drive/v3/web/quickstart/nodejs]
+      ...
     }
   }
 ...
@@ -292,7 +331,7 @@ pwmetrics --upload --view
 
 ```sh
 # run pwmetrics with config in your-own-file.js
-pwmetrics --upload --config=your-own-file.js
+pwmetrics --upload --view --config=your-own-file.js
 ```
 
 `your-own-file.js`
@@ -300,8 +339,7 @@ pwmetrics --upload --config=your-own-file.js
 module.exports = {
   url: 'http://example.com/',
   clientSecret: {
-    // Follow step 1 of https://developers.google.com/drive/v3/web/quickstart/nodejs
-    // Then paste resulting JSON payload as this clientSecret value
+    ...
   }
 }
 ```
@@ -319,7 +357,7 @@ module.exports = {
 
 ### Default Lighthouse options
 
- - `disableCpuThrottling` is set `false` by default. It means that CPU throttling `5x` is enabled. To turn it off, run `pwmetrcis http:example.com --disableCpuThrottling`
+ - `disableCpuThrottling` is set `false` by default. It means that CPU throttling `5x` is enabled. To turn it off, run `pwmetrics http:example.com --disableCpuThrottling`
 
 
 ### API
@@ -327,7 +365,7 @@ module.exports = {
 ```js
 const PWMetrics = require('pwmetrics');
 
-const pwMetrics = new PWMetrics('http://example.com/', opts);
+const pwMetrics = new PWMetrics('http://example.com/', opts); // [All available configuration options](#all-available-configuration-options) can be used as `opts` 
 pwMetrics.start(); // returns Promise
 
 ```
@@ -337,7 +375,7 @@ pwMetrics.start(); // returns Promise
 **flags** [Object]
 
 Feature flags. These are equal to CLI options. 
-For example, if you want to get result in json format.
+For example, if you want to get a result in json format.
 
 ```js
 const PWMetrics = require('pwmetrics');
@@ -377,7 +415,7 @@ Example:
 ```js
 const PWMetrics = require('pwmetrics');
 
-const pwMetrics = new PWMetrics('http://example.com/', { 
+const pwMetrics = new PWMetrics('http://example.com/', {
   sheets: { 
     // sheets data 
   } 
@@ -388,6 +426,12 @@ pwMetrics.start();
 See [Defining submit](#defining-submit) above.
 
 *Default*: `{}`
+
+
+**clientSecret** [Object]
+
+*Default*: `{}`
+
 
 ### Recipes
 
