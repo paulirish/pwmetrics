@@ -18,6 +18,8 @@ const getMessage = function (messageType: string, ...args: any[]) {
       return 'No url entered.';
     case 'LAUNCHING_CHROME':
       return 'Launching Chrome';
+    case 'WAITING':
+      return 'Waiting...';
     case 'CLOSING_CHROME':
       return '\nClosing Chrome';
     case 'CRI_TIMEOUT_RELAUNCH':

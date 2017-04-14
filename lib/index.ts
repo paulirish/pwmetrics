@@ -102,7 +102,15 @@ class PWMetrics {
       if (process.env.CI) {
         // handling CRI_TIMEOUT issue - https://github.com/GoogleChrome/lighthouse/issues/833
         this.tryLighthouseCounter = 0;
-        lhResults = await this.runLighthouseOnCI();
+        lhResults = await this.runLighthouseOnCI().then((lhResults:LighthouseResults) => {
+          // fix for https://github.com/paulirish/pwmetrics/issues/63
+          return new Promise(resolve => {
+            console.log(messages.getMessage('WAITING'));
+            setTimeout(_ => {
+              return resolve(lhResults);
+            }, 2000);
+          });
+        });
       } else {
         lhResults = await lighthouse(this.url, this.flags, perfConfig);
       }
