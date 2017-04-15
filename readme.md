@@ -23,7 +23,6 @@ $ npm install pwmetrics --save-dev
 ```sh
 $ pwmetrics <url> <flags>
 
-```sh
 pwmetrics http://example.com/
 
 # --runs=n     Does n runs (eg. 3, 5), and reports the median run's numbers.
