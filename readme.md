@@ -14,23 +14,24 @@
 ```sh
 $ npm install --global pwmetrics
 # or
-$ npm install --save pwmetrics
+$ npm install pwmetrics --save-dev
 ```
 
 
 ### CLI Usage
 
 ```sh
+$ pwmetrics <url> <flags>
+
+```sh
+pwmetrics http://example.com/
+
 # --runs=n     Does n runs (eg. 3, 5), and reports the median run's numbers.
 #              Median run selected by run with the median TTI.
 pwmetrics http://example.com/ --runs=3
 
 # --json       Reports json details to stdout.
 pwmetrics http://example.com/ --json
-
-# --output-path       File path to save results.
-pwmetrics http://example.com/ --output-path='pathToFile/file.json'
-
 
 # returns...
 # {runs: [{
@@ -45,21 +46,19 @@ pwmetrics http://example.com/ --output-path='pathToFile/file.json'
 #     },
 #     ...
 
+# --output-path       File path to save results.
+pwmetrics http://example.com/ --output-path='pathToFile/file.json'
 
 # --config        Provide configuration. See _Defining config_ below.
-pwmetrics --config=pwmetrics-config.js
 pwmetrics --config
 
 # --submit       Submit results to Google Sheets. See _Defining submit_ below.
-pwmetrics --submit --config=pwmetrics-config.js
 pwmetrics --submit
 
 # --upload       Upload Lighthouse traces to Google Drive. See _Defining upload_ below.
-pwmetrics --upload --config=pwmetrics-config.js
 pwmetrics --upload
 
 # --view       View Lighthouse traces, which were uploaded to Google Drive, in DevTools. See _Defining view_ below.
-pwmetrics --view --config=pwmetrics-config.js
 pwmetrics --view
 
 ##
@@ -67,7 +66,6 @@ pwmetrics --view
 ##
 
 # --expectations  Assert metrics results against provides values. See _Defining expectations_ below.
-pwmetrics --expectations --config=pwmetrics-config.js
 pwmetrics --expectations
 
 
@@ -113,8 +111,6 @@ module.exports = {
   url: 'http://example.com/',
   flags: { // AKA feature flags 
     runs: '3', // number or runs
-    json: true, // print all data in json format to console
-    outputPath: 'pathToFile/fileName.json', //path to file where results will be saved
     submit: true, // trurn on submitting to Google Sheets
     upload: true, // trurn on uploading to Google Drive
     view: true, // open uploaded traces to Google Drive in DevTools    
@@ -157,7 +153,7 @@ module.exports = {
   },
   clientSecret: {
     // Data object. Can be get 
-    // eithr 
+    // either 
     // by (using everything in step 1 here)[https://developers.google.com/sheets/api/quickstart/nodejs#step_1_turn_on_the_api_name]
     // or
     // by (using everything in step 1 here)[https://developers.google.com/drive/v3/web/quickstart/nodejs]
@@ -175,13 +171,10 @@ pwmetrics --expectations
 ```
 
 `package.json`
-```json
+```
 ...
   "pwmetrics": {
     "url": "http://example.com/",
-    "flags": {
-      "expectations": true
-    }
     "expectations": {
       ...
     }
@@ -191,21 +184,8 @@ pwmetrics --expectations
 
 
 ```sh
-# run pwmetrics with config in your-own-file.js
-pwmetrics --expectations --config=your-own-file.js
-```
-
-`your-own-file.js`
-```js
-module.exports = {
-  url: 'http://example.com/',
-  flags: {
-    expectations: true
-  },
-  expectations: {
-    ...
-  }
-}
+# run pwmetrics with config in pwmetrics-config.js
+pwmetrics --expectations --config=pwmetrics-config.js
 ```
 
 ### Defining submit
@@ -225,39 +205,24 @@ Submit results to Google Sheets
 pwmetrics --submit
 ```
 
-`package.json`
-```
-...
-  "pwmetrics": {
-    "url": "http://example.com/",
-    "sheets": {
-      ...
-    }
-    "clientSecret": {
-      ...
-    }
-  }
-...
-```
-
-
 ```sh
-# run pwmetrics with config in your-own-file.js
-pwmetrics --submit --config=your-own-file.js
+# run pwmetrics with config in pwmetrics-config.js
+pwmetrics --submit --config=pwmetrics-config.js
 ```
 
-`your-own-file.js`
+`pwmetrics-config.js`
 ```js
 module.exports = {
-  url: 'http://example.com/',
-  sheets: {
+  'url': 'http://example.com/',
+  'sheets': {
     ...
   },
-  clientSecret: {
+  'clientSecret': {
     ...
   }
 }
 ```
+
 
 ### Defining upload
 
@@ -274,29 +239,16 @@ Upload Lighthouse traces to Google Drive
 pwmetrics --upload
 ```
 
-`package.json`
-```
-...
-  "pwmetrics": {
-    "url": "http://example.com/",
-    "clientSecret": {
-      ...
-    }
-  }
-...
-```
-
-
 ```sh
-# run pwmetrics with config in your-own-file.js
-pwmetrics --upload --config=your-own-file.js
+# run pwmetrics with config in pwmetrics-config.js
+pwmetrics --upload --config=pwmetrics-config.js
 ```
 
-`your-own-file.js`
+`pwmetrics-config.js`
 ```js
 module.exports = {
-  url: 'http://example.com/',
-  clientSecret: {
+  'url': 'http://example.com/',
+  'clientSecret': {
     ...
   }
 }
@@ -316,29 +268,17 @@ Show Lighthouse traces in timeline-viewer.
 pwmetrics --upload --view
 ```
 
-`package.json`
-```
-...
-  "pwmetrics": {
-    "url": 'http://example.com/',
-    "clientSecret": {
-      ...
-    }
-  }
-...
-```
-
 
 ```sh
 # run pwmetrics with config in your-own-file.js
 pwmetrics --upload --view --config=your-own-file.js
 ```
 
-`your-own-file.js`
+`pwmetrics-config.js`
 ```js
 module.exports = {
-  url: 'http://example.com/',
-  clientSecret: {
+  'url': 'http://example.com/',
+  'clientSecret': {
     ...
   }
 }
@@ -365,73 +305,63 @@ module.exports = {
 ```js
 const PWMetrics = require('pwmetrics');
 
-const pwMetrics = new PWMetrics('http://example.com/', opts); // [All available configuration options](#all-available-configuration-options) can be used as `opts` 
+const pwMetrics = new PWMetrics('http://example.com/', options); // [All available configuration options](#all-available-configuration-options) can be used as `opts` 
 pwMetrics.start(); // returns Promise
 
 ```
 
-#### Options Parameter
+#### Options
 
-**flags** [Object]
-
-Feature flags. These are equal to CLI options. 
-For example, if you want to get a result in json format.
-
-```js
-const PWMetrics = require('pwmetrics');
-
-const pwMetrics = new PWMetrics('http://example.com/', { flags: { json: true } });
-pwMetrics.start();
-
-```
- 
-*Default*: `{ disableCpuThrottling: false }`
-
-
-**expectations** [Object]
-
-Example: 
-
-```js
-const PWMetrics = require('pwmetrics');
-
-const pwMetrics = new PWMetrics('http://example.com/', { 
-  expectations: { 
-    // expecations data 
-  } 
-});
-pwMetrics.start();
-```
-
-See [Defining expectations](#defining-expectations) above.
-
-*Default*: `{}`
-
-
-**sheets** [Object]
-
-Example: 
-
-```js
-const PWMetrics = require('pwmetrics');
-
-const pwMetrics = new PWMetrics('http://example.com/', {
-  sheets: { 
-    // sheets data 
-  } 
-});
-pwMetrics.start();
-```
-
-See [Defining submit](#defining-submit) above.
-
-*Default*: `{}`
-
-
-**clientSecret** [Object]
-
-*Default*: `{}`
-
+<table class="table" width="100%">
+  <thead>
+    <tr>
+      <th width="10%">Option</th>
+      <th width="15%">Type</th>
+      <th width="40%">Default</th>
+      <th width="25%">Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: center;">flags</td>
+      <td style="text-align: center;">Object</td>
+      <td>
+        <pre>
+{
+  runs: 1,
+  submit: false,
+  upload: false,
+  view: false,
+  expectations: false,
+  disableCpuThrottling: false
+}
+        </pre>
+      </td>
+      <td>Feature flags</td>
+    </tr>
+    <tr>
+      <td style="text-align: center;">expectations</td>
+      <td style="text-align: center;">Object</td>
+      <td style="text-align: center;">{}</td>
+      <td>See <a href="#defining-expectations">Defining expectations</a> above.</td>
+    </tr>
+    <tr>
+      <td style="text-align: center;">sheets</td>
+      <td style="text-align: center;">Object</td>
+      <td style="text-align: center;">{}</td>
+      <td>See <a href="#defining-submit">Defining submit</a> above.</td>
+    </tr>
+    <tr>
+      <td style="text-align: center;">clientSecret</td>
+      <td style="text-align: center;">Object</td>
+      <td style="text-align: center;">{}</td>
+      <td>
+        Client secrete data generated by Google API console.
+        To setup Google Developer project and get credentials apply <a href="https://developers.google.com/drive/v3/web/quickstart/nodejs">everything in step 1 here</a>.
+      </td>
+    </tr>
+  </tbody>
+</table>
 
 ### Recipes
 
