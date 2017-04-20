@@ -10,7 +10,7 @@ describe('Config', () => {
   describe('validate input', () => {
     context('from package.json', () => {
       it('should return empty object if pwmetrics property not defined', () => {
-        expect(getConfigFromFile()).to.be.deep.equal({});
+        expect(getConfigFromFile('package.json')).to.be.deep.equal({});
       });
     });
     context('with pwmetrics property defined', () => {
@@ -19,7 +19,7 @@ describe('Config', () => {
       });
 
       it('should return the pwmetrics data', () => {
-        expect(getConfigFromFile()).to.be.deep.equal(expectations);
+        expect(getConfigFromFile('package.json')).to.be.deep.equal(expectations);
       });
 
       after(() => {
