@@ -1885,9 +1885,9 @@ liftoff@^2.1.0:
     rechoir "^0.6.2"
     resolve "^1.1.7"
 
-lighthouse@paulirish/lighthouse#b7756033:
+lighthouse@paulirish/lighthouse#c74ea959:
   version "1.6.0"
-  resolved "https://codeload.github.com/paulirish/lighthouse/tar.gz/b7756033"
+  resolved "https://codeload.github.com/paulirish/lighthouse/tar.gz/c74ea959"
   dependencies:
     axe-core "2.1.7"
     chrome-devtools-frontend "1.0.422034"
