@@ -48,7 +48,8 @@ const cliFlags = yargs
   })
   .option('config', {
     'describe': 'Path to config file',
-    'type': 'string'
+    'type': 'string',
+    'default': 'package.json'
   })
   .option('upload', {
     'describe': 'Upload trace to Google Drive',

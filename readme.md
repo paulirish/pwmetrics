@@ -48,8 +48,8 @@ pwmetrics http://example.com/ --json
 # --output-path       File path to save results.
 pwmetrics http://example.com/ --output-path='pathToFile/file.json'
 
-# --config        Provide configuration. See _Defining config_ below.
-pwmetrics --config
+# --config        Provide configuration (defaults to `package.json`). See _Defining config_ below.
+pwmetrics --config=pwmetrics-config.js
 
 # --submit       Submit results to Google Sheets. See _Defining submit_ below.
 pwmetrics --submit
@@ -74,7 +74,7 @@ pwmetrics --expectations
 
 ```sh
 # run pwmetrics with config in package.json
-pwmetrics --config
+pwmetrics
 ```
 
 `package.json`
@@ -108,12 +108,12 @@ module.exports = {
 ```js
 module.exports = {
   url: 'http://example.com/',
-  flags: { // AKA feature flags 
+  flags: { // AKA feature flags
     runs: '3', // number or runs
     submit: true, // turn on submitting to Google Sheets
     upload: true, // turn on uploading to Google Drive
-    view: true, // open uploaded traces to Google Drive in DevTools    
-    expectations: true // turn on assertation metrics results against provides values   
+    view: true, // open uploaded traces to Google Drive in DevTools
+    expectations: true // turn on assertation metrics results against provides values
   },
   expectations: {
     // these expectations values are examples, for your cases set your own
@@ -151,8 +151,8 @@ module.exports = {
     }
   },
   clientSecret: {
-    // Data object. Can be get 
-    // either 
+    // Data object. Can be get
+    // either
     // by (using everything in step 1 here)[https://developers.google.com/sheets/api/quickstart/nodejs#step_1_turn_on_the_api_name]
     // or
     // by (using everything in step 1 here)[https://developers.google.com/drive/v3/web/quickstart/nodejs]
@@ -283,7 +283,7 @@ module.exports = {
 }
 ```
 
-#### Available metrics: 
+#### Available metrics:
 
  - `ttfcp` - First Contentful Paint
  - `ttfmp` - First Meaningful Paint
@@ -304,7 +304,7 @@ module.exports = {
 ```js
 const PWMetrics = require('pwmetrics');
 
-const pwMetrics = new PWMetrics('http://example.com/', options); // [All available configuration options](#all-available-configuration-options) can be used as `opts` 
+const pwMetrics = new PWMetrics('http://example.com/', options); // [All available configuration options](#all-available-configuration-options) can be used as `opts`
 pwMetrics.start(); // returns Promise
 
 ```
