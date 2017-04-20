@@ -12,9 +12,9 @@
 
 ### Install [![NPM pwmetrics package](https://img.shields.io/npm/v/pwmetrics.svg)](https://npmjs.org/package/pwmetrics)
 ```sh
-$ npm install --global pwmetrics
+$ yarn global add pwmetrics
 # or
-$ npm install pwmetrics --save-dev
+$ yarn add --dev pwmetrics
 ```
 
 
