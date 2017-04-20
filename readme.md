@@ -110,10 +110,10 @@ module.exports = {
   url: 'http://example.com/',
   flags: { // AKA feature flags 
     runs: '3', // number or runs
-    submit: true, // trurn on submitting to Google Sheets
-    upload: true, // trurn on uploading to Google Drive
+    submit: true, // turn on submitting to Google Sheets
+    upload: true, // turn on uploading to Google Drive
     view: true, // open uploaded traces to Google Drive in DevTools    
-    expectations: true // trurn on assertation metrics results against provides values   
+    expectations: true // turn on assertation metrics results against provides values   
   },
   expectations: {
     // these expectations values are examples, for your cases set your own
