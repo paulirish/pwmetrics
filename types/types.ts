@@ -3,7 +3,7 @@
 
 import {AuditFullResult, Results} from 'lighthouse/lighthouse-cli/types/types';
 
-interface LighthouseResults extends Results { }
+interface LighthouseResults extends Results {}
 
 interface LighthouseAudits {
   [metric: string]: AuditFullResult;

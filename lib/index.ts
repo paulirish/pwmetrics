@@ -104,7 +104,7 @@ class PWMetrics {
         this.tryLighthouseCounter = 0;
         lhResults = await this.runLighthouseOnCI().then((lhResults:LighthouseResults) => {
           // fix for https://github.com/paulirish/pwmetrics/issues/63
-          return new Promise(resolve => {
+          return new Promise<LighthouseResults>(resolve => {
             console.log(messages.getMessage('WAITING'));
             setTimeout(_ => {
               return resolve(lhResults);
@@ -162,9 +162,11 @@ class PWMetrics {
     try {
       this.launcher = new ChromeLauncher();
       await this.launcher.isDebuggerReady();
+      return this.launcher;
     } catch(e) {
       console.log(messages.getMessage('LAUNCHING_CHROME'));
-      return this.launcher.run();
+      await this.launcher.run();
+      return this.launcher;
     }
   }
 

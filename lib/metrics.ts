@@ -16,7 +16,9 @@ const metricsIds = {
   VC100: 'vc100',
   TTI: 'tti',
   TTInonvis: 'tti-non-visual',
-  TTInonvis5s: 'tti-non-visual-5s'
+  TTInonvis5s: 'tti-non-visual-5s',
+  EndOfATrace: 'eot',
+  OnLoad: 'onload'
 };
 
 module.exports = {
@@ -26,6 +28,8 @@ module.exports = {
     metricsIds.VC85,
     metricsIds.TTInonvis,
     metricsIds.TTInonvis5s,
+    metricsIds.EndOfATrace,
+    metricsIds.OnLoad,
     metricsIds.NAVSTART
   ],
   ids: metricsIds,
@@ -59,7 +63,10 @@ function prepareData(res: LighthouseResults): MetricsResults {
     // exclude navStart as its not a timing
     .filter(def => def.id !== metricsIds.NAVSTART)
     // exclude experimental metrics
-    .filter(def => def.id !== metricsIds.TTInonvis && def.id !== metricsIds.TTInonvis5s)
+    .filter(def => def.id !== metricsIds.TTInonvis
+      && def.id !== metricsIds.TTInonvis5s
+      && def.id !== metricsIds.OnLoad
+      && def.id !== metricsIds.EndOfATrace)
     .forEach(metric => {
       const resolvedMetric: Timing = {
         title: metric.name,
