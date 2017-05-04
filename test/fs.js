@@ -14,15 +14,9 @@ describe('Config', () => {
       });
     });
     context('with pwmetrics property defined', () => {
-      before(() => {
-        packageJSON.pwmetrics = expectations;
-      });
-
       it('should return the pwmetrics data', () => {
+        packageJSON.pwmetrics = expectations;
         expect(getConfigFromFile('package.json')).to.be.deep.equal(expectations);
-      });
-
-      after(() => {
         delete packageJSON.pwmetrics;
       });
     });
@@ -37,7 +31,7 @@ describe('Config', () => {
       });
 
       it('should return empty object if file in path is not a json', () => {
-        expect(() => getConfigFromFile('./test/fixtures/invalid-config')).to.throw(Error, 'Invalid config from');
+        expect(getConfigFromFile('./test/fixtures/invalid-config')).to.be.deep.equal({});
       });
     });
   });

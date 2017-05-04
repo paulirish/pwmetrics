@@ -4,6 +4,25 @@
 import * as path from 'path';
 
 function getConfigFromFile(fileName: string) {
+  if (fileName.endsWith('package.json')) return getConfigFromPkgFile(fileName);
+  else return getConfigFromFilePath(fileName);
+}
+
+const getConfigFromPkgFile = function(fileName: string) {
+  let resolved: string;
+  try {
+    const cwdPath = path.resolve(process.cwd(), fileName);
+    resolved = require.resolve(cwdPath);
+  } catch (e) {
+    // if there no package.json for current process.cwd then return empty config
+    return {};
+  }
+
+  const config = require(resolved);
+  return config.pwmetrics || {};
+};
+
+const getConfigFromFilePath = function(fileName: string) {
   let resolved: string;
   try {
     resolved = require.resolve(`./${fileName}`);
@@ -11,13 +30,9 @@ function getConfigFromFile(fileName: string) {
     const cwdPath = path.resolve(process.cwd(), fileName);
     resolved = require.resolve(cwdPath);
   }
-  const config = require(resolved);
-  if(config !== null && typeof config === 'object') {
-    if (resolved.endsWith('package.json'))
-      return config.pwmetrics || {};
-    else return config;
-  } else throw new Error(`Invalid config from ${fileName}`);
 
-}
+  const config = require(resolved);
+  return (config !== null && typeof config === 'object') ? config : {};
+};
 
 module.exports = { getConfigFromFile };
