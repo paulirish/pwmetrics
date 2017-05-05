@@ -10,7 +10,7 @@ describe('CLI', function() {
   describe('url', () => {
     it('should throw error if a url is not provided by cli', () => {
       try {
-        childProcess.execSync('bin/cli.js --config');
+        childProcess.execSync('bin/cli.js');
       } catch (e) {
         expect(e.message).to.contain('No url entered..');
       }
