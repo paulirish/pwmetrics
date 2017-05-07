@@ -9,19 +9,15 @@ const expect = require('chai').expect;
 describe('CLI', function() {
   describe('url', () => {
     it('should throw error if a url is not provided by cli', () => {
-      try {
-        childProcess.execSync('bin/cli.js');
-      } catch (e) {
-        expect(e.message).to.contain('No url entered..');
-      }
+      return childProcess.exec('bin/cli.js', error => {
+        expect(error.message).to.contain('No url entered..');
+      });
     });
 
     it('should throw error if a url is not provided either by config or by cli', () => {
-      try {
-        childProcess.execSync('bin/cli.js --config=./test/fixtures/empty-config.js');
-      } catch (e) {
-        expect(e.message).to.contain('No url entered..');
-      }
+      return childProcess.exec('bin/cli.js --config=./test/fixtures/empty-config.js', error => {
+        expect(error.message).to.contain('No url entered..');
+      });
     });
 
     it('should not throw any error if a url is provided from cli', () => {
