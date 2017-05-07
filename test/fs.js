@@ -8,15 +8,15 @@ const expectations = require('./fixtures/run-expectations');
 
 describe('Config', () => {
   describe('validate input', () => {
-    context('from package.json', () => {
+    context('from package.json as default parameter', () => {
       it('should return empty object if pwmetrics property not defined', () => {
-        expect(getConfigFromFile('package.json')).to.be.deep.equal({});
+        expect(getConfigFromFile()).to.be.deep.equal({});
       });
     });
     context('with pwmetrics property defined', () => {
       it('should return the pwmetrics data', () => {
         packageJSON.pwmetrics = expectations;
-        expect(getConfigFromFile('package.json')).to.be.deep.equal(expectations);
+        expect(getConfigFromFile()).to.be.deep.equal(expectations);
         delete packageJSON.pwmetrics;
       });
     });
@@ -30,8 +30,8 @@ describe('Config', () => {
         expect(() => getConfigFromFile('./some/invalid/path')).to.throw(Error, 'Cannot find module');
       });
 
-      it('should return empty object if file in path is not a json', () => {
-        expect(getConfigFromFile('./test/fixtures/invalid-config')).to.be.deep.equal({});
+      it('should throw if file in path is not a json', () => {
+        expect(() => getConfigFromFile('./test/fixtures/invalid-config')).to.throw(Error, 'Invalid config from');
       });
     });
   });
