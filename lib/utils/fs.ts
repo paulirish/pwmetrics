@@ -3,7 +3,7 @@
 
 import * as path from 'path';
 
-function getConfigFromFile(fileName: string) {
+function getConfigFromFile(fileName: string = 'package.json') {
   let resolved: string;
   try {
     resolved = require.resolve(`./${fileName}`);
@@ -17,7 +17,7 @@ function getConfigFromFile(fileName: string) {
       return config.pwmetrics || {};
     else return config;
   } else throw new Error(`Invalid config from ${fileName}`);
-
+  
 }
 
 module.exports = { getConfigFromFile };

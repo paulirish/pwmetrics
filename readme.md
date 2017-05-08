@@ -9,6 +9,7 @@
 ![image](https://cloud.githubusercontent.com/assets/39191/19417867/7aead922-93af-11e6-88ec-917dad6e89d2.png)
 
  Documentation on these metrics in the works. If you hit bugs in the metrics collection, report at [Lighthouse issues](https://github.com/GoogleChrome/lighthouse/issues).
+ [How to use article](https://medium.com/@denar90/easy-progressive-web-metrics-9afa5ed857c2)
 
 ### Install [![NPM pwmetrics package](https://img.shields.io/npm/v/pwmetrics.svg)](https://npmjs.org/package/pwmetrics)
 ```sh
@@ -304,7 +305,7 @@ module.exports = {
 ```js
 const PWMetrics = require('pwmetrics');
 
-const pwMetrics = new PWMetrics('http://example.com/', options); // [All available configuration options](#all-available-configuration-options) can be used as `opts`
+const pwMetrics = new PWMetrics('http://example.com/', options); // _All available configuration options_ can be used as `options`
 pwMetrics.start(); // returns Promise
 
 ```

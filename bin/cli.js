@@ -48,8 +48,7 @@ const cliFlags = yargs
   })
   .option('config', {
     'describe': 'Path to config file',
-    'type': 'string',
-    'default': 'package.json'
+    'type': 'string'
   })
   .option('upload', {
     'describe': 'Upload trace to Google Drive',
@@ -66,9 +65,13 @@ const cliFlags = yargs
     'type': 'boolean',
     'default': false
   })
-  .check( (argv) => {
-    // Make sure pwmetrics has been passed a url, either from cli or config file
-    if(argv.config) config = getConfigFromFile(argv.config);
+  .check((argv) => {
+    // Make sure pwmetrics has been passed a url, either from cli or config fileg()
+
+    // Test if flag was explicitly set, yargs default will always assume flag is called, lack of optional support
+    if (argv.config !== undefined) {
+      config = argv.config.length ? getConfigFromFile(argv.config) : getConfigFromFile();
+    }
 
     if (argv._.length === 0 && (config === undefined || !config.url))
       throw new Error(getMessageWithPrefix('ERROR', 'NO_URL'));
