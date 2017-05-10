@@ -1,6 +1,6 @@
 {
   "name": "pwmetrics",
-  "version": "2.0.1",
+  "version": "2.0.2",
   "description": "Gather progressive web metrics for a url. CLI & lib",
   "main": "lib/index.js",
   "bin": {
