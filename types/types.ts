@@ -21,6 +21,7 @@ interface SheetsConfig {
 interface MainOptions {
   flags?: FeatureFlags;
   sheets?: SheetsConfig;
+  includedMetrics?: IncludedMetrics;
   expectations?: ExpectationMetrics;
   clientSecret?: AuthorizeCredentials;
 }
@@ -101,6 +102,13 @@ interface GSheetsAppendResultsOptions {
   tableName: string;
 }
 
+interface IncludedMetrics {
+  [key: string]: {
+    warn: string;
+    error: string;
+  }
+}
+
 interface ExpectationMetrics {
   [key: string]: {
     warn: string;
@@ -142,6 +150,7 @@ export {
   GSheetsValuesToAppend,
   GSheetsAppendResultsOptions,
   DriveResponse,
+  IncludedMetrics,
   ExpectationMetrics,
   NormalizedExpectationMetrics,
   PreparedAssets,

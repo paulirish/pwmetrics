@@ -22,15 +22,11 @@ const metricsIds = {
 };
 
 module.exports = {
-  hiddenMetrics: [
-    metricsIds.FV,
-    metricsIds.VC100,
-    metricsIds.VC85,
-    metricsIds.TTInonvis,
-    metricsIds.TTInonvis5s,
-    metricsIds.EndOfATrace,
-    metricsIds.OnLoad,
-    metricsIds.NAVSTART
+  includedMetrics: [
+    metricsIds.TTFCP,
+    metricsIds.TTFMP,
+    metricsIds.PSI,
+    metricsIds.TTI
   ],
   ids: metricsIds,
   prepareData
