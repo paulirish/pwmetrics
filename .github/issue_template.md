@@ -1,6 +1,10 @@
-### Description 
-Please provide us with some description of your problem.
+### Config / CLI options
 
+### Steps to reproduce.
+
+### Stack trace
+
+### Screenshot
 
 ### Environment
 1. `pwmetrcis` version:
