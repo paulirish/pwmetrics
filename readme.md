@@ -75,7 +75,7 @@ pwmetrics --expectations
 
 ```sh
 # run pwmetrics with config in package.json
-pwmetrics
+pwmetrics --config
 ```
 
 `package.json`
