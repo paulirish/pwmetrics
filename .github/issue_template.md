@@ -7,6 +7,6 @@
 ### Screenshot
 
 ### Environment
-1. `pwmetrcis` version:
+1. `pwmetrics` version:
 2. Chrome version:
 3. OS version: 
