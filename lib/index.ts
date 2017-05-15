@@ -13,7 +13,7 @@ const expectations = require('./expectations');
 const {upload} = require('./upload');
 const messages = require('./utils/messages');
 
-import {MainOptions, FeatureFlags, AuthorizeCredentials, LighthouseResults, MetricsResults, TermWritableStream, PWMetricsResults, SheetsConfig, ExpectationMetrics} from '../types/types';
+import {MainOptions, FeatureFlags, AuthorizeCredentials, LighthouseResults, MetricsResults, TermWritableStream, PWMetricsResults, SheetsConfig, IncludedMetrics, ExpectationMetrics} from '../types/types';
 
 const MAX_LIGHTHOUSE_TRIES = 2;
 const SIGINT = 'SIGINT';
@@ -33,6 +33,7 @@ class PWMetrics {
   };
   runs: number;
   sheets: SheetsConfig;
+  includedMetrics: IncludedMetrics;
   expectations: ExpectationMetrics;
   clientSecret: AuthorizeCredentials;
   tryLighthouseCounter: number;
@@ -42,6 +43,7 @@ class PWMetrics {
     this.flags = Object.assign({}, this.flags, opts.flags);
     this.runs = this.flags.runs;
     this.sheets = opts.sheets;
+    this.includedMetrics = opts.includedMetrics;
     this.expectations = opts.expectations;
     this.clientSecret = opts.clientSecret;
     this.tryLighthouseCounter = 0;
@@ -203,15 +205,18 @@ class PWMetrics {
   }
 
   showChart(data: MetricsResults) {
+    let includedMetrics = this.includedMetrics || metrics.includedMetrics;
+
     // reverse to preserve the order, because cli-chart.
     let timings = data.timings;
 
     timings = timings.filter(r => {
+
       if (r.timing === undefined) {
         console.error(messages.getMessageWithPrefix('ERROR', 'METRIC_IS_UNAVAILABLE', r.title));
       }
-      // don't chart hidden metrics, but include in json
-      return !metrics.hiddenMetrics.includes(r.id);
+      // only chart included metrics.
+      return includedMetrics.includes(r.id);
     });
 
     const fullWidthInMs = Math.max(...timings.map(result => result.timing));
