@@ -60,11 +60,6 @@ const cliFlags = yargs
     'type': 'boolean',
     'default': false
   })
-  .option('disable-cpu-throttling', {
-    'describe': 'Disable CPU throttling',
-    'type': 'boolean',
-    'default': false
-  })
   .check((argv) => {
     // Make sure pwmetrics has been passed a url, either from cli or config fileg()
 

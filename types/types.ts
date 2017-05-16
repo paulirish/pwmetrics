@@ -32,7 +32,6 @@ interface FeatureFlags {
   view: Boolean;
   expectations: Boolean;
   output: Boolean;
-  disableCpuThrottling: Boolean;
   chromeFlags: Array<string>;
   port?: number;
 }

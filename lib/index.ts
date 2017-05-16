@@ -26,8 +26,6 @@ class PWMetrics {
     view: false,
     expectations: false,
     output: false,
-    // @todo remove when new lighthouse version be released, because -https://github.com/GoogleChrome/lighthouse/pull/1778
-    disableCpuThrottling: false,
     chromeFlags: []
   };
   runs: number;
