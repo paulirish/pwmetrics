@@ -1885,9 +1885,9 @@ liftoff@^2.1.0:
     rechoir "^0.6.2"
     resolve "^1.1.7"
 
-lighthouse@GoogleChrome/lighthouse#c908e81:
+lighthouse@denar90/lighthouse#14cd4f5:
   version "2.0.0-alpha.6"
-  resolved "https://codeload.github.com/GoogleChrome/lighthouse/tar.gz/c908e81"
+  resolved "https://codeload.github.com/denar90/lighthouse/tar.gz/14cd4f5"
   dependencies:
     axe-core "2.2.0"
     chrome-devtools-frontend "1.0.422034"
