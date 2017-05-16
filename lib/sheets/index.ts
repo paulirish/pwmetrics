@@ -60,7 +60,8 @@ class Sheets {
         getTiming(metricsIds.PSI),
         getTiming(metricsIds.FV),
         getTiming(metricsIds.VC100),
-        getTiming(metricsIds.TTI),
+        getTiming(metricsIds.TTFI),
+        getTiming(metricsIds.TTCI),
         getTiming(metricsIds.VC85)
       ]);
     });

@@ -15,6 +15,8 @@ const metricsIds = {
   VC85: 'vc85',
   VC100: 'vc100',
   TTI: 'tti',
+  TTFI: 'ttfi',
+  TTCI: 'ttci',
   TTInonvis: 'tti-non-visual',
   TTInonvis5s: 'tti-non-visual-5s',
   EndOfATrace: 'eot',
@@ -66,6 +68,7 @@ function prepareData(res: LighthouseResults): MetricsResults {
     .filter(def => def.id !== metricsIds.TTInonvis
       && def.id !== metricsIds.TTInonvis5s
       && def.id !== metricsIds.OnLoad
+      && def.id !== metricsIds.TTI
       && def.id !== metricsIds.EndOfATrace)
     .forEach(metric => {
       const resolvedMetric: Timing = {
@@ -81,7 +84,8 @@ function prepareData(res: LighthouseResults): MetricsResults {
         case metricsIds.TTFMP:
           resolvedMetric.color = colorP2;
           break;
-        case metricsIds.TTI:
+        case metricsIds.TTFI:
+        case metricsIds.TTCI:
           resolvedMetric.color = colorP0;
           break;
       }
