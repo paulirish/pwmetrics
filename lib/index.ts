@@ -2,7 +2,7 @@
 // Licensed under the Apache License, Version 2.0. See LICENSE
 
 const lighthouse = require('lighthouse');
-import {ChromeLauncher} from 'lighthouse/lighthouse-cli/chrome-launcher';
+import {launch, LaunchedChrome} from 'lighthouse/chrome-launcher/chrome-launcher';
 const perfConfig: any = require('lighthouse/lighthouse-core/config/perf.json');
 const opn = require('opn');
 
@@ -16,8 +16,6 @@ const messages = require('./utils/messages');
 import {MainOptions, FeatureFlags, AuthorizeCredentials, LighthouseResults, MetricsResults, TermWritableStream, PWMetricsResults, SheetsConfig, ExpectationMetrics} from '../types/types';
 
 const MAX_LIGHTHOUSE_TRIES = 2;
-const SIGINT = 'SIGINT';
-const SIGINT_EXIT_CODE = 130;
 const getTimelineViewerUrl = (id: string) => `https://chromedevtools.github.io/timeline-viewer/?loadTimelineFromURL=https://drive.google.com/file/d//${id}/view?usp=drivesdk`
 
 class PWMetrics {
@@ -29,14 +27,15 @@ class PWMetrics {
     expectations: false,
     output: false,
     // @todo remove when new lighthouse version be released, because -https://github.com/GoogleChrome/lighthouse/pull/1778
-    disableCpuThrottling: false
+    disableCpuThrottling: false,
+    chromeFlags: []
   };
   runs: number;
   sheets: SheetsConfig;
   expectations: ExpectationMetrics;
   clientSecret: AuthorizeCredentials;
   tryLighthouseCounter: number;
-  launcher: ChromeLauncher | undefined = undefined;
+  launcher: LaunchedChrome | undefined;
 
   constructor(public url: string, opts: MainOptions) {
     this.flags = Object.assign({}, this.flags, opts.flags);
@@ -58,18 +57,6 @@ class PWMetrics {
     const runs = Array.apply(null, {length: +this.runs}).map(Number.call, Number);
     let metricsResults: MetricsResults[] = [];
 
-    // Kill spawned Chrome process in case of ctrl-C.
-    process.on(SIGINT, async() => {
-      if (this.launcher) {
-        try {
-          await this.killLauncher();
-          process.exit(SIGINT_EXIT_CODE);
-          console.log(messages.getMessage('CLOSING_CHROME'));
-        } catch (error) {
-          throw error;
-        }
-      }
-    });
     for (let runIndex of runs) {
       try {
         metricsResults[runIndex] = await this.run();
@@ -158,15 +145,17 @@ class PWMetrics {
     }
   }
 
-  async launchChrome(): Promise<ChromeLauncher> {
+  async launchChrome(): Promise<LaunchedChrome|Error> {
     try {
-      this.launcher = new ChromeLauncher();
-      await this.launcher.isDebuggerReady();
-      return this.launcher;
-    } catch(e) {
       console.log(messages.getMessage('LAUNCHING_CHROME'));
-      await this.launcher.run();
-      return this.launcher;
+      this.launcher = await launch({
+        port: this.flags.port,
+        chromeFlags: this.flags.chromeFlags,
+        handleSIGINT: true
+      });
+      this.flags.port = this.launcher.port;
+    } catch(error) {
+      return error;
     }
   }
 

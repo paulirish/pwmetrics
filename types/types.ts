@@ -33,6 +33,8 @@ interface FeatureFlags {
   expectations: Boolean;
   output: Boolean;
   disableCpuThrottling: Boolean;
+  chromeFlags: Array<string>;
+  port?: number;
 }
 
 interface MetricsResults {

@@ -163,9 +163,9 @@ aws4@^1.2.1:
   version "1.6.0"
   resolved "https://registry.yarnpkg.com/aws4/-/aws4-1.6.0.tgz#83ef5ca860b2b32e4a0deedee8c771b9db57471e"
 
-axe-core@2.1.7:
-  version "2.1.7"
-  resolved "https://registry.yarnpkg.com/axe-core/-/axe-core-2.1.7.tgz#4f66f2b3ee3b58ec2d3db4339dd124c5b33b79c3"
+axe-core@2.2.0:
+  version "2.2.0"
+  resolved "https://registry.yarnpkg.com/axe-core/-/axe-core-2.2.0.tgz#00b410b3fc899207d4f2f8e3753cff150d34e4bb"
 
 babar@0.0.3:
   version "0.0.3"
@@ -1768,7 +1768,7 @@ jodid25519@^1.0.0:
   dependencies:
     jsbn "~0.1.0"
 
-jpeg-js@^0.1.2:
+jpeg-js@0.1.2, jpeg-js@^0.1.2:
   version "0.1.2"
   resolved "https://registry.yarnpkg.com/jpeg-js/-/jpeg-js-0.1.2.tgz#135b992c0575c985cfa0f494a3227ed238583ece"
 
@@ -1885,16 +1885,17 @@ liftoff@^2.1.0:
     rechoir "^0.6.2"
     resolve "^1.1.7"
 
-lighthouse@paulirish/lighthouse#c74ea959:
-  version "1.6.0"
-  resolved "https://codeload.github.com/paulirish/lighthouse/tar.gz/c74ea959"
+lighthouse@GoogleChrome/lighthouse#c908e81:
+  version "2.0.0-alpha.6"
+  resolved "https://codeload.github.com/GoogleChrome/lighthouse/tar.gz/c908e81"
   dependencies:
-    axe-core "2.1.7"
+    axe-core "2.2.0"
     chrome-devtools-frontend "1.0.422034"
     debug "2.2.0"
     devtools-timeline-model "1.1.6"
     gl-matrix "2.3.2"
     handlebars "4.0.5"
+    jpeg-js "0.1.2"
     json-stringify-safe "5.0.1"
     marked "0.3.6"
     metaviewport-parser "0.0.1"
@@ -1902,7 +1903,7 @@ lighthouse@paulirish/lighthouse#c74ea959:
     opn "4.0.2"
     rimraf "2.2.8"
     semver "5.3.0"
-    speedline "1.0.3"
+    speedline "1.2.0"
     update-notifier "^2.1.0"
     whatwg-url "4.0.0"
     ws "1.1.1"
@@ -2932,9 +2933,9 @@ spdx-license-ids@^1.0.2:
   version "1.2.2"
   resolved "https://registry.yarnpkg.com/spdx-license-ids/-/spdx-license-ids-1.2.2.tgz#c9df7a3424594ade6bd11900d596696dc06bac57"
 
-speedline@1.0.3:
-  version "1.0.3"
-  resolved "https://registry.yarnpkg.com/speedline/-/speedline-1.0.3.tgz#ee1d98c18d583a2d8488aaded2db9334b943dbbd"
+speedline@1.2.0:
+  version "1.2.0"
+  resolved "https://registry.yarnpkg.com/speedline/-/speedline-1.2.0.tgz#f5828dcf8e9b96a9f6c1da8ab298538820c6668d"
   dependencies:
     babar "0.0.3"
     image-ssim "^0.2.0"
