@@ -23,18 +23,6 @@ describe('PWMetrics', () => {
       expect(pwMetrics.runs).to.be.equal(2);
     });
 
-    describe('flags', () => {
-      it('should have enabled CPU throttling property for lighthouse by default', () => {
-        const pwMetrics = new PWMetrics(runOptions.publicVariables.url, runOptions.publicVariables.opts);
-        expect(pwMetrics.flags.disableCpuThrottling).to.be.false;
-      });
-
-      it('should disable CPU throttling property for lighthouse', () => {
-        const pwMetrics = new PWMetrics(runOptions.publicVariables.url, runOptions.publicVariablesWithDisabledThrottling.opts);
-        expect(pwMetrics.flags.disableCpuThrottling).to.be.true;
-      });
-    });
-
     describe('expectations', () => {
       it('should set expectations', () => {
         const pwMetrics = new PWMetrics(runOptions.publicVariables.url, runOptions.publicVariablesWithExpectations.opts);
