@@ -148,11 +148,11 @@ class PWMetrics {
       console.log(messages.getMessage('LAUNCHING_CHROME'));
       this.launcher = await launch({
         port: this.flags.port,
-        chromeFlags: this.flags.chromeFlags,
-        handleSIGINT: true
+        chromeFlags: this.flags.chromeFlags
       });
       this.flags.port = this.launcher.port;
     } catch(error) {
+      await this.killLauncher();
       return error;
     }
   }
