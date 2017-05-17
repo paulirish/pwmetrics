@@ -194,7 +194,7 @@ Submit results to Google Sheets
 
 *Instructions:*
 
-- Copy [this spreadsheet](https://docs.google.com/spreadsheets/d/1k9ukQrxlnn8H8BB0tIJg5Q-_b4qhgB6dGxgc5d0Ibpo/edit).
+- Copy [this spreadsheet](https://docs.google.com/spreadsheets/d/14DXR9x267fOftf7sYFuUlT3djChSl6PNuPBvUD4h9Rw/edit).
 - Copy the ID of the spreadsheet into the config as value of `sheets.options.spreadsheetId` property.
 - Setup Google Developer project and get credentials. ([everything in step 1 here](https://developers.google.com/sheets/api/quickstart/nodejs#step_1_turn_on_the_api_name))
 - Take a `client_secret` and put it into the config as value of `clientSecret` property.
@@ -291,14 +291,9 @@ module.exports = {
  - `psi` - Perceptual Speed Index
  - `fv` - First Visual Change
  - `vc` - Visually Complete 100%
- - `tti` - Time to Interactive
+ - `ttfi` - First Interactive (vBeta)
+ - `ttci` - Time to Consistently Interactive (vBeta)
  - `vc85` - Visually Complete 85%
-
-
-### Default Lighthouse options
-
- - `disableCpuThrottling` is set `false` by default. It means that CPU throttling `5x` is enabled. To turn it off, run `pwmetrics http:example.com --disableCpuThrottling`
-
 
 ### API
 
