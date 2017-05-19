@@ -21,7 +21,7 @@
     "charm": "^1.0.2",
     "google-auth-library": "^0.10.0",
     "googleapis": "^16.0.0",
-    "lighthouse": "canary",
+    "lighthouse": "^2.0.0",
     "micro-promisify": "^0.1.1",
     "readline-sync": "^1.4.6",
     "yargs": "^6.6.0"
