@@ -1,8 +1,8 @@
 // Copyright 2016 Google Inc. All Rights Reserved.
 // Licensed under the Apache License, Version 2.0. See LICENSE
 
+import {launch, LaunchedChrome} from 'chrome-launcher/chrome-launcher';
 const lighthouse = require('lighthouse');
-import {launch, LaunchedChrome} from 'chrome-launcher';
 const perfConfig: any = require('lighthouse/lighthouse-core/config/perf.json');
 const opn = require('opn');
 
@@ -13,7 +13,17 @@ const expectations = require('./expectations');
 const {upload} = require('./upload');
 const messages = require('./utils/messages');
 
-import {MainOptions, FeatureFlags, AuthorizeCredentials, LighthouseResults, MetricsResults, TermWritableStream, PWMetricsResults, SheetsConfig, ExpectationMetrics} from '../types/types';
+import {
+  MainOptions,
+  FeatureFlags,
+  AuthorizeCredentials,
+  LighthouseResults,
+  MetricsResults,
+  TermWritableStream,
+  PWMetricsResults,
+  SheetsConfig,
+  ExpectationMetrics
+} from '../types/types';
 
 const MAX_LIGHTHOUSE_TRIES = 2;
 const getTimelineViewerUrl = (id: string) => `https://chromedevtools.github.io/timeline-viewer/?loadTimelineFromURL=https://drive.google.com/file/d//${id}/view?usp=drivesdk`
