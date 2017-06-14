@@ -2,7 +2,7 @@
 // Licensed under the Apache License, Version 2.0. See LICENSE
 
 const lighthouse = require('lighthouse');
-import {launch} from 'chrome-launcher';
+import {launch, LaunchedChrome} from 'chrome-launcher';
 const perfConfig: any = require('lighthouse/lighthouse-core/config/perf.json');
 const opn = require('opn');
 
@@ -33,7 +33,7 @@ class PWMetrics {
   expectations: ExpectationMetrics;
   clientSecret: AuthorizeCredentials;
   tryLighthouseCounter: number;
-  launcher: launch | undefined;
+  launcher: LaunchedChrome;
 
   constructor(public url: string, opts: MainOptions) {
     this.flags = Object.assign({}, this.flags, opts.flags);
@@ -146,11 +146,10 @@ class PWMetrics {
   async launchChrome(): Promise<LaunchedChrome|Error> {
     try {
       console.log(messages.getMessage('LAUNCHING_CHROME'));
-      this.launcher = await launch({
+      return this.launcher = await launch({
         port: this.flags.port,
         chromeFlags: this.flags.chromeFlags
       });
-      this.flags.port = this.launcher.port;
     } catch(error) {
       await this.killLauncher();
       return error;
