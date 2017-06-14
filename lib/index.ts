@@ -156,10 +156,12 @@ class PWMetrics {
   async launchChrome(): Promise<LaunchedChrome|Error> {
     try {
       console.log(messages.getMessage('LAUNCHING_CHROME'));
-      return this.launcher = await launch({
+      this.launcher = await launch({
         port: this.flags.port,
         chromeFlags: this.flags.chromeFlags
       });
+      this.flags.port = this.launcher.port;
+      return this.launcher;
     } catch(error) {
       await this.killLauncher();
       return error;
