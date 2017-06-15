@@ -21,4 +21,4 @@ before_script:
   - export DISPLAY=:99.0
   - export LIGHTHOUSE_CHROMIUM_PATH="$(pwd)/chrome-linux/chrome"
   - sh -e /etc/init.d/xvfb start
-  - ./node_modules/lighthouse/lighthouse-core/scripts/download-chrome.sh
+  - curl -L https://raw.githubusercontent.com/GoogleChrome/lighthouse/master/lighthouse-core/scripts/download-chrome.sh | bash
