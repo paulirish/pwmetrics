@@ -1,7 +1,7 @@
 // Copyright 2016 Google Inc. All Rights Reserved.
 // Licensed under the Apache License, Version 2.0. See LICENSE
 
-import {launch, LaunchedChrome} from 'chrome-launcher/chrome-launcher';
+import {launch, LaunchedChrome} from 'chrome-launcher';
 const lighthouse = require('lighthouse');
 const perfConfig: any = require('lighthouse/lighthouse-core/config/perf.json');
 const opn = require('opn');
