@@ -3,7 +3,7 @@
 
 import {launch, LaunchedChrome} from 'chrome-launcher';
 const lighthouse = require('lighthouse');
-const perfConfig: any = require('lighthouse/lighthouse-core/config/perf.json');
+const perfConfig: any = require('./lh-config');
 const opn = require('opn');
 
 const Sheets = require('./sheets/index');
