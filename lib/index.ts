@@ -245,12 +245,12 @@ class PWMetrics {
   }
 
   findMedianRun(results: MetricsResults[]): MetricsResults {
-    const ttiValues = results.map(r => r.timings.find(timing => timing.id === metrics.ids.TTI).timing);
-    const medianTTI = this.median(ttiValues);
-    // in the case of duplicate runs having the exact same TTI, we naively pick the first
+    const ttfiValues = results.map(r => r.timings.find(timing => timing.id === metrics.ids.TTFI).timing);
+    const medianTTFI = this.median(ttfiValues);
+    // in the case of duplicate runs having the exact same TTFI, we naively pick the first
     // @fixme, but any for now...
     return results.find((result: any) => result.timings.find((timing:any) =>
-        timing.id === metrics.ids.TTI && timing.timing === medianTTI
+        timing.id === metrics.ids.TTFI && timing.timing === medianTTFI
       )
     );
   }
