@@ -5,6 +5,7 @@ module.exports = {
   passes: [{
     recordTrace: true,
     pauseBeforeTraceEndMs: 5000,
+    pauseAfterNetworkQuietMs: 2500,
     useThrottling: true,
     gatherers: []
   }],
