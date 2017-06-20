@@ -19,9 +19,10 @@
   "dependencies": {
     "@types/node": "^6.0.45",
     "charm": "^1.0.2",
+    "chrome-launcher": "^0.1.3",
     "google-auth-library": "^0.10.0",
     "googleapis": "^16.0.0",
-    "lighthouse": "paulirish/lighthouse#c74ea959",
+    "lighthouse": "^2.1.0",
     "micro-promisify": "^0.1.1",
     "readline-sync": "^1.4.6",
     "yargs": "^6.6.0"

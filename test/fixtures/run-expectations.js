@@ -8,16 +8,16 @@ module.exports = {
   },
   expectations: {
     ttfmp: {
-      warn: '>=3000',
-      error: '>=2000'
+      warn: '>=500',
+      error: '>=1000'
     },
     tti: {
       warn: '>=3000',
       error: '>=5000',
     },
     ttfcp: {
-      warn: '>=1500',
-      error: '>=3000',
+      warn: '>=500',
+      error: '>=1000',
     },
     psi: {
       warn: '>=3000',

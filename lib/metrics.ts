@@ -15,8 +15,8 @@ const metricsIds = {
   VC85: 'vc85',
   VC100: 'vc100',
   TTI: 'tti',
-  TTInonvis: 'tti-non-visual',
-  TTInonvis5s: 'tti-non-visual-5s',
+  TTFI: 'ttfi',
+  TTCI: 'ttci',
   EndOfATrace: 'eot',
   OnLoad: 'onload'
 };
@@ -26,10 +26,9 @@ module.exports = {
     metricsIds.FV,
     metricsIds.VC100,
     metricsIds.VC85,
-    metricsIds.TTInonvis,
-    metricsIds.TTInonvis5s,
     metricsIds.EndOfATrace,
     metricsIds.OnLoad,
+    metricsIds.TTI,
     metricsIds.NAVSTART
   ],
   ids: metricsIds,
@@ -63,8 +62,7 @@ function prepareData(res: LighthouseResults): MetricsResults {
     // exclude navStart as its not a timing
     .filter(def => def.id !== metricsIds.NAVSTART)
     // exclude experimental metrics
-    .filter(def => def.id !== metricsIds.TTInonvis
-      && def.id !== metricsIds.TTInonvis5s
+    .filter(def => def.id !== metricsIds.TTI
       && def.id !== metricsIds.OnLoad
       && def.id !== metricsIds.EndOfATrace)
     .forEach(metric => {
@@ -81,7 +79,8 @@ function prepareData(res: LighthouseResults): MetricsResults {
         case metricsIds.TTFMP:
           resolvedMetric.color = colorP2;
           break;
-        case metricsIds.TTI:
+        case metricsIds.TTFI:
+        case metricsIds.TTCI:
           resolvedMetric.color = colorP0;
           break;
       }

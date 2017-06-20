@@ -1,13 +1,11 @@
 // Copyright 2016 Google Inc. All Rights Reserved.
 // Licensed under the Apache License, Version 2.0. See LICENSE
 
-import {AuditFullResult, Results} from 'lighthouse/lighthouse-cli/types/types';
+import {AuditFullResults, Results} from 'lighthouse/lighthouse-cli/types/types';
 
 interface LighthouseResults extends Results {}
 
-interface LighthouseAudits {
-  [metric: string]: AuditFullResult;
-}
+interface LighthouseAudits extends AuditFullResults {}
 
 interface SheetsConfig {
   type: string;
@@ -32,7 +30,8 @@ interface FeatureFlags {
   view: Boolean;
   expectations: Boolean;
   output: Boolean;
-  disableCpuThrottling: Boolean;
+  chromeFlags: Array<string>;
+  port?: number;
 }
 
 interface MetricsResults {
