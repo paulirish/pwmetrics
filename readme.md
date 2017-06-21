@@ -140,7 +140,10 @@ module.exports = {
     vs100: {
       ...
     },
-    tti: {
+    ttfi: {
+      ...
+    },
+    ttci: {
       ...
     }
   },
