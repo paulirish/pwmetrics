@@ -402,14 +402,16 @@ chrome-devtools-frontend@1.0.422034:
   version "1.0.422034"
   resolved "https://registry.yarnpkg.com/chrome-devtools-frontend/-/chrome-devtools-frontend-1.0.422034.tgz#071c8ce14466b7653032fcd1ad1a4a68d5e3cbd9"
 
-chrome-launcher@^0.2.0:
-  version "0.2.0"
-  resolved "https://registry.yarnpkg.com/chrome-launcher/-/chrome-launcher-0.2.0.tgz#22b0a5ba1182ab7b22189eafdf4006e1a184a3ef"
+chrome-launcher@^0.2.1:
+  version "0.2.1"
+  resolved "https://registry.yarnpkg.com/chrome-launcher/-/chrome-launcher-0.2.1.tgz#6ce9f54d146d6b8071e9ab7020ee5b11b61cc46f"
   dependencies:
     "@types/core-js" "^0.9.41"
     "@types/mkdirp" "^0.3.29"
     "@types/node" "6.0.66"
     lighthouse-logger "^1.0.0"
+    mkdirp "0.5.1"
+    rimraf "2.2.8"
 
 circular-json@^0.3.1:
   version "0.3.1"
