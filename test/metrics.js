@@ -7,6 +7,7 @@ const metrics = require('../lib/metrics');
 const events = require('./fixtures/events.json');
 const metricsResults = require('./fixtures/metrics-results.json');
 
+/* eslint-env mocha */
 describe('Metrics', () => {
   describe('prepareData', () => {
     it('should prepare data', () => {

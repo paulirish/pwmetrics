@@ -6,6 +6,7 @@ const path = require('path');
 const childProcess = require('child_process');
 const expect = require('chai').expect;
 
+/* eslint-env mocha */
 describe('CLI', function() {
   describe('url', () => {
     it('should throw error if a url is not provided by cli', () => {

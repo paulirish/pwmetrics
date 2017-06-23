@@ -6,6 +6,7 @@ const {getConfigFromFile} = require('../lib/utils/fs');
 const packageJSON = require('../package.json');
 const expectations = require('./fixtures/run-expectations');
 
+/* eslint-env mocha */
 describe('Config', () => {
   describe('validate input', () => {
     context('from package.json as default parameter', () => {

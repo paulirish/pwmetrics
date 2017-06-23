@@ -6,6 +6,7 @@ const PWMetrics = require('../lib');
 const runOptions = require('./fixtures/run-options');
 const dataMocks = require('./fixtures/mocks');
 
+/* eslint-env mocha */
 describe('PWMetrics', () => {
   describe('public variables', () => {
     it('should set class variables', () => {
