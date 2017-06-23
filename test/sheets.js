@@ -7,6 +7,7 @@ const {getMessage} = require('../lib/utils/messages');
 
 const runOptions = require('./fixtures/run-options');
 
+/* eslint-env mocha */
 describe('Sheets', () => {
   let sheets;
 

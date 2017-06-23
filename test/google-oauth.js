@@ -9,6 +9,8 @@ const GoogleOauth = require('../lib/oauth/google-oauth');
 
 const mocks = require('./fixtures/mocks');
 
+/* eslint-env mocha */
+
 const mockedOauth2Client = {
   generateAuthUrl() {
     return 'http://mocked.url';

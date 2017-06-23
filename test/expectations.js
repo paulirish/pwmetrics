@@ -7,6 +7,7 @@ const timings = require('./fixtures/metrics-results.json').timings;
 const normalizedExpectations = require('./fixtures/mocks').normalizedExpectations;
 const expectationsData = require('./fixtures/run-expectations').expectations;
 
+/* eslint-env mocha */
 describe('Expectations', () => {
   describe('checkExpectations', () => {
     let logSpy;
