@@ -115,6 +115,7 @@ module.exports = {
     upload: true, // turn on uploading to Google Drive
     view: true, // open uploaded traces to Google Drive in DevTools
     expectations: true // turn on assertation metrics results against provides values
+    chromeFlags: [] // custom flags to pass to Chrome. For a full list of flags, see http://peter.sh/experiments/chromium-command-line-switches/. 
   },
   expectations: {
     // these expectations values are examples, for your cases set your own
@@ -303,6 +304,19 @@ module.exports = {
 ```js
 const PWMetrics = require('pwmetrics');
 
+const options = {
+  flags: {
+    runs: '3', // number or runs
+    submit: true, // turn on submitting to Google Sheets
+    upload: true, // turn on uploading to Google Drive
+    view: true, // open uploaded traces to Google Drive in DevTools
+    expectations: true // turn on assertation metrics results against provides values
+    chromeFlags: [
+      '--headless' // run in headless Chrome
+     ]
+  }
+};
+
 const pwMetrics = new PWMetrics('http://example.com/', options); // _All available configuration options_ can be used as `options`
 pwMetrics.start(); // returns Promise
 
@@ -331,7 +345,8 @@ pwMetrics.start(); // returns Promise
   upload: false,
   view: false,
   expectations: false,
-  disableCpuThrottling: false
+  disableCpuThrottling: false,
+  chromeFlags: []
 }
         </pre>
       </td>
