@@ -115,7 +115,8 @@ module.exports = {
     upload: true, // turn on uploading to Google Drive
     view: true, // open uploaded traces to Google Drive in DevTools
     expectations: true // turn on assertation metrics results against provides values
-    chromeFlags: [] // custom flags to pass to Chrome. For a full list of flags, see http://peter.sh/experiments/chromium-command-line-switches/. 
+    chromeFlags: [] // custom flags to pass to Chrome. For a full list of flags, see http://peter.sh/experiments/chromium-command-line-switches/.
+    // Note: pwmetrics supports all flags from Lighthouse
   },
   expectations: {
     // these expectations values are examples, for your cases set your own
@@ -335,7 +336,7 @@ pwMetrics.start(); // returns Promise
   </thead>
   <tbody>
     <tr>
-      <td style="text-align: center;">flags</td>
+    <td style="text-align: center;">flags<sup><b>*</b></sup></td>
       <td style="text-align: center;">Object</td>
       <td>
         <pre>
@@ -375,6 +376,9 @@ pwMetrics.start(); // returns Promise
     </tr>
   </tbody>
 </table>
+
+<sup>*</sup>pwmetrics supports all flags from Lighthouse. See [here](https://github.com/GoogleChrome/lighthouse/#cli-options) for the complete list.
+
 
 ### Recipes
 
