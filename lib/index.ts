@@ -57,7 +57,7 @@ class PWMetrics {
       if (this.expectations) {
         expectations.validateMetrics(this.expectations);
         this.expectations = expectations.normalizeMetrics(this.expectations);
-      } else throw new Error(getMessageWithPrefix('ERROR', 'NO_EXPECTATIONS_FOUND'));
+      } else throw new Error(messages.getMessageWithPrefix('ERROR', 'NO_EXPECTATIONS_FOUND'));
     }
   }
 
@@ -85,8 +85,36 @@ class PWMetrics {
         const sheets = new Sheets(this.sheets, this.clientSecret);
         await sheets.appendResults(results.runs);
       }
+
+      if (this.resultHasExpectationErrors(results) && this.flags.expectations) {
+        throw new Error(messages.getMessage('HAS_EXPECTATION_ERRORS'));
+      }
     }
     return results;
+  }
+
+  resultHasExpectationErrors(results: PWMetricsResults): boolean {
+    const expectationErrors = results.runs.filter(run => {
+      return run.timings.filter(item => {
+        const metricName = item.id;
+        const isAMetricErrorTiming = this.isAMetricErrorTiming(
+          item.timing,
+          metricName
+        );
+        return isAMetricErrorTiming === true;
+      });
+    });
+
+    return expectationErrors.length > 0;
+  }
+
+  isAMetricErrorTiming(metricValue: any, metricName: string): boolean {
+    const expectation = this.expectations[metricName];
+    if (expectation) {
+      const expectedErrorLimit = expectation.error;
+      return expectedErrorLimit !== undefined && metricValue >= expectedErrorLimit;
+    }
+    return false;
   }
 
   async run(): Promise<MetricsResults> {

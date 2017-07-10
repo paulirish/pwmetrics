@@ -116,6 +116,20 @@ describe('PWMetrics', () => {
         });
       });
     });
+
+    describe('with one run with expectations', () => {
+      beforeEach(() => {
+        const {opts} = runOptions.startWithOneRunWithExpectations;
+        pwMetrics = new PWMetrics(runOptions.startWithOneRun.url, opts);
+        runStub = sinon.stub(pwMetrics, 'run', () => Promise.resolve({timings: []}));
+      });
+
+      it('should call method for calculating median results', () => {
+        return pwMetrics.start().catch(error => {
+          expect(error.message).to.contain('Expectation with errors.');
+        });
+      });
+    });
   });
 
   describe('findMedianRun method', () => {
