@@ -3,7 +3,6 @@ matrix:
   include:
     - node_js: "6"
     - node_js: "7"
-    - node_js: "7"
       env: RUN_RECIPES=1
   allow_failures:
     - node_js: "7"
@@ -14,9 +13,9 @@ cache:
   directories:
     - node_modules
 before_install:
-  - npm install -g yarn@v0.22.0
+  - npm install -g --no-progress yarn@v0.22.0
 install:
-  - yarn install
+  - yarn install --no-progress
 before_script:
   - export DISPLAY=:99.0
   - export LIGHTHOUSE_CHROMIUM_PATH="$(pwd)/chrome-linux/chrome"
