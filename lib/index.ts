@@ -88,6 +88,7 @@ class PWMetrics {
 
       if (this.resultHasExpectationErrors(results) && this.flags.expectations) {
         throw new Error(messages.getMessage('HAS_EXPECTATION_ERRORS'));
+        process.exit(1);
       }
     }
     return results;

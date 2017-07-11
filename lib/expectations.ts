@@ -9,13 +9,13 @@ function validateMetrics(metrics: ExpectationMetrics) {
 
   if (!metrics || !metricsKeys.length) {
     console.error(getMessageWithPrefix('ERROR', 'NO_METRICS'));
-    process.exit(0);
+    process.exit(1);
   }
 
   metricsKeys.forEach(key => {
     if (!metrics[key] || !metrics[key].warn || !metrics[key].error) {
       console.error(getMessageWithPrefix('ERROR', 'NO_EXPECTATION_ERROR', key));
-      process.exit(0);
+      process.exit(1);
     }
   });
 }
