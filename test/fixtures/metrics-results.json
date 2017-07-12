@@ -52,5 +52,6 @@
   "generatedTime": "2017-05-17T11:50:08.096Z",
   "lighthouseVersion": "2.0.0-alpha.7",
   "initialUrl": "http://example.com",
-  "url": "http://example.com/"
+  "url": "http://example.com/",
+  "error": false
 }

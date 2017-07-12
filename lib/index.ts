@@ -22,7 +22,8 @@ import {
   TermWritableStream,
   PWMetricsResults,
   SheetsConfig,
-  ExpectationMetrics
+  ExpectationMetrics,
+  Timing
 } from '../types/types';
 
 const MAX_LIGHTHOUSE_TRIES = 2;
@@ -67,12 +68,20 @@ class PWMetrics {
 
     for (let runIndex of runs) {
       try {
-        metricsResults[runIndex] = await this.run();
+        const currentMetricResult: MetricsResults = await this.run();
+        currentMetricResult.error = this.resultHasExpectationErrors(currentMetricResult);
+        metricsResults[runIndex] = currentMetricResult;
         console.log(messages.getMessageWithPrefix('SUCCESS', 'SUCCESS_RUN', runIndex, runs.length));
       } catch (error) {
         metricsResults[runIndex] = error;
         console.error(messages.getMessageWithPrefix('ERROR', 'FAILED_RUN', runIndex, runs.length, error.message));
       }
+    }
+
+    const hasMetricResultsError = metricsResults.filter(m => !m.error).length > 0;
+
+    if (hasMetricResultsError && this.flags.expectations) {
+      throw new Error(messages.getMessage('HAS_EXPECTATION_ERRORS'));
     }
 
     let results: PWMetricsResults = { runs: metricsResults.filter(r => !(r instanceof Error)) };
@@ -85,26 +94,14 @@ class PWMetrics {
         const sheets = new Sheets(this.sheets, this.clientSecret);
         await sheets.appendResults(results.runs);
       }
-
-      if (this.resultHasExpectationErrors(results) && this.flags.expectations) {
-        throw new Error(messages.getMessage('HAS_EXPECTATION_ERRORS'));
-      }
     }
     return results;
   }
 
-  resultHasExpectationErrors(results: PWMetricsResults): boolean {
-    const expectationErrors = results.runs.filter(run => {
-      return run.timings.filter(item => {
-        const metricName = item.id;
-        const isAMetricErrorTiming = this.isAMetricErrorTiming(
-          item.timing,
-          metricName
-        );
-        return isAMetricErrorTiming === true;
-      });
+  resultHasExpectationErrors(metrics: MetricsResults): boolean {
+    const expectationErrors = metrics.timings.filter(timing => {
+      return !!this.isAMetricErrorTiming(timing.timing, timing.id);
     });
-
     return expectationErrors.length > 0;
   }
 

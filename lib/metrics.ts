@@ -94,6 +94,7 @@ function prepareData(res: LighthouseResults): MetricsResults {
     generatedTime: res.generatedTime,
     lighthouseVersion: res.lighthouseVersion,
     initialUrl: res.initialUrl,
-    url: res.url
+    url: res.url,
+    error: false
   };
 }

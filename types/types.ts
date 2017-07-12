@@ -41,6 +41,7 @@ interface MetricsResults {
   lighthouseVersion: string;
   url: string;
   initialUrl: string;
+  error: Boolean;
 }
 
 interface PWMetricsResults {
