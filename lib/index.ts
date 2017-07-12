@@ -101,19 +101,15 @@ class PWMetrics {
   }
 
   resultHasExpectationErrors(metrics: MetricsResults): boolean {
-    const expectationErrors = metrics.timings.filter(timing => {
-      return !!this.isAMetricErrorTiming(timing.timing, timing.id);
+    const expectationErrors = metrics.timings.filter((timing: Timing) => {
+      const expectation = this.expectations[timing.id];
+      if (!expectation) {
+        return false;
+      }
+      const expectedErrorLimit = expectation.error;
+      return expectedErrorLimit !== undefined && timing.timing >= expectedErrorLimit;
     });
     return expectationErrors.length > 0;
-  }
-
-  isAMetricErrorTiming(metricValue: any, metricName: string): boolean {
-    const expectation = this.expectations[metricName];
-    if (expectation) {
-      const expectedErrorLimit = expectation.error;
-      return expectedErrorLimit !== undefined && metricValue >= expectedErrorLimit;
-    }
-    return false;
   }
 
   async run(): Promise<MetricsResults> {
