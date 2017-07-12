@@ -78,12 +78,6 @@ class PWMetrics {
       }
     }
 
-    const hasMetricResultsError = metricsResults.filter(m => !m.error).length > 0;
-
-    if (hasMetricResultsError && this.flags.expectations) {
-      throw new Error(messages.getMessage('HAS_EXPECTATION_ERRORS'));
-    }
-
     let results: PWMetricsResults = { runs: metricsResults.filter(r => !(r instanceof Error)) };
     if (results.runs.length > 0) {
       if (this.runs > 1 && !this.flags.submit) {
@@ -95,6 +89,13 @@ class PWMetrics {
         await sheets.appendResults(results.runs);
       }
     }
+
+    const hasMetricResultsError = metricsResults.filter(m => !m.error).length > 0;
+
+    if (hasMetricResultsError && this.flags.expectations) {
+      throw new Error(messages.getMessage('HAS_EXPECTATION_ERRORS'));
+    }
+
     return results;
   }
 
