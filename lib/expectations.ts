@@ -20,7 +20,7 @@ function validateMetrics(metrics: ExpectationMetrics) {
   });
 }
 
-function normalizeMetrics(metrics: ExpectationMetrics) {
+function normalizeMetrics(metrics: ExpectationMetrics): NormalizedExpectationMetrics {
   let normalizedMetrics: NormalizedExpectationMetrics = {};
   Object.keys(metrics).forEach(key => {
     normalizedMetrics[key] = {

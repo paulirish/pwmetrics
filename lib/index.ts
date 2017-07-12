@@ -23,6 +23,7 @@ import {
   PWMetricsResults,
   SheetsConfig,
   ExpectationMetrics,
+  NormalizedExpectationMetrics,
   Timing
 } from '../types/types';
 
@@ -41,7 +42,7 @@ class PWMetrics {
   };
   runs: number;
   sheets: SheetsConfig;
-  expectations: ExpectationMetrics;
+  expectations: ExpectationMetrics | NormalizedExpectationMetrics;
   clientSecret: AuthorizeCredentials;
   tryLighthouseCounter: number;
   launcher: LaunchedChrome;
