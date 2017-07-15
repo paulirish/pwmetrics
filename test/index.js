@@ -48,7 +48,7 @@ describe('PWMetrics', () => {
       });
 
       it('should calculate results', () => {
-        const expected = {runs: [{timings: [], error: false}]};
+        const expected = {runs: [{timings: []}]};
 
         return pwMetrics.start().then(data => {
           expect(data).to.be.deep.equal(expected);

@@ -67,10 +67,14 @@ class PWMetrics {
     const runs = Array.apply(null, {length: +this.runs}).map(Number.call, Number);
     let metricsResults: MetricsResults[] = [];
 
+    let resultHasExpectationErrors = false;
+
     for (let runIndex of runs) {
       try {
         const currentMetricResult: MetricsResults = await this.run();
-        currentMetricResult.error = this.resultHasExpectationErrors(currentMetricResult);
+        if (!resultHasExpectationErrors) {
+          resultHasExpectationErrors = this.resultHasExpectationErrors(currentMetricResult);
+        }
         metricsResults[runIndex] = currentMetricResult;
         console.log(messages.getMessageWithPrefix('SUCCESS', 'SUCCESS_RUN', runIndex, runs.length));
       } catch (error) {
@@ -91,9 +95,7 @@ class PWMetrics {
       }
     }
 
-    const hasMetricResultsError = metricsResults.filter(m => !m.error).length > 0;
-
-    if (hasMetricResultsError && this.flags.expectations) {
+    if (resultHasExpectationErrors && this.flags.expectations) {
       throw new Error(messages.getMessage('HAS_EXPECTATION_ERRORS'));
     }
 
