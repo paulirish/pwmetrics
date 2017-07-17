@@ -103,7 +103,7 @@ class PWMetrics {
   }
 
   resultHasExpectationErrors(metrics: MetricsResults): boolean {
-    const expectationErrors = metrics.timings.filter((timing: Timing) => {
+    return metrics.timings.some((timing: Timing) => {
       const expectation = this.expectations[timing.id];
       if (!expectation) {
         return false;
@@ -111,7 +111,6 @@ class PWMetrics {
       const expectedErrorLimit = expectation.error;
       return expectedErrorLimit !== undefined && timing.timing >= expectedErrorLimit;
     });
-    return expectationErrors.length > 0;
   }
 
   async run(): Promise<MetricsResults> {
