@@ -174,6 +174,10 @@ class PWMetrics {
 
       if (this.flags.upload) {
         const driveResponse = await upload(data, this.clientSecret);
+
+        preparedData.fileId = driveResponse.id;
+        preparedData.fileName = driveResponse.name;
+
         this.view(driveResponse.id);
       }
 

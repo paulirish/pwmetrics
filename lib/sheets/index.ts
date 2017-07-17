@@ -13,6 +13,7 @@ const metricsIds = require('../metrics').ids;
 const SHEET_TYPES = {
   'GOOGLE_SHEETS': 'GOOGLE_SHEETS'
 };
+const VIEWER_URL_PREFIX = 'https://chromedevtools.github.io/timeline-viewer/?loadTimelineFromURL=drive://';
 
 class Sheets {
   constructor(public config: SheetsConfig, public clientSecret: AuthorizeCredentials) {
@@ -50,6 +51,12 @@ class Sheets {
     results.forEach(data => {
       const getTiming = (key: string) => data.timings.find(t => t.id === key).timing;
       const dateObj = new Date(data.generatedTime);
+      let viewerUrl = '';
+
+      if(typeof data.fileName !== 'undefined' && typeof data.fileName !== 'undefined') {
+          viewerUrl = VIEWER_URL_PREFIX + data.fileId;
+      }
+
       // order matters
       valuesToAppend.push([
         data.lighthouseVersion,
@@ -62,7 +69,8 @@ class Sheets {
         getTiming(metricsIds.VC100),
         getTiming(metricsIds.TTFI),
         getTiming(metricsIds.TTCI),
-        getTiming(metricsIds.VC85)
+        getTiming(metricsIds.VC85),
+        viewerUrl
       ]);
     });
 

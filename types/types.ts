@@ -35,6 +35,8 @@ interface FeatureFlags {
 }
 
 interface MetricsResults {
+  fileName: string,
+  fileId: string,
   timestamps: Timestamp[];
   timings: Timing[];
   generatedTime: string;

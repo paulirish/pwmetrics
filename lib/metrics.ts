@@ -89,6 +89,8 @@ function prepareData(res: LighthouseResults): MetricsResults {
     });
 
   return {
+    fileId: '',
+    fileName: '',
     timings,
     timestamps,
     generatedTime: res.generatedTime,
