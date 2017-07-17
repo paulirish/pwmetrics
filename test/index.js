@@ -120,7 +120,7 @@ describe('PWMetrics', () => {
     describe('with one run with expectations', () => {
       beforeEach(() => {
         const {opts} = runOptions.startWithOneRunWithExpectations;
-        pwMetrics = new PWMetrics(runOptions.startWithOneRun.url, opts);
+        pwMetrics = new PWMetrics(runOptions.startWithOneRunWithExpectations.url, opts);
         runStub = sinon.stub(pwMetrics, 'run', () => Promise.resolve({timings: []}));
       });
 
