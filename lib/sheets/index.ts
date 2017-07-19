@@ -53,7 +53,7 @@ class Sheets {
       const dateObj = new Date(data.generatedTime);
       let viewerUrl = '';
 
-      if(typeof data.fileName !== 'undefined' && typeof data.fileName !== 'undefined') {
+      if(typeof data.fileId !== 'undefined') {
           viewerUrl = VIEWER_URL_PREFIX + data.fileId;
       }
 
