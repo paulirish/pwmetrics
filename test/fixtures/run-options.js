@@ -41,6 +41,22 @@ exports.publicVariablesWithExpectations = {
   }
 };
 
+exports.startWithOneRunWithExpectations = {
+  url: url,
+  opts: {
+    flags: {
+      runs: 1,
+      expectations: true
+    },
+    expectations: {
+      ttfcp: {
+        warn: '>=1500',
+        error: '>=3000',
+      }
+    }
+  }
+};
+
 exports.sheets = {
   type: 'GOOGLE_SHEETS',
   options: {

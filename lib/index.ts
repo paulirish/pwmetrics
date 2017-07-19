@@ -22,7 +22,9 @@ import {
   TermWritableStream,
   PWMetricsResults,
   SheetsConfig,
-  ExpectationMetrics
+  ExpectationMetrics,
+  NormalizedExpectationMetrics,
+  Timing
 } from '../types/types';
 
 const MAX_LIGHTHOUSE_TRIES = 2;
@@ -40,7 +42,7 @@ class PWMetrics {
   };
   runs: number;
   sheets: SheetsConfig;
-  expectations: ExpectationMetrics;
+  expectations: ExpectationMetrics | NormalizedExpectationMetrics;
   clientSecret: AuthorizeCredentials;
   tryLighthouseCounter: number;
   launcher: LaunchedChrome;
@@ -57,7 +59,7 @@ class PWMetrics {
       if (this.expectations) {
         expectations.validateMetrics(this.expectations);
         this.expectations = expectations.normalizeMetrics(this.expectations);
-      } else throw new Error(getMessageWithPrefix('ERROR', 'NO_EXPECTATIONS_FOUND'));
+      } else throw new Error(messages.getMessageWithPrefix('ERROR', 'NO_EXPECTATIONS_FOUND'));
     }
   }
 
@@ -65,9 +67,15 @@ class PWMetrics {
     const runs = Array.apply(null, {length: +this.runs}).map(Number.call, Number);
     let metricsResults: MetricsResults[] = [];
 
+    let resultHasExpectationErrors = false;
+
     for (let runIndex of runs) {
       try {
-        metricsResults[runIndex] = await this.run();
+        const currentMetricResult: MetricsResults = await this.run();
+        if (!resultHasExpectationErrors) {
+          resultHasExpectationErrors = this.resultHasExpectationErrors(currentMetricResult);
+        }
+        metricsResults[runIndex] = currentMetricResult;
         console.log(messages.getMessageWithPrefix('SUCCESS', 'SUCCESS_RUN', runIndex, runs.length));
       } catch (error) {
         metricsResults[runIndex] = error;
@@ -86,7 +94,23 @@ class PWMetrics {
         await sheets.appendResults(results.runs);
       }
     }
+
+    if (resultHasExpectationErrors && this.flags.expectations) {
+      throw new Error(messages.getMessage('HAS_EXPECTATION_ERRORS'));
+    }
+
     return results;
+  }
+
+  resultHasExpectationErrors(metrics: MetricsResults): boolean {
+    return metrics.timings.some((timing: Timing) => {
+      const expectation = this.expectations[timing.id];
+      if (!expectation) {
+        return false;
+      }
+      const expectedErrorLimit = expectation.error;
+      return expectedErrorLimit !== undefined && timing.timing >= expectedErrorLimit;
+    });
   }
 
   async run(): Promise<MetricsResults> {
