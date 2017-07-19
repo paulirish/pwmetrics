@@ -83,7 +83,7 @@ class PWMetrics {
         this.displayOutput(results.median);
       } else if (this.flags.submit) {
         const sheets = new Sheets(this.sheets, this.clientSecret);
-        await sheets.appendResults(results.runs);
+        await sheets.appendResults(results.runs, this.flags.upload);
       }
     }
     return results;

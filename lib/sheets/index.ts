@@ -39,21 +39,21 @@ class Sheets {
     }
   }
 
-  appendResults(results: Array<MetricsResults>) {
+  appendResults(results: Array<MetricsResults>, upload: boolean) {
     switch (this.config.type) {
       case SHEET_TYPES.GOOGLE_SHEETS:
-        return this.appendResultsToGSheets(results);
+        return this.appendResultsToGSheets(results, upload);
     }
   }
 
-  async appendResultsToGSheets(results: Array<MetricsResults>) {
+  async appendResultsToGSheets(results: Array<MetricsResults>, upload: boolean) {
     let valuesToAppend: Array<GSheetsValuesToAppend> = [];
     results.forEach(data => {
       const getTiming = (key: string) => data.timings.find(t => t.id === key).timing;
       const dateObj = new Date(data.generatedTime);
       let viewerUrl = '';
 
-      if(typeof data.fileId !== 'undefined') {
+      if(upload && typeof data.fileId !== 'undefined') {
           viewerUrl = VIEWER_URL_PREFIX + data.fileId;
       }
 
