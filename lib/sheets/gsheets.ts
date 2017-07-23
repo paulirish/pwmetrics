@@ -23,7 +23,7 @@ async function getRange(auth: Oauth2Client, range: number, spreadsheetId: string
   }
 }
 
-const formatValues = (values: Array<GSheetsValuesToAppend>) => {
+const formatValues = (values: Array<GSheetsValuesToAppend>): string => {
   let newValues = values.slice();
   return newValues.reduce((result: any, value: any) => {
     return result.concat(value.slice(3).join('\t')).concat('\n');

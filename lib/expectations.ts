@@ -4,7 +4,7 @@
 import { Timing, ExpectationMetrics, NormalizedExpectationMetrics } from '../types/types';
 const { getAssertionMessage, getMessageWithPrefix } = require('./utils/messages');
 
-function validateMetrics(metrics: ExpectationMetrics) {
+function validateMetrics(metrics: ExpectationMetrics): void {
   const metricsKeys = Object.keys(metrics);
 
   if (!metrics || !metricsKeys.length) {
@@ -31,7 +31,7 @@ function normalizeMetrics(metrics: ExpectationMetrics): NormalizedExpectationMet
   return normalizedMetrics;
 }
 
-function checkExpectations(metricsData: Timing[], expectationMetrics: NormalizedExpectationMetrics) {
+function checkExpectations(metricsData: Timing[], expectationMetrics: NormalizedExpectationMetrics): void {
   metricsData.forEach(metric => {
     const metricName = metric.id;
     const expectationValue = expectationMetrics[metricName];

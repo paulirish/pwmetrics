@@ -63,7 +63,7 @@ class PWMetrics {
     }
   }
 
-  async start() {
+  async start(): Promise<PWMetricsResults> {
     const runs = Array.apply(null, {length: +this.runs}).map(Number.call, Number);
     let metricsResults: MetricsResults[] = [];
 
@@ -144,7 +144,7 @@ class PWMetrics {
     }
   }
 
-  async killLauncher() {
+  async killLauncher(): Promise<void> {
     if (typeof this.launcher !== 'undefined') {
       await this.launcher!.kill();
     }
@@ -224,7 +224,7 @@ class PWMetrics {
     return data;
   }
 
-  showChart(data: MetricsResults) {
+  showChart(data: MetricsResults): MetricsResults {
     // reverse to preserve the order, because cli-chart.
     let timings = data.timings;
 
@@ -279,14 +279,14 @@ class PWMetrics {
     );
   }
 
-  median(values: Array<number>) {
+  median(values: Array<number>): number {
     if (values.length === 1) return values[0];
     values.sort((a, b) => a - b);
     const half = Math.floor(values.length / 2);
     return values[half];
   }
 
-  view(id: string) {
+  view(id: string): void {
     if (this.flags.view) {
       opn(getTimelineViewerUrl(id));
     }
