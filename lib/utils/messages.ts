@@ -12,7 +12,7 @@ const redify = (str: string) => `${RED}${str}${RESET}`;
 const yellowify = (str: string) => `${YELLOW}${str}${RESET}`;
 const boldify = (str: string) => `${BOLD}${str}${RESET}`;
 
-const getMessage = function (messageType: string, ...args: any[]) {
+const getMessage = function (messageType: string, ...args: any[]): string {
   switch (messageType) {
     case 'NO_URL':
       return 'No url entered.';
@@ -85,7 +85,7 @@ const getMessage = function (messageType: string, ...args: any[]) {
   }
 };
 
-const getAssertionMessage = function (assertionLevel: string, messageType: string, expectedValue: number, actualValue: number) {
+const getAssertionMessage = function (assertionLevel: string, messageType: string, expectedValue: number, actualValue: number): string {
   const message = getMessageWithPrefix(assertionLevel, messageType);
   const colorizer = assertionLevel === 'ERROR' ? redify : yellowify;
 
@@ -94,7 +94,7 @@ const getAssertionMessage = function (assertionLevel: string, messageType: strin
   return `${message} Expected ${expectedStr}, but found ${actualStr}.`;
 };
 
-const getMessageWithPrefix = function (assertionLevel: string, messageType: string, ...args: any[]) {
+const getMessageWithPrefix = function (assertionLevel: string, messageType: string, ...args: any[]): string {
   let prefix;
   const message = getMessage(messageType, ...args);
 
