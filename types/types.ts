@@ -31,6 +31,7 @@ interface FeatureFlags {
   expectations: Boolean;
   output: Boolean;
   chromeFlags: Array<string>;
+  chromePath?: string
   port?: number;
 }
 
