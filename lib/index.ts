@@ -5,6 +5,7 @@ import {launch, LaunchedChrome} from 'chrome-launcher';
 const lighthouse = require('lighthouse');
 const perfConfig: any = require('./lh-config');
 const opn = require('opn');
+const path = require('path');
 
 const Sheets = require('./sheets/index');
 const Chart = require('./chart/chart');
@@ -54,6 +55,11 @@ class PWMetrics {
     this.expectations = opts.expectations;
     this.clientSecret = opts.clientSecret;
     this.tryLighthouseCounter = 0;
+
+    // normalize path if provided
+    if (this.flags.chromePath) {
+        this.flags.chromePath = path.normalize(this.flags.chromePath);
+    }
 
     if (this.flags.expectations) {
       if (this.expectations) {
@@ -182,7 +188,8 @@ class PWMetrics {
       console.log(messages.getMessage('LAUNCHING_CHROME'));
       this.launcher = await launch({
         port: this.flags.port,
-        chromeFlags: this.flags.chromeFlags
+        chromeFlags: this.flags.chromeFlags,
+        chromePath: this.flags.chromePath
       });
       this.flags.port = this.launcher.port;
       return this.launcher;
