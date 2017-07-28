@@ -78,7 +78,7 @@ class PWMetrics {
     for (let runIndex of runs) {
       try {
         const currentMetricResult: MetricsResults = await this.run();
-        if (!resultHasExpectationErrors) {
+        if (!resultHasExpectationErrors && this.flags.expectations) {
           resultHasExpectationErrors = this.resultHasExpectationErrors(currentMetricResult);
         }
         metricsResults[runIndex] = currentMetricResult;
