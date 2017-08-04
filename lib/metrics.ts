@@ -90,12 +90,12 @@ function prepareData(res: LighthouseResults): MetricsResults {
 
   return {
     fileId: '',
-    fileName: '',
     timings,
     timestamps,
     generatedTime: res.generatedTime,
     lighthouseVersion: res.lighthouseVersion,
     initialUrl: res.initialUrl,
-    url: res.url
+    url: res.url,
+    viewerUrl: null
   };
 }

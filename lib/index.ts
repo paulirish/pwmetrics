@@ -96,8 +96,8 @@ class PWMetrics {
         console.log(messages.getMessage('MEDIAN_RUN'));
         this.displayOutput(results.median);
       } else if (this.flags.submit) {
-        const sheets = new Sheets(this.sheets, this.clientSecret);
-        await sheets.appendResults(results.runs, this.flags.upload);
+        const sheets = new Sheets(this.sheets, this.clientSecret, this.configIsSubmitAndUpload);
+        await sheets.appendResults(results.runs);
       }
     }
 
@@ -207,7 +207,6 @@ class PWMetrics {
         const driveResponse = await upload(data, this.clientSecret);
 
         preparedData.fileId = driveResponse.id;
-        preparedData.fileName = driveResponse.name;
 
         this.view(driveResponse.id);
       }
@@ -232,6 +231,14 @@ class PWMetrics {
     } else {
       this.showChart(data);
     }
+    return data;
+  }
+
+  configIsSubmitAndUpload = (data: MetricsResults) => {
+    if(this.flags.submit && this.flags.upload) {
+      data.viewerUrl = getTimelineViewerUrl(data.fileId);
+    }
+
     return data;
   }
 

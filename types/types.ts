@@ -31,12 +31,11 @@ interface FeatureFlags {
   expectations: Boolean;
   output: Boolean;
   chromeFlags: Array<string>;
-  chromePath?: string
+  chromePath?: string;
   port?: number;
 }
 
 interface MetricsResults {
-  fileName: string,
   fileId: string,
   timestamps: Timestamp[];
   timings: Timing[];
@@ -44,6 +43,7 @@ interface MetricsResults {
   lighthouseVersion: string;
   url: string;
   initialUrl: string;
+  viewerUrl?: string;
 }
 
 interface PWMetricsResults {

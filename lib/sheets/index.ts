@@ -13,10 +13,9 @@ const metricsIds = require('../metrics').ids;
 const SHEET_TYPES = {
   'GOOGLE_SHEETS': 'GOOGLE_SHEETS'
 };
-const VIEWER_URL_PREFIX = 'https://chromedevtools.github.io/timeline-viewer/?loadTimelineFromURL=drive://';
 
 class Sheets {
-  constructor(public config: SheetsConfig, public clientSecret: AuthorizeCredentials) {
+  constructor(public config: SheetsConfig, public clientSecret: AuthorizeCredentials, public configIsSubmitAndUpload: Function) {
     this.validateOptions(config, clientSecret);
   }
 
@@ -39,23 +38,20 @@ class Sheets {
     }
   }
 
-  appendResults(results: Array<MetricsResults>, upload: boolean) {
+  appendResults(results: Array<MetricsResults>) {
     switch (this.config.type) {
       case SHEET_TYPES.GOOGLE_SHEETS:
-        return this.appendResultsToGSheets(results, upload);
+        return this.appendResultsToGSheets(results);
     }
   }
 
-  async appendResultsToGSheets(results: Array<MetricsResults>, upload: boolean) {
+  async appendResultsToGSheets(results: Array<MetricsResults>) {
     let valuesToAppend: Array<GSheetsValuesToAppend> = [];
     results.forEach(data => {
       const getTiming = (key: string) => data.timings.find(t => t.id === key).timing;
       const dateObj = new Date(data.generatedTime);
-      let viewerUrl = '';
 
-      if(upload && typeof data.fileId !== 'undefined') {
-          viewerUrl = VIEWER_URL_PREFIX + data.fileId;
-      }
+      data = this.configIsSubmitAndUpload(data);
 
       // order matters
       valuesToAppend.push([
@@ -70,7 +66,7 @@ class Sheets {
         getTiming(metricsIds.TTFI),
         getTiming(metricsIds.TTCI),
         getTiming(metricsIds.VC85),
-        viewerUrl
+        data.viewerUrl
       ]);
     });
 
