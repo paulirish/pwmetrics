@@ -38,7 +38,7 @@ module.exports = {
 const checkAudits = (audits: LighthouseAudits) => Object.keys(audits).forEach(key => {
   const debugString = audits[key].debugString;
   if (audits[key].debugString)
-    throw new Error(`${debugString} Audit key: ${key}`);
+    console.log(`${debugString} Audit key: ${key}`);
 });
 
 function prepareData(res: LighthouseResults): MetricsResults {

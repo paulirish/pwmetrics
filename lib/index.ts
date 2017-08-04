@@ -5,6 +5,7 @@ import {launch, LaunchedChrome} from 'chrome-launcher';
 const lighthouse = require('lighthouse');
 const perfConfig: any = require('./lh-config');
 const opn = require('opn');
+const path = require('path');
 
 const Sheets = require('./sheets/index');
 const Chart = require('./chart/chart');
@@ -22,7 +23,9 @@ import {
   TermWritableStream,
   PWMetricsResults,
   SheetsConfig,
-  ExpectationMetrics
+  ExpectationMetrics,
+  NormalizedExpectationMetrics,
+  Timing
 } from '../types/types';
 
 const MAX_LIGHTHOUSE_TRIES = 2;
@@ -40,7 +43,7 @@ class PWMetrics {
   };
   runs: number;
   sheets: SheetsConfig;
-  expectations: ExpectationMetrics;
+  expectations: ExpectationMetrics | NormalizedExpectationMetrics;
   clientSecret: AuthorizeCredentials;
   tryLighthouseCounter: number;
   launcher: LaunchedChrome;
@@ -53,11 +56,16 @@ class PWMetrics {
     this.clientSecret = opts.clientSecret;
     this.tryLighthouseCounter = 0;
 
+    // normalize path if provided
+    if (this.flags.chromePath) {
+        this.flags.chromePath = path.normalize(this.flags.chromePath);
+    }
+
     if (this.flags.expectations) {
       if (this.expectations) {
         expectations.validateMetrics(this.expectations);
         this.expectations = expectations.normalizeMetrics(this.expectations);
-      } else throw new Error(getMessageWithPrefix('ERROR', 'NO_EXPECTATIONS_FOUND'));
+      } else throw new Error(messages.getMessageWithPrefix('ERROR', 'NO_EXPECTATIONS_FOUND'));
     }
   }
 
@@ -65,9 +73,15 @@ class PWMetrics {
     const runs = Array.apply(null, {length: +this.runs}).map(Number.call, Number);
     let metricsResults: MetricsResults[] = [];
 
+    let resultHasExpectationErrors = false;
+
     for (let runIndex of runs) {
       try {
-        metricsResults[runIndex] = await this.run();
+        const currentMetricResult: MetricsResults = await this.run();
+        if (!resultHasExpectationErrors && this.flags.expectations) {
+          resultHasExpectationErrors = this.resultHasExpectationErrors(currentMetricResult);
+        }
+        metricsResults[runIndex] = currentMetricResult;
         console.log(messages.getMessageWithPrefix('SUCCESS', 'SUCCESS_RUN', runIndex, runs.length));
       } catch (error) {
         metricsResults[runIndex] = error;
@@ -86,7 +100,23 @@ class PWMetrics {
         await sheets.appendResults(results.runs, this.flags.upload);
       }
     }
+
+    if (resultHasExpectationErrors && this.flags.expectations) {
+      throw new Error(messages.getMessage('HAS_EXPECTATION_ERRORS'));
+    }
+
     return results;
+  }
+
+  resultHasExpectationErrors(metrics: MetricsResults): boolean {
+    return metrics.timings.some((timing: Timing) => {
+      const expectation = this.expectations[timing.id];
+      if (!expectation) {
+        return false;
+      }
+      const expectedErrorLimit = expectation.error;
+      return expectedErrorLimit !== undefined && timing.timing >= expectedErrorLimit;
+    });
   }
 
   async run(): Promise<MetricsResults> {
@@ -158,7 +188,8 @@ class PWMetrics {
       console.log(messages.getMessage('LAUNCHING_CHROME'));
       this.launcher = await launch({
         port: this.flags.port,
-        chromeFlags: this.flags.chromeFlags
+        chromeFlags: this.flags.chromeFlags,
+        chromePath: this.flags.chromePath
       });
       this.flags.port = this.launcher.port;
       return this.launcher;
