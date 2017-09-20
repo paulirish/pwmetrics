@@ -300,6 +300,8 @@ module.exports = {
  - `ttfi` - First Interactive (vBeta)
  - `ttci` - Time to Consistently Interactive (vBeta)
  - `vc85` - Visually Complete 85%
+ 
+Read article [Performance metrics. What’s this all about?](https://medium.com/@denar90/performance-metrics-whats-this-all-about-1128461ad6b) which is decoding this metrics.
 
 ### API
 
