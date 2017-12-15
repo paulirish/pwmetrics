@@ -38,7 +38,7 @@ class PWMetrics {
     upload: false,
     view: false,
     expectations: false,
-    output: false,
+    json: false,
     chromeFlags: []
   };
   runs: number;
@@ -223,11 +223,9 @@ class PWMetrics {
   }
 
   displayOutput(data: MetricsResults): MetricsResults {
-    if (this.flags.output) {
-      return data;
-    } else {
+    if (!this.flags.json)
       this.showChart(data);
-    }
+
     return data;
   }
 
