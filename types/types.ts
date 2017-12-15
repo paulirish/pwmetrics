@@ -47,7 +47,7 @@ interface FeatureFlags {
   upload: Boolean;
   view: Boolean;
   expectations: Boolean;
-  output: Boolean;
+  json: Boolean;
   chromeFlags: Array<string>;
   chromePath?: string
   port?: number;
