@@ -1,11 +1,29 @@
 // Copyright 2016 Google Inc. All Rights Reserved.
 // Licensed under the Apache License, Version 2.0. See LICENSE
 
-import {AuditFullResults, Results} from 'lighthouse/lighthouse-cli/types/types';
+interface LighthouseAudits {
+  [key: string]: {
+    rawValue: boolean | number;
+    displayValue: string;
+    debugString?: string;
+    score: boolean | number;
+    scoringMode: string;
+    error?: boolean;
+    description: string;
+    name: string;
+    helpText?: string;
+    extendedInfo?: { value: string };
+  }
+}
 
-interface LighthouseResults extends Results {}
-
-interface LighthouseAudits extends AuditFullResults {}
+interface LighthouseResults {
+  url: string;
+  audits: LighthouseAudits;
+  lighthouseVersion: string;
+  artifacts?: Object;
+  initialUrl: string;
+  generatedTime: string;
+}
 
 interface SheetsConfig {
   type: string;
