@@ -22,7 +22,7 @@
     "chrome-launcher": "^0.2.1",
     "google-auth-library": "^0.10.0",
     "googleapis": "^16.0.0",
-    "lighthouse": "^2.6.0",
+    "lighthouse": "^2.7.0",
     "micro-promisify": "^0.1.1",
     "readline-sync": "^1.4.6",
     "yargs": "^6.6.0"
