@@ -2,6 +2,7 @@ node_modules
 tmp
 .DS_Store
 npm-debug.log
+.idea
 
 gsheets.config.js
 
