@@ -268,6 +268,8 @@ Show Lighthouse traces in timeline-viewer.
 
 [timeline-viewer](https://chromedevtools.github.io/timeline-viewer/) - Shareable URLs for your Chrome DevTools Timeline traces.
 
+If both upload and submit flags are set, a link to the viewer for each result trace will be added to the Notes column of the sheet. This is particularly useful when multiple runs have been stored, as otherwise it is dificult to view the trace for any given run.
+
 
 ```sh
 # run pwmetrics with config in package.json

@@ -15,7 +15,7 @@ const SHEET_TYPES = {
 };
 
 class Sheets {
-  constructor(public config: SheetsConfig, public clientSecret: AuthorizeCredentials) {
+  constructor(public config: SheetsConfig, public clientSecret: AuthorizeCredentials, public configIsSubmitAndUpload: Function) {
     this.validateOptions(config, clientSecret);
   }
 
@@ -50,6 +50,9 @@ class Sheets {
     results.forEach(data => {
       const getTiming = (key: string) => data.timings.find(t => t.id === key).timing;
       const dateObj = new Date(data.generatedTime);
+
+      data = this.configIsSubmitAndUpload(data);
+
       // order matters
       valuesToAppend.push([
         data.lighthouseVersion,
@@ -62,7 +65,8 @@ class Sheets {
         getTiming(metricsIds.VC100),
         getTiming(metricsIds.TTFI),
         getTiming(metricsIds.TTCI),
-        getTiming(metricsIds.VC85)
+        getTiming(metricsIds.VC85),
+        data.viewerUrl
       ]);
     });
 

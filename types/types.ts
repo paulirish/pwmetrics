@@ -49,17 +49,19 @@ interface FeatureFlags {
   expectations: Boolean;
   json: Boolean;
   chromeFlags: Array<string>;
-  chromePath?: string
+  chromePath?: string;
   port?: number;
 }
 
 interface MetricsResults {
+  fileId: string,
   timestamps: Timestamp[];
   timings: Timing[];
   generatedTime: string;
   lighthouseVersion: string;
   url: string;
   initialUrl: string;
+  viewerUrl?: string;
 }
 
 interface PWMetricsResults {
