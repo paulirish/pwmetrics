@@ -24,6 +24,12 @@ describe('PWMetrics', () => {
       expect(pwMetrics.runs).to.be.equal(2);
     });
 
+    it('should parse chromeFlags', () => {
+      const opts = Object.assign({}, runOptions.startWithChromeFlags.opts);
+      const pwMetrics = new PWMetrics(runOptions.startWithChromeFlags.url, opts);
+      expect(pwMetrics.flags.chromeFlags).to.be.deep.equal(['--no-sandbox', '--disable-setuid-sandbox']);
+    });
+
     describe('expectations', () => {
       it('should set expectations', () => {
         const pwMetrics = new PWMetrics(runOptions.publicVariables.url, runOptions.publicVariablesWithExpectations.opts);
