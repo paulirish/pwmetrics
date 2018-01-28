@@ -68,6 +68,8 @@ class PWMetrics {
         this.expectations = expectations.normalizeMetrics(this.expectations);
       } else throw new Error(messages.getMessageWithPrefix('ERROR', 'NO_EXPECTATIONS_FOUND'));
     }
+
+    this.flags.chromeFlags = parseChromeFlags(this.flags.chromeFlags);
   }
 
   async start() {

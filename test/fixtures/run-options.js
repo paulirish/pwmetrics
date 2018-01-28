@@ -57,6 +57,15 @@ exports.startWithOneRunWithExpectations = {
   }
 };
 
+exports.startWithChromeFlags = {
+  url: url,
+  opts: {
+    flags: {
+      chromeFlags: '--no-sandbox --disable-setuid-sandbox'
+    }
+  }
+};
+
 exports.sheets = {
   type: 'GOOGLE_SHEETS',
   options: {
