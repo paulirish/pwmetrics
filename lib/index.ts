@@ -3,6 +3,7 @@
 
 import {launch, LaunchedChrome} from 'chrome-launcher';
 const lighthouse = require('lighthouse');
+const parseChromeFlags = require('lighthouse/lighthouse-cli/run').parseChromeFlags;
 const perfConfig: any = require('./lh-config');
 const opn = require('opn');
 const path = require('path');
@@ -39,7 +40,7 @@ class PWMetrics {
     view: false,
     expectations: false,
     json: false,
-    chromeFlags: []
+    chromeFlags: ''
   };
   runs: number;
   sheets: SheetsConfig;
@@ -67,6 +68,8 @@ class PWMetrics {
         this.expectations = expectations.normalizeMetrics(this.expectations);
       } else throw new Error(messages.getMessageWithPrefix('ERROR', 'NO_EXPECTATIONS_FOUND'));
     }
+
+    this.flags.chromeFlags = parseChromeFlags(this.flags.chromeFlags);
   }
 
   async start() {
@@ -188,7 +191,7 @@ class PWMetrics {
       console.log(messages.getMessage('LAUNCHING_CHROME'));
       this.launcher = await launch({
         port: this.flags.port,
-        chromeFlags: this.flags.chromeFlags,
+        chromeFlags: parseChromeFlags(this.flags.chromeFlags),
         chromePath: this.flags.chromePath
       });
       this.flags.port = this.launcher.port;
