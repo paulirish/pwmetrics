@@ -114,8 +114,8 @@ module.exports = {
     submit: true, // turn on submitting to Google Sheets
     upload: true, // turn on uploading to Google Drive
     view: true, // open uploaded traces to Google Drive in DevTools
-    expectations: true // turn on assertation metrics results against provides values
-    chromePath: '/Applications/Google\ Chrome\ Canary.app/Contents/MacOS/Google\ Chrome\ Canary' //optional path to specific Chrome location
+    expectations: true, // turn on assertation metrics results against provides values
+    chromePath: '/Applications/Google\ Chrome\ Canary.app/Contents/MacOS/Google\ Chrome\ Canary', //optional path to specific Chrome location
     chromeFlags: [] // custom flags to pass to Chrome. For a full list of flags, see http://peter.sh/experiments/chromium-command-line-switches/.
     // Note: pwmetrics supports all flags from Lighthouse
   },
