@@ -197,6 +197,7 @@ class PWMetrics {
       this.flags.port = this.launcher.port;
       return this.launcher;
     } catch(error) {
+      console.error(error);
       await this.killLauncher();
       return error;
     }
