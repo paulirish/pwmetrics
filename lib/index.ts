@@ -48,6 +48,7 @@ class PWMetrics {
   clientSecret: AuthorizeCredentials;
   tryLighthouseCounter: number;
   launcher: LaunchedChrome;
+  parsedChromeFlags: Array<string>;
 
   constructor(public url: string, opts: MainOptions) {
     this.flags = Object.assign({}, this.flags, opts.flags);
@@ -69,7 +70,7 @@ class PWMetrics {
       } else throw new Error(messages.getMessageWithPrefix('ERROR', 'NO_EXPECTATIONS_FOUND'));
     }
 
-    this.flags.chromeFlags = parseChromeFlags(this.flags.chromeFlags);
+    this.parsedChromeFlags = parseChromeFlags(this.flags.chromeFlags);
   }
 
   async start() {
@@ -191,7 +192,7 @@ class PWMetrics {
       console.log(messages.getMessage('LAUNCHING_CHROME'));
       this.launcher = await launch({
         port: this.flags.port,
-        chromeFlags: parseChromeFlags(this.flags.chromeFlags),
+        chromeFlags: this.parsedChromeFlags,
         chromePath: this.flags.chromePath
       });
       this.flags.port = this.launcher.port;
