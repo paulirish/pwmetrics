@@ -27,7 +27,7 @@ describe('PWMetrics', () => {
     it('should parse chromeFlags', () => {
       const opts = Object.assign({}, runOptions.startWithChromeFlags.opts);
       const pwMetrics = new PWMetrics(runOptions.startWithChromeFlags.url, opts);
-      expect(pwMetrics.flags.chromeFlags).to.be.deep.equal(['--no-sandbox', '--disable-setuid-sandbox']);
+      expect(pwMetrics.parsedChromeFlags).to.be.deep.equal(['--no-sandbox', '--disable-setuid-sandbox']);
     });
 
     describe('expectations', () => {
