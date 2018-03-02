@@ -5,6 +5,7 @@ npm-debug.log
 .idea
 
 gsheets.config.js
+package-lock.json
 
 # Typescript built files
 lib/**/*.js
