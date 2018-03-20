@@ -17,6 +17,7 @@
   "author": "Paul Irish",
   "license": "Apache-2.0",
   "dependencies": {
+    "@gribnoysup/wunderbar": "^2.1.0",
     "@types/node": "^6.0.45",
     "charm": "^1.0.2",
     "chrome-launcher": "^0.10.2",

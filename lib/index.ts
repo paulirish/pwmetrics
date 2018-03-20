@@ -14,6 +14,7 @@ const metrics = require('./metrics');
 const expectations = require('./expectations');
 const {upload} = require('./upload');
 const messages = require('./utils/messages');
+const drawChart = require('./chart/chart');
 
 import {
   MainOptions,
@@ -249,32 +250,18 @@ class PWMetrics {
     const fullWidthInMs = Math.max(...timings.map(result => result.timing));
     const maxLabelWidth = Math.max(...timings.map(result => result.title.length));
     const stdout = <TermWritableStream>(process.stdout);
-    const chartOps = {
+
+    drawChart(timings, {
       // 90% of terminal width to give some right margin
       width: stdout.columns * 0.9 - maxLabelWidth,
       xlabel: 'Time (ms) since navigation start',
 
+      xmin: 0,
       // nearest second
-      maxBound: Math.ceil(fullWidthInMs / 1000) * 1000,
-      xmax: fullWidthInMs,
+      xmax: Math.ceil(fullWidthInMs / 1000) * 1000,
       lmargin: maxLabelWidth + 1,
-
-      // 2 rows per bar, horitzonal plot
-      height: timings.length * 2,
-      step: 2,
-      direction: 'x'
-    };
-
-    const chart = new Chart(chartOps);
-    timings.forEach(result => {
-      chart.addBar({
-        size: result.timing,
-        label: result.title,
-        barLabel: `${Math.floor(result.timing).toLocaleString()}`,
-        color: result.color
-      });
     });
-    chart.draw();
+
     return data;
   }
 
