@@ -12,6 +12,5 @@ gsheets.config.js
 
 # Typescript built files
 lib/**/*.js
-!lib/chart/**
 types/types.js
 test/google-oauth.js

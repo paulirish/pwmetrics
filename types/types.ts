@@ -147,6 +147,14 @@ interface TermWritableStream extends NodeJS.WritableStream  {
   rows: number;
 }
 
+interface ChartOptions {
+  width: number;
+  xlabel: string;
+  xmin: number;
+  xmax: number;
+  lmargin: number;
+};
+
 export {
   Timing,
   Timestamp,
@@ -166,5 +174,6 @@ export {
   MainOptions,
   FeatureFlags,
   TermWritableStream,
-  PWMetricsResults
+  PWMetricsResults,
+  ChartOptions
 };

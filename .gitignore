@@ -9,5 +9,4 @@ package-lock.json
 
 # Typescript built files
 lib/**/*.js
-!lib/chart/**
 types/types.js
