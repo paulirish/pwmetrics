@@ -161,6 +161,22 @@ module.exports = {
     // Data object. Can be get
     // either
     // by (using everything in step 1 here)[https://developers.google.com/sheets/api/quickstart/nodejs#step_1_turn_on_the_api_name]
+    //
+    // example format:
+    //
+    // installed: {
+    //   client_id: "sample_client_id",
+    //   project_id: "sample_project_id",
+    //   auth_uri: "https://accounts.google.com/o/oauth2/auth",
+    //   token_uri: "https://accounts.google.com/o/oauth2/token",
+    //   auth_provider_x509_cert_url: "https://www.googleapis.com/oauth2/v1/certs",
+    //   client_secret: "sample_client_secret",
+    //   redirect_uris: [
+    //     "url",
+    //     "http://localhost"
+    //   ]
+    // }
+    //
     // or
     // by (using everything in step 1 here)[https://developers.google.com/drive/v3/web/quickstart/nodejs]
   }
@@ -300,7 +316,7 @@ module.exports = {
  - `ttfi` - First Interactive (vBeta)
  - `ttci` - Time to Consistently Interactive (vBeta)
  - `vc85` - Visually Complete 85%
- 
+
 Read article [Performance metrics. What’s this all about?](https://medium.com/@denar90/performance-metrics-whats-this-all-about-1128461ad6b) which is decoding this metrics.
 
 ### API
