@@ -6,23 +6,18 @@ const {getConfigFromFile} = require('../lib/utils/fs');
 const packageJSON = require('../package.json');
 const expectations = require('./fixtures/run-expectations');
 
+/* eslint-env mocha */
 describe('Config', () => {
   describe('validate input', () => {
-    context('from package.json', () => {
+    context('from package.json as default parameter', () => {
       it('should return empty object if pwmetrics property not defined', () => {
         expect(getConfigFromFile()).to.be.deep.equal({});
       });
     });
     context('with pwmetrics property defined', () => {
-      before(() => {
-        packageJSON.pwmetrics = expectations;
-      });
-
       it('should return the pwmetrics data', () => {
+        packageJSON.pwmetrics = expectations;
         expect(getConfigFromFile()).to.be.deep.equal(expectations);
-      });
-
-      after(() => {
         delete packageJSON.pwmetrics;
       });
     });
@@ -36,7 +31,7 @@ describe('Config', () => {
         expect(() => getConfigFromFile('./some/invalid/path')).to.throw(Error, 'Cannot find module');
       });
 
-      it('should return empty object if file in path is not a json', () => {
+      it('should throw if file in path is not a json', () => {
         expect(() => getConfigFromFile('./test/fixtures/invalid-config')).to.throw(Error, 'Invalid config from');
       });
     });

@@ -41,6 +41,31 @@ exports.publicVariablesWithExpectations = {
   }
 };
 
+exports.startWithOneRunWithExpectations = {
+  url: url,
+  opts: {
+    flags: {
+      runs: 1,
+      expectations: true
+    },
+    expectations: {
+      ttfcp: {
+        warn: '>=1500',
+        error: '>=3000',
+      }
+    }
+  }
+};
+
+exports.startWithChromeFlags = {
+  url: url,
+  opts: {
+    flags: {
+      chromeFlags: '--no-sandbox --disable-setuid-sandbox'
+    }
+  }
+};
+
 exports.sheets = {
   type: 'GOOGLE_SHEETS',
   options: {

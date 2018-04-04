@@ -1,12 +1,28 @@
 // Copyright 2016 Google Inc. All Rights Reserved.
 // Licensed under the Apache License, Version 2.0. See LICENSE
 
-import {AuditFullResult, Results} from 'lighthouse/lighthouse-cli/types/types';
-
-interface LighthouseResults extends Results { }
-
 interface LighthouseAudits {
-  [metric: string]: AuditFullResult;
+  [key: string]: {
+    rawValue: boolean | number;
+    displayValue: string;
+    debugString?: string;
+    score: boolean | number;
+    scoringMode: string;
+    error?: boolean;
+    description: string;
+    name: string;
+    helpText?: string;
+    extendedInfo?: { value: string };
+  }
+}
+
+interface LighthouseResults {
+  url: string;
+  audits: LighthouseAudits;
+  lighthouseVersion: string;
+  artifacts?: Object;
+  initialUrl: string;
+  generatedTime: string;
 }
 
 interface SheetsConfig {
@@ -31,8 +47,10 @@ interface FeatureFlags {
   upload: Boolean;
   view: Boolean;
   expectations: Boolean;
-  output: Boolean;
-  disableCpuThrottling: Boolean;
+  json: Boolean;
+  chromeFlags: string;
+  chromePath?: string
+  port?: number;
 }
 
 interface MetricsResults {
@@ -129,6 +147,14 @@ interface TermWritableStream extends NodeJS.WritableStream  {
   rows: number;
 }
 
+interface ChartOptions {
+  width: number;
+  xlabel: string;
+  xmin: number;
+  xmax: number;
+  lmargin: number;
+};
+
 export {
   Timing,
   Timestamp,
@@ -148,5 +174,6 @@ export {
   MainOptions,
   FeatureFlags,
   TermWritableStream,
-  PWMetricsResults
+  PWMetricsResults,
+  ChartOptions
 };

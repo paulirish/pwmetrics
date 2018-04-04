@@ -1,10 +1,12 @@
 // Copyright 2016 Google Inc. All Rights Reserved.
 // Licensed under the Apache License, Version 2.0. See LICENSE
 
+import {launch, LaunchedChrome} from 'chrome-launcher';
 const lighthouse = require('lighthouse');
-import {ChromeLauncher} from 'lighthouse/lighthouse-cli/chrome-launcher';
-const perfConfig: any = require('lighthouse/lighthouse-core/config/perf.json');
+const parseChromeFlags = require('lighthouse/lighthouse-cli/run').parseChromeFlags;
+const perfConfig: any = require('./lh-config');
 const opn = require('opn');
+const path = require('path');
 
 const Sheets = require('./sheets/index');
 const Chart = require('./chart/chart');
@@ -12,12 +14,23 @@ const metrics = require('./metrics');
 const expectations = require('./expectations');
 const {upload} = require('./upload');
 const messages = require('./utils/messages');
+const drawChart = require('./chart/chart');
 
-import {MainOptions, FeatureFlags, AuthorizeCredentials, LighthouseResults, MetricsResults, TermWritableStream, PWMetricsResults, SheetsConfig, ExpectationMetrics} from '../types/types';
+import {
+  MainOptions,
+  FeatureFlags,
+  AuthorizeCredentials,
+  LighthouseResults,
+  MetricsResults,
+  TermWritableStream,
+  PWMetricsResults,
+  SheetsConfig,
+  ExpectationMetrics,
+  NormalizedExpectationMetrics,
+  Timing
+} from '../types/types';
 
 const MAX_LIGHTHOUSE_TRIES = 2;
-const SIGINT = 'SIGINT';
-const SIGINT_EXIT_CODE = 130;
 const getTimelineViewerUrl = (id: string) => `https://chromedevtools.github.io/timeline-viewer/?loadTimelineFromURL=https://drive.google.com/file/d//${id}/view?usp=drivesdk`
 
 class PWMetrics {
@@ -27,16 +40,16 @@ class PWMetrics {
     upload: false,
     view: false,
     expectations: false,
-    output: false,
-    // @todo remove when new lighthouse version be released, because -https://github.com/GoogleChrome/lighthouse/pull/1778
-    disableCpuThrottling: false
+    json: false,
+    chromeFlags: ''
   };
   runs: number;
   sheets: SheetsConfig;
-  expectations: ExpectationMetrics;
+  expectations: ExpectationMetrics | NormalizedExpectationMetrics;
   clientSecret: AuthorizeCredentials;
   tryLighthouseCounter: number;
-  launcher: ChromeLauncher | undefined = undefined;
+  launcher: LaunchedChrome;
+  parsedChromeFlags: Array<string>;
 
   constructor(public url: string, opts: MainOptions) {
     this.flags = Object.assign({}, this.flags, opts.flags);
@@ -46,33 +59,34 @@ class PWMetrics {
     this.clientSecret = opts.clientSecret;
     this.tryLighthouseCounter = 0;
 
+    // normalize path if provided
+    if (this.flags.chromePath) {
+        this.flags.chromePath = path.normalize(this.flags.chromePath);
+    }
+
     if (this.flags.expectations) {
       if (this.expectations) {
         expectations.validateMetrics(this.expectations);
         this.expectations = expectations.normalizeMetrics(this.expectations);
-      } else throw new Error(getMessageWithPrefix('ERROR', 'NO_EXPECTATIONS_FOUND'));
+      } else throw new Error(messages.getMessageWithPrefix('ERROR', 'NO_EXPECTATIONS_FOUND'));
     }
+
+    this.parsedChromeFlags = parseChromeFlags(this.flags.chromeFlags);
   }
 
   async start() {
     const runs = Array.apply(null, {length: +this.runs}).map(Number.call, Number);
     let metricsResults: MetricsResults[] = [];
 
-    // Kill spawned Chrome process in case of ctrl-C.
-    process.on(SIGINT, async() => {
-      if (this.launcher) {
-        try {
-          await this.killLauncher();
-          process.exit(SIGINT_EXIT_CODE);
-          console.log(messages.getMessage('CLOSING_CHROME'));
-        } catch (error) {
-          throw error;
-        }
-      }
-    });
+    let resultHasExpectationErrors = false;
+
     for (let runIndex of runs) {
       try {
-        metricsResults[runIndex] = await this.run();
+        const currentMetricResult: MetricsResults = await this.run();
+        if (!resultHasExpectationErrors && this.flags.expectations) {
+          resultHasExpectationErrors = this.resultHasExpectationErrors(currentMetricResult);
+        }
+        metricsResults[runIndex] = currentMetricResult;
         console.log(messages.getMessageWithPrefix('SUCCESS', 'SUCCESS_RUN', runIndex, runs.length));
       } catch (error) {
         metricsResults[runIndex] = error;
@@ -91,7 +105,23 @@ class PWMetrics {
         await sheets.appendResults(results.runs);
       }
     }
+
+    if (resultHasExpectationErrors && this.flags.expectations) {
+      throw new Error(messages.getMessage('HAS_EXPECTATION_ERRORS'));
+    }
+
     return results;
+  }
+
+  resultHasExpectationErrors(metrics: MetricsResults): boolean {
+    return metrics.timings.some((timing: Timing) => {
+      const expectation = this.expectations[timing.id];
+      if (!expectation) {
+        return false;
+      }
+      const expectedErrorLimit = expectation.error;
+      return expectedErrorLimit !== undefined && timing.timing >= expectedErrorLimit;
+    });
   }
 
   async run(): Promise<MetricsResults> {
@@ -104,7 +134,7 @@ class PWMetrics {
         this.tryLighthouseCounter = 0;
         lhResults = await this.runLighthouseOnCI().then((lhResults:LighthouseResults) => {
           // fix for https://github.com/paulirish/pwmetrics/issues/63
-          return new Promise(resolve => {
+          return new Promise<LighthouseResults>(resolve => {
             console.log(messages.getMessage('WAITING'));
             setTimeout(_ => {
               return resolve(lhResults);
@@ -158,13 +188,20 @@ class PWMetrics {
     }
   }
 
-  async launchChrome(): Promise<ChromeLauncher> {
+  async launchChrome(): Promise<LaunchedChrome|Error> {
     try {
-      this.launcher = new ChromeLauncher();
-      await this.launcher.isDebuggerReady();
-    } catch(e) {
       console.log(messages.getMessage('LAUNCHING_CHROME'));
-      return this.launcher.run();
+      this.launcher = await launch({
+        port: this.flags.port,
+        chromeFlags: this.parsedChromeFlags,
+        chromePath: this.flags.chromePath
+      });
+      this.flags.port = this.launcher.port;
+      return this.launcher;
+    } catch(error) {
+      console.error(error);
+      await this.killLauncher();
+      return error;
     }
   }
 
@@ -192,11 +229,9 @@ class PWMetrics {
   }
 
   displayOutput(data: MetricsResults): MetricsResults {
-    if (this.flags.output) {
-      return data;
-    } else {
+    if (!this.flags.json)
       this.showChart(data);
-    }
+
     return data;
   }
 
@@ -215,42 +250,28 @@ class PWMetrics {
     const fullWidthInMs = Math.max(...timings.map(result => result.timing));
     const maxLabelWidth = Math.max(...timings.map(result => result.title.length));
     const stdout = <TermWritableStream>(process.stdout);
-    const chartOps = {
+
+    drawChart(timings, {
       // 90% of terminal width to give some right margin
       width: stdout.columns * 0.9 - maxLabelWidth,
       xlabel: 'Time (ms) since navigation start',
 
+      xmin: 0,
       // nearest second
-      maxBound: Math.ceil(fullWidthInMs / 1000) * 1000,
-      xmax: fullWidthInMs,
+      xmax: Math.ceil(fullWidthInMs / 1000) * 1000,
       lmargin: maxLabelWidth + 1,
-
-      // 2 rows per bar, horitzonal plot
-      height: timings.length * 2,
-      step: 2,
-      direction: 'x'
-    };
-
-    const chart = new Chart(chartOps);
-    timings.forEach(result => {
-      chart.addBar({
-        size: result.timing,
-        label: result.title,
-        barLabel: `${Math.floor(result.timing).toLocaleString()}`,
-        color: result.color
-      });
     });
-    chart.draw();
+
     return data;
   }
 
   findMedianRun(results: MetricsResults[]): MetricsResults {
-    const ttiValues = results.map(r => r.timings.find(timing => timing.id === metrics.ids.TTI).timing);
-    const medianTTI = this.median(ttiValues);
-    // in the case of duplicate runs having the exact same TTI, we naively pick the first
+    const ttfiValues = results.map(r => r.timings.find(timing => timing.id === metrics.ids.TTFI).timing);
+    const medianTTFI = this.median(ttfiValues);
+    // in the case of duplicate runs having the exact same TTFI, we naively pick the first
     // @fixme, but any for now...
     return results.find((result: any) => result.timings.find((timing:any) =>
-        timing.id === metrics.ids.TTI && timing.timing === medianTTI
+        timing.id === metrics.ids.TTFI && timing.timing === medianTTFI
       )
     );
   }

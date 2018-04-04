@@ -6,6 +6,7 @@ const PWMetrics = require('../lib');
 const runOptions = require('./fixtures/run-options');
 const dataMocks = require('./fixtures/mocks');
 
+/* eslint-env mocha */
 describe('PWMetrics', () => {
   describe('public variables', () => {
     it('should set class variables', () => {
@@ -23,16 +24,10 @@ describe('PWMetrics', () => {
       expect(pwMetrics.runs).to.be.equal(2);
     });
 
-    describe('flags', () => {
-      it('should have enabled CPU throttling property for lighthouse by default', () => {
-        const pwMetrics = new PWMetrics(runOptions.publicVariables.url, runOptions.publicVariables.opts);
-        expect(pwMetrics.flags.disableCpuThrottling).to.be.false;
-      });
-
-      it('should disable CPU throttling property for lighthouse', () => {
-        const pwMetrics = new PWMetrics(runOptions.publicVariables.url, runOptions.publicVariablesWithDisabledThrottling.opts);
-        expect(pwMetrics.flags.disableCpuThrottling).to.be.true;
-      });
+    it('should parse chromeFlags', () => {
+      const opts = Object.assign({}, runOptions.startWithChromeFlags.opts);
+      const pwMetrics = new PWMetrics(runOptions.startWithChromeFlags.url, opts);
+      expect(pwMetrics.parsedChromeFlags).to.be.deep.equal(['--no-sandbox', '--disable-setuid-sandbox']);
     });
 
     describe('expectations', () => {
@@ -127,6 +122,20 @@ describe('PWMetrics', () => {
         });
       });
     });
+
+    describe('with one run with expectations', () => {
+      beforeEach(() => {
+        const {opts} = runOptions.startWithOneRunWithExpectations;
+        pwMetrics = new PWMetrics(runOptions.startWithOneRunWithExpectations.url, opts);
+        runStub = sinon.stub(pwMetrics, 'run', () => Promise.resolve({timings: []}));
+      });
+
+      it('should call method for calculating median results', () => {
+        return pwMetrics.start().catch(error => {
+          expect(error.message).to.contain('Expectation with errors.');
+        });
+      });
+    });
   });
 
   describe('findMedianRun method', () => {
@@ -138,11 +147,11 @@ describe('PWMetrics', () => {
     });
 
     it('for 2 runs, return largest element', () => {
-      expect(pwMetrics.findMedianRun([runs[0], runs[1]])).to.be.deep.equal(runs[1]);
+      expect(pwMetrics.findMedianRun([runs[0], runs[1]])).to.be.deep.equal(runs[0]);
     });
 
     it('for odd number of runs, return middle element of sorted array', () => {
-      expect(pwMetrics.findMedianRun([runs[0], runs[1], runs[2]])).to.be.deep.equal(runs[1]);
+      expect(pwMetrics.findMedianRun([runs[0], runs[1], runs[2]])).to.be.deep.equal(runs[2]);
     });
 
     it('for even runs, return n/2+1 element element of sorted array', () => {

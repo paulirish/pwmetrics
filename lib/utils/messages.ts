@@ -56,6 +56,10 @@ const getMessage = function (messageType: string, ...args: any[]) {
       return 'Visually Complete 100%';
     case 'tti':
       return 'Time to Interactive';
+    case 'ttfi':
+      return 'First Interactive (vBeta)';
+    case 'ttci':
+      return 'Time to Consistently Interactive (vBeta)';
     case 'vc85':
       return 'Visually Complete 85%';
     case 'SUCCESS_RUN':
@@ -78,6 +82,8 @@ const getMessage = function (messageType: string, ...args: any[]) {
       return 'Uploading trace to Google Drive...';
     case 'G_DRIVE_UPLOADED':
       return 'Trace uploaded to Google Drive...';
+    case 'HAS_EXPECTATION_ERRORS':
+      return 'Expectation with errors.';
     default:
       throw new Error(`No matching message ID: ${messageType}`);
   }

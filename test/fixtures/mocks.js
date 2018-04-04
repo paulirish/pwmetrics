@@ -17,230 +17,168 @@ exports.failedMetricResult = new Error('Failed run');
 
 exports.metricsResults = [
   {
-    'timings': [
-      {
-        'title': 'First Contentful Paint',
-        'id': 'ttfcp',
-        'timing': 598.468,
-        'color': 'green'
-      },
-      {
-        'title': 'First Meaningful Paint',
-        'id': 'ttfmp',
-        'timing': 598.5,
-        'color': 'green'
-      },
-      {
-        'title': 'Perceptual Speed Index',
-        'id': 'psi',
-        'timing': 650,
-        'color': 'blue'
-      },
-      {
-        'title': 'First Visual Change',
-        'id': 'fv',
-        'timing': 649,
-        'color': 'blue'
-      },
-      {
-        'title': 'Visually Complete 100%',
-        'id': 'vc',
-        'timing': 649,
-        'color': 'blue'
-      },
-      {
-        'title': 'Time to Interactive',
-        'id': 'tti',
-        'timing': 625.9,
-        'color': 'yellow'
-      },
-      {
-        'title': 'Visually Complete 85%',
-        'id': 'vc85',
-        'timing': 635.872,
-        'color': 'blue'
-      }
-    ],
-    'timestamps': [
-      {
-        'title': 'Navigation Start',
-        'id': 'navstart',
-        'timing': 85880196188
-      }
-    ],
-    'generatedTime': '2017-01-24T23:29:54.465Z',
-    'lighthouseVersion': '1.4.1',
+    'timings': [{
+      'title': 'First Contentful Paint',
+      'id': 'ttfcp',
+      'timestamp': 38340021362,
+      'timing': 1006.643,
+      'color': 'green'
+    }, {
+      'title': 'First Meaningful Paint',
+      'id': 'ttfmp',
+      'timestamp': 38340021379,
+      'timing': 1006.66,
+      'color': 'green'
+    }, {
+      'title': 'Perceptual Speed Index',
+      'id': 'psi',
+      'timestamp': 38340062085,
+      'timing': 1047.366,
+      'color': 'blue'
+    }, {
+      'title': 'First Visual Change',
+      'id': 'fv',
+      'timestamp': 38340061719,
+      'timing': 1047,
+      'color': 'blue'
+    }, {
+      'title': 'Visually Complete 85%',
+      'id': 'vc85',
+      'timestamp': 38340062085,
+      'timing': 1047.366,
+      'color': 'blue'
+    }, {
+      'title': 'Visually Complete 100%',
+      'id': 'vc100',
+      'timestamp': 38340061719,
+      'timing': 1047,
+      'color': 'blue'
+    }, {
+      'title': 'First Interactive (vBeta)',
+      'id': 'ttfi',
+      'timestamp': 38340021379,
+      'timing': 1006.66,
+      'color': 'yellow'
+    }, {
+      'title': 'Time to Consistently Interactive (vBeta)',
+      'id': 'ttci',
+      'timestamp': 38340021379,
+      'timing': 1006.66,
+      'color': 'yellow'
+    }],
+    'timestamps': [{'title': 'Navigation Start', 'id': 'navstart', 'timestamp': 38339014719}],
+    'generatedTime': '2017-06-19T20:39:08.057Z',
+    'lighthouseVersion': '2.1.0',
     'initialUrl': 'http://example.com',
     'url': 'http://example.com/'
-  },
-  {
-    'timings': [
-      {
-        'title': 'First Contentful Paint',
-        'id': 'ttfcp',
-        'timing': 598.468,
-        'color': 'green'
-      },
-      {
-        'title': 'First Meaningful Paint',
-        'id': 'ttfmp',
-        'timing': 598.5,
-        'color': 'green'
-      },
-      {
-        'title': 'Perceptual Speed Index',
-        'id': 'psi',
-        'timing': 650,
-        'color': 'blue'
-      },
-      {
-        'title': 'First Visual Change',
-        'id': 'fv',
-        'timing': 649,
-        'color': 'blue'
-      },
-      {
-        'title': 'Visually Complete 100%',
-        'id': 'vc',
-        'timing': 649,
-        'color': 'blue'
-      },
-      {
-        'title': 'Time to Interactive',
-        'id': 'tti',
-        'timing': 635.9,
-        'color': 'yellow'
-      },
-      {
-        'title': 'Visually Complete 85%',
-        'id': 'vc85',
-        'timing': 635.872,
-        'color': 'blue'
-      }
-    ],
-    'timestamps': [
-      {
-        'title': 'Navigation Start',
-        'id': 'navstart',
-        'timing': 85880196188
-      }
-    ],
-    'generatedTime': '2017-01-24T23:29:54.465Z',
-    'lighthouseVersion': '1.4.1',
+  }, {
+    'timings': [{
+      'title': 'First Contentful Paint',
+      'id': 'ttfcp',
+      'timestamp': 38351240693,
+      'timing': 894.788,
+      'color': 'green'
+    }, {
+      'title': 'First Meaningful Paint',
+      'id': 'ttfmp',
+      'timestamp': 38351240870,
+      'timing': 894.965,
+      'color': 'green'
+    }, {
+      'title': 'Perceptual Speed Index',
+      'id': 'psi',
+      'timestamp': 38351260183,
+      'timing': 914.278,
+      'color': 'blue'
+    }, {
+      'title': 'First Visual Change',
+      'id': 'fv',
+      'timestamp': 38351259905,
+      'timing': 914,
+      'color': 'blue'
+    }, {
+      'title': 'Visually Complete 85%',
+      'id': 'vc85',
+      'timestamp': 38351260183,
+      'timing': 914.278,
+      'color': 'blue'
+    }, {
+      'title': 'Visually Complete 100%',
+      'id': 'vc100',
+      'timestamp': 38351259905,
+      'timing': 914,
+      'color': 'blue'
+    }, {
+      'title': 'First Interactive (vBeta)',
+      'id': 'ttfi',
+      'timestamp': 38351240870,
+      'timing': 894.965,
+      'color': 'yellow'
+    }, {
+      'title': 'Time to Consistently Interactive (vBeta)',
+      'id': 'ttci',
+      'timestamp': 38351240870,
+      'timing': 894.965,
+      'color': 'yellow'
+    }],
+    'timestamps': [{'title': 'Navigation Start', 'id': 'navstart', 'timestamp': 38350345905}],
+    'generatedTime': '2017-06-19T20:39:19.070Z',
+    'lighthouseVersion': '2.1.0',
     'initialUrl': 'http://example.com',
     'url': 'http://example.com/'
-  },
-  {
-    'timings': [
-      {
-        'title': 'First Contentful Paint',
-        'id': 'ttfcp',
-        'timing': 598.468,
-        'color': 'green'
-      },
-      {
-        'title': 'First Meaningful Paint',
-        'id': 'ttfmp',
-        'timing': 598.5,
-        'color': 'green'
-      },
-      {
-        'title': 'Perceptual Speed Index',
-        'id': 'psi',
-        'timing': 650,
-        'color': 'blue'
-      },
-      {
-        'title': 'First Visual Change',
-        'id': 'fv',
-        'timing': 649,
-        'color': 'blue'
-      },
-      {
-        'title': 'Visually Complete 100%',
-        'id': 'vc',
-        'timing': 649,
-        'color': 'blue'
-      },
-      {
-        'title': 'Time to Interactive',
-        'id': 'tti',
-        'timing': 645.9,
-        'color': 'yellow'
-      },
-      {
-        'title': 'Visually Complete 85%',
-        'id': 'vc85',
-        'timing': 635.872,
-        'color': 'blue'
-      }
-    ],
-    'timestamps': [
-      {
-        'title': 'Navigation Start',
-        'id': 'navstart',
-        'timing': 85880196188
-      }
-    ],
-    'generatedTime': '2017-01-24T23:29:54.465Z',
-    'lighthouseVersion': '1.4.1',
-    'initialUrl': 'http://example.com',
-    'url': 'http://example.com/'
-  },
-  {
-    'timings': [
-      {
-        'title': 'First Contentful Paint',
-        'id': 'ttfcp',
-        'timing': 598.468,
-        'color': 'green'
-      },
-      {
-        'title': 'First Meaningful Paint',
-        'id': 'ttfmp',
-        'timing': 598.5,
-        'color': 'green'
-      },
-      {
-        'title': 'Perceptual Speed Index',
-        'id': 'psi',
-        'timing': 650,
-        'color': 'blue'
-      },
-      {
-        'title': 'First Visual Change',
-        'id': 'fv',
-        'timing': 649,
-        'color': 'blue'
-      },
-      {
-        'title': 'Visually Complete 100%',
-        'id': 'vc',
-        'timing': 649,
-        'color': 'blue'
-      },
-      {
-        'title': 'Time to Interactive',
-        'id': 'tti',
-        'timing': 655.9,
-        'color': 'yellow'
-      },
-      {
-        'title': 'Visually Complete 85%',
-        'id': 'vc85',
-        'timing': 635.872,
-        'color': 'blue'
-      }
-    ],
-    'timestamps': [
-      {
-        'title': 'Navigation Start',
-        'id': 'navstart',
-        'timing': 85880196188
-      }
-    ],
-    'generatedTime': '2017-01-24T23:29:54.465Z',
-    'lighthouseVersion': '1.4.1',
+  }, {
+    'timings': [{
+      'title': 'First Contentful Paint',
+      'id': 'ttfcp',
+      'timestamp': 38362423762,
+      'timing': 903.559,
+      'color': 'green'
+    }, {
+      'title': 'First Meaningful Paint',
+      'id': 'ttfmp',
+      'timestamp': 38362423774,
+      'timing': 903.571,
+      'color': 'green'
+    }, {
+      'title': 'Perceptual Speed Index',
+      'id': 'psi',
+      'timestamp': 38362441101,
+      'timing': 920.898,
+      'color': 'blue'
+    }, {
+      'title': 'First Visual Change',
+      'id': 'fv',
+      'timestamp': 38362440203,
+      'timing': 920,
+      'color': 'blue'
+    }, {
+      'title': 'Visually Complete 85%',
+      'id': 'vc85',
+      'timestamp': 38362441101,
+      'timing': 920.898,
+      'color': 'blue'
+    }, {
+      'title': 'Visually Complete 100%',
+      'id': 'vc100',
+      'timestamp': 38362440203,
+      'timing': 920,
+      'color': 'blue'
+    }, {
+      'title': 'First Interactive (vBeta)',
+      'id': 'ttfi',
+      'timestamp': 38362423774,
+      'timing': 903.571,
+      'color': 'yellow'
+    }, {
+      'title': 'Time to Consistently Interactive (vBeta)',
+      'id': 'ttci',
+      'timestamp': 38362423774,
+      'timing': 903.571,
+      'color': 'yellow'
+    }],
+    'timestamps': [{'title': 'Navigation Start', 'id': 'navstart', 'timestamp': 38361520203}],
+    'generatedTime': '2017-06-19T20:39:30.261Z',
+    'lighthouseVersion': '2.1.0',
     'initialUrl': 'http://example.com',
     'url': 'http://example.com/'
   }
@@ -260,16 +198,16 @@ module.exports.googleOauthToken = {
 
 module.exports.normalizedExpectations = {
   ttfmp: {
-    warn: 3000,
-    error: 2000
+    warn: 500,
+    error: 1000
   },
   tti: {
     warn: 3000,
     error: 5000,
   },
   ttfcp: {
-    warn: 1500,
-    error: 3000,
+    warn: 500,
+    error: 1000,
   },
   psi: {
     warn: 3000,

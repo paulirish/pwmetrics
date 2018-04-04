@@ -9,6 +9,7 @@
 ![image](https://cloud.githubusercontent.com/assets/39191/19417867/7aead922-93af-11e6-88ec-917dad6e89d2.png)
 
  Documentation on these metrics in the works. If you hit bugs in the metrics collection, report at [Lighthouse issues](https://github.com/GoogleChrome/lighthouse/issues).
+ [How to use article](https://medium.com/@denar90/easy-progressive-web-metrics-9afa5ed857c2)
 
 ### Install [![NPM pwmetrics package](https://img.shields.io/npm/v/pwmetrics.svg)](https://npmjs.org/package/pwmetrics)
 ```sh
@@ -48,8 +49,8 @@ pwmetrics http://example.com/ --json
 # --output-path       File path to save results.
 pwmetrics http://example.com/ --output-path='pathToFile/file.json'
 
-# --config        Provide configuration. See _Defining config_ below.
-pwmetrics --config
+# --config        Provide configuration (defaults to `package.json`). See _Defining config_ below.
+pwmetrics --config=pwmetrics-config.js
 
 # --submit       Submit results to Google Sheets. See _Defining submit_ below.
 pwmetrics --submit
@@ -108,12 +109,15 @@ module.exports = {
 ```js
 module.exports = {
   url: 'http://example.com/',
-  flags: { // AKA feature flags 
+  flags: { // AKA feature flags
     runs: '3', // number or runs
-    submit: true, // trurn on submitting to Google Sheets
-    upload: true, // trurn on uploading to Google Drive
-    view: true, // open uploaded traces to Google Drive in DevTools    
-    expectations: true // trurn on assertation metrics results against provides values   
+    submit: true, // turn on submitting to Google Sheets
+    upload: true, // turn on uploading to Google Drive
+    view: true, // open uploaded traces to Google Drive in DevTools
+    expectations: true, // turn on assertation metrics results against provides values
+    chromePath: '/Applications/Google\ Chrome\ Canary.app/Contents/MacOS/Google\ Chrome\ Canary', //optional path to specific Chrome location
+    chromeFlags: '' // custom flags to pass to Chrome. For a full list of flags, see http://peter.sh/experiments/chromium-command-line-switches/.
+    // Note: pwmetrics supports all flags from Lighthouse
   },
   expectations: {
     // these expectations values are examples, for your cases set your own
@@ -139,7 +143,10 @@ module.exports = {
     vs100: {
       ...
     },
-    tti: {
+    ttfi: {
+      ...
+    },
+    ttci: {
       ...
     }
   },
@@ -151,8 +158,8 @@ module.exports = {
     }
   },
   clientSecret: {
-    // Data object. Can be get 
-    // either 
+    // Data object. Can be get
+    // either
     // by (using everything in step 1 here)[https://developers.google.com/sheets/api/quickstart/nodejs#step_1_turn_on_the_api_name]
     // or
     // by (using everything in step 1 here)[https://developers.google.com/drive/v3/web/quickstart/nodejs]
@@ -193,7 +200,7 @@ Submit results to Google Sheets
 
 *Instructions:*
 
-- Copy [this spreadsheet](https://docs.google.com/spreadsheets/d/1k9ukQrxlnn8H8BB0tIJg5Q-_b4qhgB6dGxgc5d0Ibpo/edit).
+- Copy [this spreadsheet](https://docs.google.com/spreadsheets/d/14DXR9x267fOftf7sYFuUlT3djChSl6PNuPBvUD4h9Rw/edit).
 - Copy the ID of the spreadsheet into the config as value of `sheets.options.spreadsheetId` property.
 - Setup Google Developer project and get credentials. ([everything in step 1 here](https://developers.google.com/sheets/api/quickstart/nodejs#step_1_turn_on_the_api_name))
 - Take a `client_secret` and put it into the config as value of `clientSecret` property.
@@ -283,28 +290,36 @@ module.exports = {
 }
 ```
 
-#### Available metrics: 
+#### Available metrics:
 
  - `ttfcp` - First Contentful Paint
  - `ttfmp` - First Meaningful Paint
  - `psi` - Perceptual Speed Index
  - `fv` - First Visual Change
  - `vc` - Visually Complete 100%
- - `tti` - Time to Interactive
+ - `ttfi` - First Interactive (vBeta)
+ - `ttci` - Time to Consistently Interactive (vBeta)
  - `vc85` - Visually Complete 85%
-
-
-### Default Lighthouse options
-
- - `disableCpuThrottling` is set `false` by default. It means that CPU throttling `5x` is enabled. To turn it off, run `pwmetrics http:example.com --disableCpuThrottling`
-
+ 
+Read article [Performance metrics. What’s this all about?](https://medium.com/@denar90/performance-metrics-whats-this-all-about-1128461ad6b) which is decoding this metrics.
 
 ### API
 
 ```js
 const PWMetrics = require('pwmetrics');
 
-const pwMetrics = new PWMetrics('http://example.com/', options); // [All available configuration options](#all-available-configuration-options) can be used as `opts` 
+const options = {
+  flags: {
+    runs: '3', // number or runs
+    submit: true, // turn on submitting to Google Sheets
+    upload: true, // turn on uploading to Google Drive
+    view: true, // open uploaded traces to Google Drive in DevTools
+    expectations: true, // turn on assertation metrics results against provides values
+    chromeFlags: '--headless' // run in headless Chrome
+  }
+};
+
+const pwMetrics = new PWMetrics('http://example.com/', options); // _All available configuration options_ can be used as `options`
 pwMetrics.start(); // returns Promise
 
 ```
@@ -322,7 +337,7 @@ pwMetrics.start(); // returns Promise
   </thead>
   <tbody>
     <tr>
-      <td style="text-align: center;">flags</td>
+    <td style="text-align: center;">flags<sup><b>*</b></sup></td>
       <td style="text-align: center;">Object</td>
       <td>
         <pre>
@@ -332,7 +347,8 @@ pwMetrics.start(); // returns Promise
   upload: false,
   view: false,
   expectations: false,
-  disableCpuThrottling: false
+  disableCpuThrottling: false,
+  chromeFlags: ''
 }
         </pre>
       </td>
@@ -361,6 +377,9 @@ pwMetrics.start(); // returns Promise
     </tr>
   </tbody>
 </table>
+
+<sup>*</sup>pwmetrics supports all flags from Lighthouse. See [here](https://github.com/GoogleChrome/lighthouse/#cli-options) for the complete list.
+
 
 ### Recipes
 
