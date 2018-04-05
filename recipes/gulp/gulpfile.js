@@ -2,6 +2,7 @@
 // Licensed under the Apache License, Version 2.0. See LICENSE
 'use strict';
 
+/* eslint-disable no-console */
 const gulp = require('gulp');
 const connect = require('gulp-connect');
 const PWMetrics = require('../../lib/');

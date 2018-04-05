@@ -7,6 +7,7 @@ const runOptions = require('./fixtures/run-options');
 const dataMocks = require('./fixtures/mocks');
 
 /* eslint-env mocha */
+/* eslint-disable no-unused-expressions */
 describe('PWMetrics', () => {
   describe('public variables', () => {
     it('should set class variables', () => {
@@ -32,7 +33,10 @@ describe('PWMetrics', () => {
 
     describe('expectations', () => {
       it('should set expectations', () => {
-        const pwMetrics = new PWMetrics(runOptions.publicVariables.url, runOptions.publicVariablesWithExpectations.opts);
+        const pwMetrics = new PWMetrics(
+          runOptions.publicVariables.url,
+          runOptions.publicVariablesWithExpectations.opts
+        );
         expect(pwMetrics.expectations).to.be.equal(runOptions.publicVariablesWithExpectations.opts.expectations);
       });
     });

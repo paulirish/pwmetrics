@@ -8,6 +8,7 @@ const normalizedExpectations = require('./fixtures/mocks').normalizedExpectation
 const expectationsData = require('./fixtures/run-expectations').expectations;
 
 /* eslint-env mocha */
+/* eslint-disable no-unused-expressions, no-console */
 describe('Expectations', () => {
   describe('checkExpectations', () => {
     let logSpy;
