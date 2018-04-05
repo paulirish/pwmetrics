@@ -110,7 +110,7 @@ module.exports = {
 module.exports = {
   url: 'http://example.com/',
   flags: { // AKA feature flags
-    runs: '3', // number or runs
+    runs: 3, // number or runs
     submit: true, // turn on submitting to Google Sheets
     upload: true, // turn on uploading to Google Drive
     view: true, // open uploaded traces to Google Drive in DevTools
@@ -326,7 +326,7 @@ const PWMetrics = require('pwmetrics');
 
 const options = {
   flags: {
-    runs: '3', // number or runs
+    runs: 3, // number or runs
     submit: true, // turn on submitting to Google Sheets
     upload: true, // turn on uploading to Google Drive
     view: true, // open uploaded traces to Google Drive in DevTools
