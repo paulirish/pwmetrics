@@ -3,6 +3,7 @@
 // Licensed under the Apache License, Version 2.0. See LICENSE
 'use strict';
 
+/* eslint-disable no-console */
 const sysPath = require('path');
 const fs = require('fs');
 const yargs = require('yargs');

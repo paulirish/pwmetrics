@@ -7,6 +7,7 @@ const childProcess = require('child_process');
 const expect = require('chai').expect;
 
 /* eslint-env mocha */
+/* eslint-disable no-unused-expressions */
 describe('CLI', function() {
   describe('url', () => {
     it('should throw error if a url is not provided by cli', () => {
