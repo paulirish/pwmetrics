@@ -110,7 +110,7 @@ module.exports = {
 module.exports = {
   url: 'http://example.com/',
   flags: { // AKA feature flags
-    runs: '3', // number or runs
+    runs: 3, // number or runs
     submit: true, // turn on submitting to Google Sheets
     upload: true, // turn on uploading to Google Drive
     view: true, // open uploaded traces to Google Drive in DevTools
@@ -300,7 +300,7 @@ module.exports = {
  - `ttfi` - First Interactive (vBeta)
  - `ttci` - Time to Consistently Interactive (vBeta)
  - `vc85` - Visually Complete 85%
- 
+
 Read article [Performance metrics. What’s this all about?](https://medium.com/@denar90/performance-metrics-whats-this-all-about-1128461ad6b) which is decoding this metrics.
 
 ### API
@@ -310,7 +310,7 @@ const PWMetrics = require('pwmetrics');
 
 const options = {
   flags: {
-    runs: '3', // number or runs
+    runs: 3, // number or runs
     submit: true, // turn on submitting to Google Sheets
     upload: true, // turn on uploading to Google Drive
     view: true, // open uploaded traces to Google Drive in DevTools
