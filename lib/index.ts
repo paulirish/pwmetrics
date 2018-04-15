@@ -240,8 +240,10 @@ class PWMetrics {
     let timings = data.timings;
 
     timings = timings.filter(r => {
-      if (r.timing === undefined) {
+      // filter out metrics that failed to record
+      if (r.timing === undefined || isNaN(r.timing)) {
         console.error(messages.getMessageWithPrefix('ERROR', 'METRIC_IS_UNAVAILABLE', r.title));
+        return false;
       }
       // don't chart hidden metrics, but include in json
       return !metrics.hiddenMetrics.includes(r.id);
