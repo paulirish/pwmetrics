@@ -44,24 +44,16 @@ const getMessage = function (messageType: string, ...args: any[]) {
       return `No matching message prefix: ${args[0]}`;
     case 'METRIC_IS_UNAVAILABLE':
       return `Sorry, ${args[0]} metric is unavailable`;
-    case 'ttfcp':
+    case 'first-meaningful-paint':
       return 'First Contentful Paint';
-    case 'ttfmp':
-      return 'First Meaningful Paint';
-    case 'psi':
+    case 'speed-index':
       return 'Perceptual Speed Index';
-    case 'fv':
-      return 'First Visual Change';
-    case 'vc':
-      return 'Visually Complete 100%';
-    case 'tti':
+    case 'estimated-input-latency':
+      return 'Estimated Input Latency';
+    case 'first-cpu-idle':
+      return 'Time to First Interactive';
+    case 'interactive':
       return 'Time to Interactive';
-    case 'ttfi':
-      return 'First Interactive (vBeta)';
-    case 'ttci':
-      return 'Time to Consistently Interactive (vBeta)';
-    case 'vc85':
-      return 'Visually Complete 85%';
     case 'SUCCESS_RUN':
       return `Run ${args[0] + 1} of ${args[1]} finished successfully`;
     case 'FAILED_RUN':

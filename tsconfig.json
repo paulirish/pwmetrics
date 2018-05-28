@@ -2,15 +2,17 @@
   "compilerOptions": {
     "module": "commonjs",
     "target": "ES2016",
-    "noImplicitAny": true,
     "inlineSourceMap": true,
     "noEmitOnError": false,
-    "allowJs": true
+    "allowJs": true,
+    "diagnostics": true
   },
-  "exclude": [
-    "node_modules"
+  "typeRoots": [
+    "@types",
+    "node_modules/lighthouse/typings"
   ],
   "include": [
-    "lib/**/*.ts"
+    "lib/**/*.ts",
+    "node_modules/lighthouse/typings/*.d.ts"
   ]
 }

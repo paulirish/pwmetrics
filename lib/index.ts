@@ -1,15 +1,15 @@
 // Copyright 2016 Google Inc. All Rights Reserved.
 // Licensed under the Apache License, Version 2.0. See LICENSE
 
-import {launch, LaunchedChrome} from 'chrome-launcher';
-const lighthouse = require('lighthouse');
+import { launch, LaunchedChrome } from 'chrome-launcher';
+const lighthouse = require('lighthouse/lighthouse-core');
 const parseChromeFlags = require('lighthouse/lighthouse-cli/run').parseChromeFlags;
-const perfConfig: any = require('./lh-config');
+const perfConfig: any = require('lighthouse/lighthouse-core/config/plots-config.js');
+perfConfig.extends = 'lighthouse:default';
 const opn = require('opn');
 const path = require('path');
 
 const Sheets = require('./sheets/index');
-const Chart = require('./chart/chart');
 const metrics = require('./metrics');
 const expectations = require('./expectations');
 const {upload} = require('./upload');
@@ -20,9 +20,7 @@ import {
   MainOptions,
   FeatureFlags,
   AuthorizeCredentials,
-  LighthouseResults,
   MetricsResults,
-  TermWritableStream,
   PWMetricsResults,
   SheetsConfig,
   ExpectationMetrics,
@@ -31,7 +29,7 @@ import {
 } from '../types/types';
 
 const MAX_LIGHTHOUSE_TRIES = 2;
-const getTimelineViewerUrl = (id: string) => `https://chromedevtools.github.io/timeline-viewer/?loadTimelineFromURL=https://drive.google.com/file/d//${id}/view?usp=drivesdk`
+const getTimelineViewerUrl = (id: string) => `https://chromedevtools.github.io/timeline-viewer/?loadTimelineFromURL=https://drive.google.com/file/d//${id}/view?usp=drivesdk`;
 
 class PWMetrics {
   flags: FeatureFlags = {
@@ -126,15 +124,15 @@ class PWMetrics {
 
   async run(): Promise<MetricsResults> {
     try {
-      let lhResults: LighthouseResults;
+      let lhResults: LH.RunnerResult;
       await this.launchChrome();
 
       if (process.env.CI) {
         // handling CRI_TIMEOUT issue - https://github.com/GoogleChrome/lighthouse/issues/833
         this.tryLighthouseCounter = 0;
-        lhResults = await this.runLighthouseOnCI().then((lhResults:LighthouseResults) => {
+        lhResults = await this.runLighthouseOnCI().then((lhResults:LH.RunnerResult) => {
           // fix for https://github.com/paulirish/pwmetrics/issues/63
-          return new Promise<LighthouseResults>(resolve => {
+          return new Promise<LH.RunnerResult>(resolve => {
             console.log(messages.getMessage('WAITING'));
             setTimeout(_ => {
               return resolve(lhResults);
@@ -161,7 +159,7 @@ class PWMetrics {
     }
   }
 
-  async runLighthouseOnCI(): Promise<LighthouseResults> {
+  async runLighthouseOnCI(): Promise<LH.RunnerResult> {
     try {
       return await lighthouse(this.url, this.flags, perfConfig);
     } catch(error) {
@@ -175,7 +173,7 @@ class PWMetrics {
     }
   }
 
-  async retryLighthouseOnCI(): Promise<LighthouseResults> {
+  async retryLighthouseOnCI(): Promise<LH.RunnerResult> {
     this.tryLighthouseCounter++;
     console.log(messages.getMessage('CRI_TIMEOUT_RELAUNCH'));
 
@@ -205,9 +203,9 @@ class PWMetrics {
     }
   }
 
-  async recordLighthouseTrace(data: LighthouseResults): Promise<MetricsResults> {
+  async recordLighthouseTrace(data: LH.RunnerResult): Promise<MetricsResults> {
     try {
-      const preparedData = metrics.prepareData(data);
+      const preparedData = metrics.prepareData(data.lhr);
 
       if (this.flags.upload) {
         const driveResponse = await upload(data, this.clientSecret);
@@ -245,13 +243,11 @@ class PWMetrics {
         console.error(messages.getMessageWithPrefix('ERROR', 'METRIC_IS_UNAVAILABLE', r.title));
         return false;
       }
-      // don't chart hidden metrics, but include in json
-      return !metrics.hiddenMetrics.includes(r.id);
     });
 
     const fullWidthInMs = Math.max(...timings.map(result => result.timing));
     const maxLabelWidth = Math.max(...timings.map(result => result.title.length));
-    const stdout = <TermWritableStream>(process.stdout);
+    const stdout = process.stdout;
 
     drawChart(timings, {
       // 90% of terminal width to give some right margin

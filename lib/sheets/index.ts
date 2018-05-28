@@ -55,14 +55,11 @@ class Sheets {
         data.lighthouseVersion,
         data.url,
         `${dateObj.toLocaleDateString()} ${dateObj.toLocaleTimeString()}`,
-        getTiming(metricsIds.TTFCP),
         getTiming(metricsIds.TTFMP),
         getTiming(metricsIds.PSI),
-        getTiming(metricsIds.FV),
-        getTiming(metricsIds.VC100),
+        getTiming(metricsIds.EIL),
         getTiming(metricsIds.TTFI),
-        getTiming(metricsIds.TTCI),
-        getTiming(metricsIds.VC85)
+        getTiming(metricsIds.TTCI)
       ]);
     });
 
