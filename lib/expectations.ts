@@ -1,10 +1,11 @@
 // Copyright 2016 Google Inc. All Rights Reserved.
 // Licensed under the Apache License, Version 2.0. See LICENSE
 
-import { Timing, ExpectationMetrics, NormalizedExpectationMetrics } from '../types/types';
-const { getAssertionMessage, getMessageWithPrefix } = require('./utils/messages');
+import {Timing, ExpectationMetrics, NormalizedExpectationMetrics} from '../types/types';
 
-function validateMetrics(metrics: ExpectationMetrics) {
+import {getAssertionMessage, getMessageWithPrefix} from './utils/messages';
+
+export const validateMetrics = (metrics: ExpectationMetrics) => {
   const metricsKeys = Object.keys(metrics);
 
   if (!metrics || !metricsKeys.length) {
@@ -18,9 +19,9 @@ function validateMetrics(metrics: ExpectationMetrics) {
       process.exit(1);
     }
   });
-}
+};
 
-function normalizeMetrics(metrics: ExpectationMetrics): NormalizedExpectationMetrics {
+export const normalizeMetrics = (metrics: ExpectationMetrics): NormalizedExpectationMetrics => {
   let normalizedMetrics: NormalizedExpectationMetrics = {};
   Object.keys(metrics).forEach(key => {
     normalizedMetrics[key] = {
@@ -29,9 +30,9 @@ function normalizeMetrics(metrics: ExpectationMetrics): NormalizedExpectationMet
     };
   });
   return normalizedMetrics;
-}
+};
 
-function checkExpectations(metricsData: Timing[], expectationMetrics: NormalizedExpectationMetrics) {
+export const checkExpectations = (metricsData: Timing[], expectationMetrics: NormalizedExpectationMetrics) => {
   metricsData.forEach(metric => {
     const metricName = metric.id;
     const expectationValue = expectationMetrics[metricName];
@@ -50,10 +51,4 @@ function checkExpectations(metricsData: Timing[], expectationMetrics: Normalized
       console.log(msg);
     }
   });
-}
-
-module.exports = {
-  validateMetrics: validateMetrics,
-  normalizeMetrics: normalizeMetrics,
-  checkExpectations: checkExpectations
 };

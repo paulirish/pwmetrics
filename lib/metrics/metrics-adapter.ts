@@ -1,20 +1,9 @@
 // Copyright 2016 Google Inc. All Rights Reserved.
 // Licensed under the Apache License, Version 2.0. See LICENSE
 
-import {MetricsResults, Timing} from '../types/types';
-
-const metricsIds = {
-  TTFMP: 'first-meaningful-paint',
-  TTFI: 'first-cpu-idle',
-  TTCI: 'interactive',
-  PSI: 'speed-index',
-  EIL: 'estimated-input-latency',
-};
-
-module.exports = {
-  ids: metricsIds,
-  prepareData
-};
+import {getMessage} from '../utils/messages';
+import {MetricsResults, Timing} from '../../types/types';
+import METRICS from './metrics';
 
 const checkAudits = (audits: Record<string, LH.Audit.Result>) => Object.keys(audits).forEach(key => {
   const errorMessage = audits[key].errorMessage;
@@ -22,7 +11,15 @@ const checkAudits = (audits: Record<string, LH.Audit.Result>) => Object.keys(aud
     console.log(`${errorMessage} Audit key: ${key}`);
 });
 
-function prepareData(res: LH.Result): MetricsResults {
+const getMetricTitle = (metricId) => {
+  try {
+    return getMessage(metricId);
+  } catch (e) {
+    return '';
+  }
+};
+
+const adaptMetricsData = (res: LH.Result): MetricsResults => {
   const audits:Record<string, LH.Audit.Result>  = res.audits;
 
   checkAudits(audits);
@@ -35,19 +32,21 @@ function prepareData(res: LH.Result): MetricsResults {
 
   Object.keys(audits).forEach(metricKey => {
     const metric = audits[metricKey];
+    const metricTitle = getMetricTitle(metric.id);
     const resolvedMetric: Timing = {
-      title: metric.title,
+      title: metricTitle.length ? metricTitle : metric.title,
       id: metric.id,
       timing: typeof metric.rawValue === 'boolean' ? 0 : metric.rawValue,
       color: colorVisual
     };
 
     switch (metric.id) {
-      case metricsIds.TTFMP:
+      case METRICS.TTFCP:
+      case METRICS.TTFMP:
         resolvedMetric.color = colorP2;
         break;
-      case metricsIds.TTFI:
-      case metricsIds.TTCI:
+      case METRICS.TTF_CPU_IDLE:
+      case METRICS.TTCI:
         resolvedMetric.color = colorP0;
         break;
     }
@@ -59,7 +58,9 @@ function prepareData(res: LH.Result): MetricsResults {
     timings,
     generatedTime: res.fetchTime,
     lighthouseVersion: res.lighthouseVersion,
-    initialUrl: res.finalUrl,
-    url: res.requestedUrl
+    requestedUrl: res.requestedUrl,
+    finalUrl: res.finalUrl,
   };
-}
+};
+
+export default adaptMetricsData;

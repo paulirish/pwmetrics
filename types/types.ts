@@ -33,8 +33,8 @@ export interface MetricsResults {
   timings: Timing[];
   generatedTime: string;
   lighthouseVersion: string;
-  url: string;
-  initialUrl: string;
+  requestedUrl: string;
+  finalUrl: string;
 }
 
 export interface PWMetricsResults {
@@ -107,4 +107,8 @@ export interface ChartOptions {
   xmin: number;
   xmax: number;
   lmargin: number;
+}
+
+export interface LHFlags extends LH.Flags {
+  chromePath: string;
 }

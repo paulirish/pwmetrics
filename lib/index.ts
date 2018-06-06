@@ -1,20 +1,18 @@
 // Copyright 2016 Google Inc. All Rights Reserved.
 // Licensed under the Apache License, Version 2.0. See LICENSE
 
-import { launch, LaunchedChrome } from 'chrome-launcher';
-const lighthouse = require('lighthouse/lighthouse-core');
-const parseChromeFlags = require('lighthouse/lighthouse-cli/run').parseChromeFlags;
-const perfConfig: any = require('lighthouse/lighthouse-core/config/plots-config.js');
-perfConfig.extends = 'lighthouse:default';
+import {LHRunner} from "./lh-runner";
+
 const opn = require('opn');
 const path = require('path');
 
-const Sheets = require('./sheets/index');
-const metrics = require('./metrics');
-const expectations = require('./expectations');
-const {upload} = require('./upload');
-const messages = require('./utils/messages');
-const drawChart = require('./chart/chart');
+import Sheets from './sheets';
+import METRICS from './metrics/metrics';
+import adaptMetricsData from './metrics/metrics-adapter';
+import {validateMetrics, normalizeMetrics, checkExpectations} from './expectations';
+import {upload} from './upload';
+import {getMessage, getMessageWithPrefix} from './utils/messages';
+import {drawChart} from './chart/chart';
 
 import {
   MainOptions,
@@ -28,7 +26,6 @@ import {
   Timing
 } from '../types/types';
 
-const MAX_LIGHTHOUSE_TRIES = 2;
 const getTimelineViewerUrl = (id: string) => `https://chromedevtools.github.io/timeline-viewer/?loadTimelineFromURL=https://drive.google.com/file/d//${id}/view?usp=drivesdk`;
 
 class PWMetrics {
@@ -43,33 +40,28 @@ class PWMetrics {
   };
   runs: number;
   sheets: SheetsConfig;
-  expectations: ExpectationMetrics | NormalizedExpectationMetrics;
+  normalizedExpectations: NormalizedExpectationMetrics;
   clientSecret: AuthorizeCredentials;
-  tryLighthouseCounter: number;
-  launcher: LaunchedChrome;
   parsedChromeFlags: Array<string>;
 
   constructor(public url: string, opts: MainOptions) {
     this.flags = Object.assign({}, this.flags, opts.flags);
     this.runs = this.flags.runs;
     this.sheets = opts.sheets;
-    this.expectations = opts.expectations;
     this.clientSecret = opts.clientSecret;
-    this.tryLighthouseCounter = 0;
+    const expectations: ExpectationMetrics = opts.expectations;
 
     // normalize path if provided
     if (this.flags.chromePath) {
-        this.flags.chromePath = path.normalize(this.flags.chromePath);
+      this.flags.chromePath = path.normalize(this.flags.chromePath);
     }
 
     if (this.flags.expectations) {
-      if (this.expectations) {
-        expectations.validateMetrics(this.expectations);
-        this.expectations = expectations.normalizeMetrics(this.expectations);
-      } else throw new Error(messages.getMessageWithPrefix('ERROR', 'NO_EXPECTATIONS_FOUND'));
+      if (expectations) {
+        validateMetrics(expectations);
+        this.normalizedExpectations = normalizeMetrics(expectations);
+      } else throw new Error(getMessageWithPrefix('ERROR', 'NO_EXPECTATIONS_FOUND'));
     }
-
-    this.parsedChromeFlags = parseChromeFlags(this.flags.chromeFlags);
   }
 
   async start() {
@@ -80,23 +72,25 @@ class PWMetrics {
 
     for (let runIndex of runs) {
       try {
-        const currentMetricResult: MetricsResults = await this.run();
+        const lhRunner = new LHRunner(this.url, this.flags);
+        const lhTrace = await lhRunner.run();
+        const currentMetricResult: MetricsResults = await this.recordLighthouseTrace(lhTrace);
         if (!resultHasExpectationErrors && this.flags.expectations) {
           resultHasExpectationErrors = this.resultHasExpectationErrors(currentMetricResult);
         }
         metricsResults[runIndex] = currentMetricResult;
-        console.log(messages.getMessageWithPrefix('SUCCESS', 'SUCCESS_RUN', runIndex, runs.length));
+        console.log(getMessageWithPrefix('SUCCESS', 'SUCCESS_RUN', runIndex, runs.length));
       } catch (error) {
         metricsResults[runIndex] = error;
-        console.error(messages.getMessageWithPrefix('ERROR', 'FAILED_RUN', runIndex, runs.length, error.message));
+        console.error(getMessageWithPrefix('ERROR', 'FAILED_RUN', runIndex, runs.length, error.message));
       }
     }
 
-    let results: PWMetricsResults = { runs: metricsResults.filter(r => !(r instanceof Error)) };
+    let results: PWMetricsResults = {runs: metricsResults.filter(r => !(r instanceof Error))};
     if (results.runs.length > 0) {
       if (this.runs > 1 && !this.flags.submit) {
         results.median = this.findMedianRun(results.runs);
-        console.log(messages.getMessage('MEDIAN_RUN'));
+        console.log(getMessage('MEDIAN_RUN'));
         this.displayOutput(results.median);
       } else if (this.flags.submit) {
         const sheets = new Sheets(this.sheets, this.clientSecret);
@@ -105,7 +99,7 @@ class PWMetrics {
     }
 
     if (resultHasExpectationErrors && this.flags.expectations) {
-      throw new Error(messages.getMessage('HAS_EXPECTATION_ERRORS'));
+      throw new Error(getMessage('HAS_EXPECTATION_ERRORS'));
     }
 
     return results;
@@ -113,7 +107,7 @@ class PWMetrics {
 
   resultHasExpectationErrors(metrics: MetricsResults): boolean {
     return metrics.timings.some((timing: Timing) => {
-      const expectation = this.expectations[timing.id];
+      const expectation = this.normalizedExpectations[timing.id];
       if (!expectation) {
         return false;
       }
@@ -122,90 +116,9 @@ class PWMetrics {
     });
   }
 
-  async run(): Promise<MetricsResults> {
-    try {
-      let lhResults: LH.RunnerResult;
-      await this.launchChrome();
-
-      if (process.env.CI) {
-        // handling CRI_TIMEOUT issue - https://github.com/GoogleChrome/lighthouse/issues/833
-        this.tryLighthouseCounter = 0;
-        lhResults = await this.runLighthouseOnCI().then((lhResults:LH.RunnerResult) => {
-          // fix for https://github.com/paulirish/pwmetrics/issues/63
-          return new Promise<LH.RunnerResult>(resolve => {
-            console.log(messages.getMessage('WAITING'));
-            setTimeout(_ => {
-              return resolve(lhResults);
-            }, 2000);
-          });
-        });
-      } else {
-        lhResults = await lighthouse(this.url, this.flags, perfConfig);
-      }
-
-      const metricsResults: MetricsResults = await this.recordLighthouseTrace(lhResults);
-      await this.killLauncher();
-
-      return metricsResults;
-    } catch (error) {
-      await this.killLauncher();
-      throw error;
-    }
-  }
-
-  async killLauncher() {
-    if (typeof this.launcher !== 'undefined') {
-      await this.launcher!.kill();
-    }
-  }
-
-  async runLighthouseOnCI(): Promise<LH.RunnerResult> {
-    try {
-      return await lighthouse(this.url, this.flags, perfConfig);
-    } catch(error) {
-      if (error.code === 'CRI_TIMEOUT' && this.tryLighthouseCounter <= MAX_LIGHTHOUSE_TRIES) {
-        return await this.retryLighthouseOnCI();
-      }
-
-      if (this.tryLighthouseCounter > MAX_LIGHTHOUSE_TRIES) {
-        throw new Error(messages.getMessage('CRI_TIMEOUT_REJECT'));
-      }
-    }
-  }
-
-  async retryLighthouseOnCI(): Promise<LH.RunnerResult> {
-    this.tryLighthouseCounter++;
-    console.log(messages.getMessage('CRI_TIMEOUT_RELAUNCH'));
-
-    try {
-      return await this.runLighthouseOnCI();
-    } catch(error) {
-      console.error(error.message);
-      console.error(messages.getMessage('CLOSING_CHROME'));
-      await this.killLauncher();
-    }
-  }
-
-  async launchChrome(): Promise<LaunchedChrome|Error> {
-    try {
-      console.log(messages.getMessage('LAUNCHING_CHROME'));
-      this.launcher = await launch({
-        port: this.flags.port,
-        chromeFlags: this.parsedChromeFlags,
-        chromePath: this.flags.chromePath
-      });
-      this.flags.port = this.launcher.port;
-      return this.launcher;
-    } catch(error) {
-      console.error(error);
-      await this.killLauncher();
-      return error;
-    }
-  }
-
   async recordLighthouseTrace(data: LH.RunnerResult): Promise<MetricsResults> {
     try {
-      const preparedData = metrics.prepareData(data.lhr);
+      const preparedData = adaptMetricsData(data.lhr);
 
       if (this.flags.upload) {
         const driveResponse = await upload(data, this.clientSecret);
@@ -217,7 +130,7 @@ class PWMetrics {
       }
 
       if (this.flags.expectations) {
-        expectations.checkExpectations(preparedData.timings, this.expectations);
+        checkExpectations(preparedData.timings, this.normalizedExpectations);
       }
 
       return preparedData;
@@ -240,7 +153,7 @@ class PWMetrics {
     timings = timings.filter(r => {
       // filter out metrics that failed to record
       if (r.timing === undefined || isNaN(r.timing)) {
-        console.error(messages.getMessageWithPrefix('ERROR', 'METRIC_IS_UNAVAILABLE', r.title));
+        console.error(getMessageWithPrefix('ERROR', 'METRIC_IS_UNAVAILABLE', r.title));
         return false;
       }
     });
@@ -264,12 +177,12 @@ class PWMetrics {
   }
 
   findMedianRun(results: MetricsResults[]): MetricsResults {
-    const ttfiValues = results.map(r => r.timings.find(timing => timing.id === metrics.ids.TTFI).timing);
+    const ttfiValues = results.map(r => r.timings.find(timing => timing.id === METRICS.TTF_CPU_IDLE).timing);
     const medianTTFI = this.median(ttfiValues);
     // in the case of duplicate runs having the exact same TTFI, we naively pick the first
     // @fixme, but any for now...
-    return results.find((result: any) => result.timings.find((timing:any) =>
-        timing.id === metrics.ids.TTFI && timing.timing === medianTTFI
+    return results.find((result: any) => result.timings.find((timing: any) =>
+      timing.id === METRICS.TTF_CPU_IDLE && timing.timing === medianTTFI
       )
     );
   }

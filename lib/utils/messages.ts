@@ -1,5 +1,6 @@
 // Copyright 2016 Google Inc. All Rights Reserved.
 // Licensed under the Apache License, Version 2.0. See LICENSE
+import METRICS from '../metrics/metrics';
 
 const GREEN = '\x1B[32m';
 const YELLOW = '\x1b[33m';
@@ -12,7 +13,14 @@ const redify = (str: string) => `${RED}${str}${RESET}`;
 const yellowify = (str: string) => `${YELLOW}${str}${RESET}`;
 const boldify = (str: string) => `${BOLD}${str}${RESET}`;
 
-const getMessage = function (messageType: string, ...args: any[]) {
+const GREEN_CHECK = greenify('✓');
+const YELLOW_FLAG = yellowify('⚑');
+const RED_X = redify('✘');
+const getErrorPrefix = () => `  ${RED_X} Error: ${RED}`;
+const getWarningPrefix = () => `  ${YELLOW_FLAG} Warning: ${YELLOW}`;
+const getSuccessPrefix = () => `  ${GREEN_CHECK} Success: ${GREEN}`;
+
+export const getMessage = function (messageType: string, ...args: any[]) {
   switch (messageType) {
     case 'NO_URL':
       return 'No url entered.';
@@ -44,15 +52,17 @@ const getMessage = function (messageType: string, ...args: any[]) {
       return `No matching message prefix: ${args[0]}`;
     case 'METRIC_IS_UNAVAILABLE':
       return `Sorry, ${args[0]} metric is unavailable`;
-    case 'first-meaningful-paint':
+    case METRICS.TTFCP:
       return 'First Contentful Paint';
-    case 'speed-index':
+    case METRICS.TTFMP:
+      return 'First Meaningful Paint';
+    case METRICS.PSI:
       return 'Perceptual Speed Index';
-    case 'estimated-input-latency':
+    case METRICS.EIL:
       return 'Estimated Input Latency';
-    case 'first-cpu-idle':
-      return 'Time to First Interactive';
-    case 'interactive':
+    case METRICS.TTF_CPU_IDLE:
+      return 'First CPU Idle';
+    case METRICS.TTCI:
       return 'Time to Interactive';
     case 'SUCCESS_RUN':
       return `Run ${args[0] + 1} of ${args[1]} finished successfully`;
@@ -81,7 +91,10 @@ const getMessage = function (messageType: string, ...args: any[]) {
   }
 };
 
-const getAssertionMessage = function (assertionLevel: string, messageType: string, expectedValue: number, actualValue: number) {
+export const getAssertionMessage = function (assertionLevel: string,
+                                             messageType: string,
+                                             expectedValue: number,
+                                             actualValue: number) {
   const message = getMessageWithPrefix(assertionLevel, messageType);
   const colorizer = assertionLevel === 'ERROR' ? redify : yellowify;
 
@@ -90,7 +103,9 @@ const getAssertionMessage = function (assertionLevel: string, messageType: strin
   return `${message} Expected ${expectedStr}, but found ${actualStr}.`;
 };
 
-const getMessageWithPrefix = function (assertionLevel: string, messageType: string, ...args: any[]) {
+export const getMessageWithPrefix = function (assertionLevel: string,
+                                              messageType: string,
+                                              ...args: any[]) {
   let prefix;
   const message = getMessage(messageType, ...args);
 
@@ -109,17 +124,4 @@ const getMessageWithPrefix = function (assertionLevel: string, messageType: stri
   }
 
   return `${prefix}${message}.${RESET}`;
-};
-
-const GREEN_CHECK = greenify('✓');
-const YELLOW_FLAG = yellowify('⚑');
-const RED_X = redify('✘');
-const getErrorPrefix = () => `  ${RED_X} Error: ${RED}`;
-const getWarningPrefix = () => `  ${YELLOW_FLAG} Warning: ${YELLOW}`;
-const getSuccessPrefix = () => `  ${GREEN_CHECK} Success: ${GREEN}`;
-
-module.exports = {
-  getMessage,
-  getAssertionMessage,
-  getMessageWithPrefix
 };

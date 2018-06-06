@@ -8,13 +8,13 @@ import * as gsheets  from './gsheets';
 
 // @todo add 'import' after moving all stuff to typescript
 const { getMessage } = require('../utils/messages');
-const metricsIds = require('../metrics').ids;
+const metricsIds = require('../metrics/metrics-adapter').ids;
 
 const SHEET_TYPES = {
   'GOOGLE_SHEETS': 'GOOGLE_SHEETS'
 };
 
-class Sheets {
+export default class Sheets {
   constructor(public config: SheetsConfig, public clientSecret: AuthorizeCredentials) {
     this.validateOptions(config, clientSecret);
   }
@@ -53,7 +53,7 @@ class Sheets {
       // order matters
       valuesToAppend.push([
         data.lighthouseVersion,
-        data.url,
+        data.requestedUrl,
         `${dateObj.toLocaleDateString()} ${dateObj.toLocaleTimeString()}`,
         getTiming(metricsIds.TTFMP),
         getTiming(metricsIds.PSI),
@@ -72,5 +72,3 @@ class Sheets {
     }
   }
 }
-
-module.exports = Sheets;
