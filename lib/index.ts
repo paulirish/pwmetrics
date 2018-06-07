@@ -155,16 +155,18 @@ class PWMetrics {
       if (r.timing === undefined || isNaN(r.timing)) {
         console.error(getMessageWithPrefix('ERROR', 'METRIC_IS_UNAVAILABLE', r.title));
         return false;
+      } else {
+        return true;
       }
     });
 
     const fullWidthInMs = Math.max(...timings.map(result => result.timing));
     const maxLabelWidth = Math.max(...timings.map(result => result.title.length));
-    const stdout = process.stdout;
+    const terminalWidth = process.stdout.columns || 90;
 
     drawChart(timings, {
       // 90% of terminal width to give some right margin
-      width: stdout.columns * 0.9 - maxLabelWidth,
+      width: terminalWidth * 0.9 - maxLabelWidth,
       xlabel: 'Time (ms) since navigation start',
 
       xmin: 0,
