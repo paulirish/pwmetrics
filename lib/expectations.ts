@@ -21,7 +21,7 @@ export const validateMetrics = (metrics: ExpectationMetrics) => {
   });
 };
 
-export const normalizeMetrics = (metrics: ExpectationMetrics): NormalizedExpectationMetrics => {
+export const normalizeExpectationMetrics = (metrics: ExpectationMetrics): NormalizedExpectationMetrics => {
   let normalizedMetrics: NormalizedExpectationMetrics = {};
   Object.keys(metrics).forEach(key => {
     normalizedMetrics[key] = {

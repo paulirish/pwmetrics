@@ -1,5 +1,5 @@
 'use strict';
-
+const METRICS = require('../../lib/metrics/metrics').default;
 const url = 'http://example.com/';
 
 exports.publicVariables = {
@@ -36,6 +36,9 @@ exports.startWithMoreThenOneRun = {
 
 exports.publicVariablesWithExpectations = {
   url: url,
+  flags: {
+    expectations: true
+  },
   opts: {
     expectations: {}
   }
@@ -49,7 +52,7 @@ exports.startWithOneRunWithExpectations = {
       expectations: true
     },
     expectations: {
-      ttfcp: {
+      [METRICS.TTFCP]: {
         warn: '>=1500',
         error: '>=3000',
       }

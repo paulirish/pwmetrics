@@ -1,4 +1,5 @@
 'use strict';
+const METRICS = require('../../lib/metrics/metrics').default;
 
 module.exports = {
   url: 'https://example.com/',
@@ -7,25 +8,21 @@ module.exports = {
     runs: 2,
   },
   expectations: {
-    ttfmp: {
+    [METRICS.TTFMP]: {
       warn: '>=500',
       error: '>=1000'
     },
-    tti: {
+    [METRICS.TTCI]: {
       warn: '>=3000',
       error: '>=5000',
     },
-    ttfcp: {
+    [METRICS.TTFCP]: {
       warn: '>=500',
       error: '>=1000',
     },
-    psi: {
+    [METRICS.PSI]: {
       warn: '>=3000',
       error: '>=6000',
     },
-    vc85: {
-      warn: '>=3000',
-      error: '>=5000',
-    }
   },
 };

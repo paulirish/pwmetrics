@@ -19,7 +19,7 @@ const getMetricTitle = (metricId) => {
   }
 };
 
-const adaptMetricsData = (res: LH.Result): MetricsResults => {
+export const adaptMetricsData = (res: LH.Result): MetricsResults => {
   const audits:Record<string, LH.Audit.Result>  = res.audits;
 
   checkAudits(audits);
@@ -62,5 +62,3 @@ const adaptMetricsData = (res: LH.Result): MetricsResults => {
     finalUrl: res.finalUrl,
   };
 };
-
-export default adaptMetricsData;

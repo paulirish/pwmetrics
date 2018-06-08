@@ -6,10 +6,10 @@ import {LHRunner} from "./lh-runner";
 const opn = require('opn');
 const path = require('path');
 
-import Sheets from './sheets';
 import METRICS from './metrics/metrics';
-import adaptMetricsData from './metrics/metrics-adapter';
-import {validateMetrics, normalizeMetrics, checkExpectations} from './expectations';
+import {Sheets} from './sheets';
+import {adaptMetricsData} from './metrics/metrics-adapter';
+import {validateMetrics, normalizeExpectationMetrics, checkExpectations} from './expectations';
 import {upload} from './upload';
 import {getMessage, getMessageWithPrefix} from './utils/messages';
 import {drawChart} from './chart/chart';
@@ -59,7 +59,7 @@ class PWMetrics {
     if (this.flags.expectations) {
       if (expectations) {
         validateMetrics(expectations);
-        this.normalizedExpectations = normalizeMetrics(expectations);
+        this.normalizedExpectations = normalizeExpectationMetrics(expectations);
       } else throw new Error(getMessageWithPrefix('ERROR', 'NO_EXPECTATIONS_FOUND'));
     }
   }

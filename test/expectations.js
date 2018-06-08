@@ -21,14 +21,14 @@ describe('Expectations', () => {
     });
 
     it('should normalize expectation', () => {
-      const result = expectations.normalizeMetrics(expectationsData);
+      const result = expectations.normalizeExpectationMetrics(expectationsData);
       expect(result).to.have.been.deep.equal(normalizedExpectations);
     });
 
     it('should show expectation messages', () => {
-      const normExpectations = expectations.normalizeMetrics(expectationsData);
+      const normExpectations = expectations.normalizeExpectationMetrics(expectationsData);
       expectations.checkExpectations(timings, normExpectations);
-      expect(logSpy).to.have.been.calledTwice;
+      expect(logSpy).to.have.been.called;
     });
   });
 });

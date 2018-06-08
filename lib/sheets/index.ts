@@ -14,7 +14,7 @@ const SHEET_TYPES = {
   'GOOGLE_SHEETS': 'GOOGLE_SHEETS'
 };
 
-export default class Sheets {
+export class Sheets {
   constructor(public config: SheetsConfig, public clientSecret: AuthorizeCredentials) {
     this.validateOptions(config, clientSecret);
   }
