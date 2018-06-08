@@ -53,6 +53,6 @@
   },
   "homepage": "https://github.com/paulirish/pwmetrics#readme",
   "engines": {
-    "node": ">= 6"
+    "node": ">=8.9"
   }
 }
