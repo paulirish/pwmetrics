@@ -18,13 +18,11 @@ install:
   # @see https://github.com/GoogleChrome/lighthouse/pull/4640/files#r171425004
   - export PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=1
   - yarn
-  # travis can't handle the parallel install (without caches)
-  - yarn run install-all:task:windows
 before_script:
   - export DISPLAY=:99.0
   # see comment above about puppeteer
   - export CHROME_PATH="$(which google-chrome-stable)"
   - sh -e /etc/init.d/xvfb start
-  - yarn build-all
+  - yarn build
 addons:
   chrome: stable
