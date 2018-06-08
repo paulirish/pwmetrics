@@ -21,8 +21,8 @@
   resolved "https://registry.yarnpkg.com/@types/mkdirp/-/mkdirp-0.3.29.tgz#7f2ad7ec55f914482fc9b1ec4bb1ae6028d46066"
 
 "@types/node@*":
-  version "10.1.1"
-  resolved "https://registry.yarnpkg.com/@types/node/-/node-10.1.1.tgz#ca39d8607fa1fcb146b0530420b93f1dd4802f6c"
+  version "10.3.2"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-10.3.2.tgz#3840ec6c12556fdda6e0e6d036df853101d732a4"
 
 "@types/node@^10.1.3":
   version "10.1.3"
@@ -1938,9 +1938,9 @@ lighthouse-logger@^1.0.0:
   dependencies:
     debug "^2.6.8"
 
-lighthouse@3.0.0-beta.0:
+"lighthouse@https://github.com/GoogleChrome/lighthouse#424c7b8c33789a9fdb226a8d079510c48d14500b":
   version "3.0.0-beta.0"
-  resolved "https://registry.yarnpkg.com/lighthouse/-/lighthouse-3.0.0-beta.0.tgz#c4bd637d6a9404f4d2586f7e73725c61407d09be"
+  resolved "https://github.com/GoogleChrome/lighthouse#424c7b8c33789a9fdb226a8d079510c48d14500b"
   dependencies:
     axe-core "3.0.0-beta.2"
     chrome-devtools-frontend "1.0.422034"
