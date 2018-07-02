@@ -8,7 +8,7 @@ import * as gsheets  from './gsheets';
 
 // @todo add 'import' after moving all stuff to typescript
 const { getMessage } = require('../utils/messages');
-const metricsIds = require('../metrics/metrics-adapter').ids;
+const METRICS = require('../metrics/metrics');
 
 const SHEET_TYPES = {
   'GOOGLE_SHEETS': 'GOOGLE_SHEETS'
@@ -55,11 +55,12 @@ export class Sheets {
         data.lighthouseVersion,
         data.requestedUrl,
         `${dateObj.toLocaleDateString()} ${dateObj.toLocaleTimeString()}`,
-        getTiming(metricsIds.TTFMP),
-        getTiming(metricsIds.PSI),
-        getTiming(metricsIds.EIL),
-        getTiming(metricsIds.TTFI),
-        getTiming(metricsIds.TTCI)
+        getTiming(METRICS.TTFMP),
+        getTiming(METRICS.TTFCP),
+        getTiming(METRICS.PSI),
+        getTiming(METRICS.VISUALLY_COMPLETE),
+        getTiming(METRICS.TTF_CPU_IDLE),
+        getTiming(METRICS.TTCI),
       ]);
     });
 

@@ -22,7 +22,7 @@
     "chrome-launcher": "^0.10.2",
     "google-auth-library": "^0.10.0",
     "googleapis": "^16.0.0",
-    "lighthouse": "https://github.com/GoogleChrome/lighthouse#424c7b8c33789a9fdb226a8d079510c48d14500b",
+    "lighthouse": "3.0.0",
     "micro-promisify": "^0.1.1",
     "readline-sync": "^1.4.6",
     "yargs": "^6.6.0"
@@ -36,7 +36,7 @@
     "mocha": "^3.2.0",
     "sinon": "^1.17.7",
     "sinon-chai": "^2.8.0",
-    "typescript": "^2.8.3",
+    "typescript": "2.9.1-insiders.20180516",
     "vscode-chrome-debug-core": "3.23.8"
   },
   "repository": {

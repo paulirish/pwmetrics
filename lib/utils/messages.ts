@@ -58,8 +58,8 @@ export const getMessage = function (messageType: string, ...args: any[]) {
       return 'First Meaningful Paint';
     case METRICS.PSI:
       return 'Perceptual Speed Index';
-    case METRICS.EIL:
-      return 'Estimated Input Latency';
+    case METRICS.VISUALLY_COMPLETE:
+      return 'Visually completed';
     case METRICS.TTF_CPU_IDLE:
       return 'First CPU Idle';
     case METRICS.TTCI:

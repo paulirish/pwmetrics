@@ -7,5 +7,5 @@ export default {
   TTF_CPU_IDLE: 'first-cpu-idle',
   TTCI: 'interactive',
   PSI: 'speed-index',
-  EIL: 'estimated-input-latency',
+  VISUALLY_COMPLETE: 'vc100',
 };

@@ -69,7 +69,7 @@ export interface GSheetsValuesToAppend {
   2: string; // time
   3: number; // TTFMP timing
   4: number; // PSI timing
-  5: number; // EIL timing
+  5: number; // VISUALLY_COMPLETE timing
   6: number; // TTFI timing
   7: number; // TTCI timing
 }

@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
     "module": "commonjs",
-    "target": "ES2016",
+    "target": "es2017",
     "inlineSourceMap": true,
     "noEmitOnError": false,
     "allowJs": true,

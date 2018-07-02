@@ -32,6 +32,9 @@ export const adaptMetricsData = (res: LH.Result): MetricsResults => {
 
   Object.keys(audits).forEach(metricKey => {
     const metric = audits[metricKey];
+
+    if (!Object.values(METRICS).includes(metric.id)) return;
+
     const metricTitle = getMetricTitle(metric.id);
     const resolvedMetric: Timing = {
       title: metricTitle.length ? metricTitle : metric.title,

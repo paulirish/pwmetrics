@@ -1938,9 +1938,9 @@ lighthouse-logger@^1.0.0:
   dependencies:
     debug "^2.6.8"
 
-"lighthouse@https://github.com/GoogleChrome/lighthouse#424c7b8c33789a9fdb226a8d079510c48d14500b":
-  version "3.0.0-beta.0"
-  resolved "https://github.com/GoogleChrome/lighthouse#424c7b8c33789a9fdb226a8d079510c48d14500b"
+lighthouse@3.0.0:
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/lighthouse/-/lighthouse-3.0.0.tgz#05ff0cdf5ad044a92f55283f1ad5b266dad510b9"
   dependencies:
     axe-core "3.0.0-beta.2"
     chrome-devtools-frontend "1.0.422034"
@@ -3337,9 +3337,9 @@ typedarray@^0.0.6:
   version "0.0.6"
   resolved "https://registry.yarnpkg.com/typedarray/-/typedarray-0.0.6.tgz#867ac74e3864187b1d3d47d996a78ec5c8830777"
 
-typescript@^2.8.3:
-  version "2.8.3"
-  resolved "https://registry.yarnpkg.com/typescript/-/typescript-2.8.3.tgz#5d817f9b6f31bb871835f4edf0089f21abe6c170"
+typescript@2.9.1-insiders.20180516:
+  version "2.9.1-insiders.20180516"
+  resolved "https://registry.yarnpkg.com/typescript/-/typescript-2.9.1-insiders.20180516.tgz#aab5261edb2c162c2d0c1754bb3092d4ff6efed0"
 
 ultron@~1.1.0:
   version "1.1.1"
