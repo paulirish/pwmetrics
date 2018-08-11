@@ -19,12 +19,6 @@
       "color": "blue"
     },
     {
-      "title": "Estimated Input Latency",
-      "id": "estimated-input-latency",
-      "timing": 369.8,
-      "color": "blue"
-    },
-    {
       "title": "First CPU Idle",
       "id": "first-cpu-idle",
       "timing": 5629.956099999999,

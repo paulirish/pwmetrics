@@ -4,47 +4,29 @@
 
 /* eslint-disable no-console */
 const gulp = require('gulp');
-const connect = require('gulp-connect');
 const PWMetrics = require('../../lib/');
-const PORT = 8080;
-
-/**
- * Start server
- */
-const startServer = function() {
-  return connect.server({
-    root: '../public',
-    livereload: true,
-    port: PORT
-  });
-};
-
-/**
- * Stop server
- */
-const stopServer = function() {
-  connect.serverClose();
-};
+const METRICS = require('../../lib/metrics/metrics').default;
 
 /**
  * Run pwmetrics
  */
 const runPwmetrics = function() {
-  const url = `http://localhost:${PORT}/index.html`;
+  const url = 'https://www.engadget.com/';
   return new PWMetrics(url, {
     flags: {
+      runs: 3,
       expectations: true
     },
     expectations: {
-      ttfmp: {
+      [METRICS.TTFMP]: {
         warn: '>=1000',
         error: '>=2000'
       },
-      tti: {
-        warn: '>=2000',
-        error: '>=3000'
+      [METRICS.TTCI]: {
+        warn: '>=5000',
+        error: '>=8000'
       },
-      ttfcp: {
+      [METRICS.TTF_CPU_IDLE]: {
         warn: '>=1500',
         error: '>=2000'
       }
@@ -57,8 +39,7 @@ const runPwmetrics = function() {
  * @param {Object} results - Pwmetrics results obtained through Lighthouse
  */
 const handleOk = function(results) {
-  stopServer();
-  console.log(results);
+  console.log(JSON.stringify(results, null, 4));
   process.exit(0);
 };
 
@@ -66,13 +47,11 @@ const handleOk = function(results) {
  * Handle error
  */
 const handleError = function(e) {
-  stopServer();
   console.error(e); // eslint-disable-line no-console
   process.exit(1);
 };
 
 gulp.task('pwmetrics', function() {
-  startServer();
   return runPwmetrics()
     .then(handleOk)
     .catch(handleError);

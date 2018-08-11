@@ -42,7 +42,6 @@ class PWMetrics {
   sheets: SheetsConfig;
   normalizedExpectations: NormalizedExpectationMetrics;
   clientSecret: AuthorizeCredentials;
-  parsedChromeFlags: Array<string>;
 
   constructor(public url: string, opts: MainOptions) {
     this.flags = Object.assign({}, this.flags, opts.flags);
@@ -99,7 +98,7 @@ class PWMetrics {
     }
 
     if (resultHasExpectationErrors && this.flags.expectations) {
-      throw new Error(getMessage('HAS_EXPECTATION_ERRORS'));
+      console.log(getMessage('HAS_EXPECTATION_ERRORS'));
     }
 
     return results;
