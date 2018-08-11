@@ -1,10 +1,10 @@
 
-<h1 align="center">pwmetrics</h1>
+<h1 align="center">PWMetrics</h1>
 <p align="center">
   <img title="Progressive web metrics" src='https://cloud.githubusercontent.com/assets/6231516/22849188/6f84c038-f003-11e6-8990-b14f3b916e54.png' />
 </p>
 <p align="center">Progressive web metrics at your fingertipz. 💅</p>
-<p align="center">CLI tool and lib to gather performance metrics via <a href="https://github.com/GoogleChrome/lighthouse/">Lighthouse</a>. <i>IN BETA</i>.</p>
+<p align="center">CLI tool and lib to gather performance metrics via <a href="https://github.com/GoogleChrome/lighthouse/">Lighthouse</a>.
 
 ![image](https://cloud.githubusercontent.com/assets/39191/19417867/7aead922-93af-11e6-88ec-917dad6e89d2.png)
 
@@ -107,6 +107,8 @@ module.exports = {
 `pwmetrics-config.js`
 
 ```js
+const METRICS = require('pwmetrics/lib/metrics/metrics'); 
+
 module.exports = {
   url: 'http://example.com/',
   flags: { // AKA feature flags
@@ -125,32 +127,26 @@ module.exports = {
     // these expectations values are examples, for your cases set your own
     // it's not required to use all metrics, you can use just a few of them
     // Read _Available metrics_ where all keys are defined
-    ttfcp: {
+    [METRICS.TTFCP]: {
       warn: '>=1500',
       error: '>=2000'
     },
-    ttfmp: {
+    [METRICS.TTFMP]: {
       warn: '>=2000',
       error: '>=3000'
     },
-    fv: {
+    [METRICS.TTCI]: {
       ...
     },
-    psi: {
+    [METRICS.TTF_CPU_IDLE]: {
       ...
     },
-    vc85: {
+    [METRICS.PSI]: {
       ...
     },
-    vs100: {
+    [METRICS.VISUALLY_COMPLETE]: {
       ...
     },
-    ttfi: {
-      ...
-    },
-    ttci: {
-      ...
-    }
   },
   sheets: {
     type: 'GOOGLE_SHEETS', // sheets service type. Available types: GOOGLE_SHEETS
@@ -310,14 +306,19 @@ module.exports = {
 
 #### Available metrics:
 
- - `ttfcp` - First Contentful Paint
- - `ttfmp` - First Meaningful Paint
- - `psi` - Perceptual Speed Index
- - `fv` - First Visual Change
- - `vc` - Visually Complete 100%
- - `ttfi` - First Interactive (vBeta)
- - `ttci` - Time to Consistently Interactive (vBeta)
- - `vc85` - Visually Complete 85%
+All metrics now are stored in separate constant object located in `pwmetrics/lib/metrics/metrics`;
+
+```js
+// Metrics.js
+{
+  TTFCP: 'first-contentful-paint',
+  TTFMP: 'first-meaningful-paint',
+  TTF_CPU_IDLE: 'first-cpu-idle',
+  TTCI: 'interactive',
+  PSI: 'speed-index',
+  VISUALLY_COMPLETE: 'vc100',
+}
+```
 
 Read article [Performance metrics. What’s this all about?](https://medium.com/@denar90/performance-metrics-whats-this-all-about-1128461ad6b) which is decoding this metrics.
 
