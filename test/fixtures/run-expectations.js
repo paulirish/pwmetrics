@@ -12,7 +12,7 @@ module.exports = {
       warn: '>=500',
       error: '>=1000'
     },
-    [METRICS.TTCI]: {
+    [METRICS.TTI]: {
       warn: '>=3000',
       error: '>=5000',
     },
@@ -20,7 +20,7 @@ module.exports = {
       warn: '>=500',
       error: '>=1000',
     },
-    [METRICS.PSI]: {
+    [METRICS.SI]: {
       warn: '>=3000',
       error: '>=6000',
     },

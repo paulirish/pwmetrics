@@ -31,7 +31,7 @@ exports.metricsResults = [
         'color': 'green'
       },
       {
-        'title': 'Perceptual Speed Index',
+        'title': 'Speed Index',
         'id': 'speed-index',
         'timing': 3314.811689134387,
         'color': 'blue'
@@ -74,7 +74,7 @@ exports.metricsResults = [
         'color': 'green'
       },
       {
-        'title': 'Perceptual Speed Index',
+        'title': 'Speed Index',
         'id': 'speed-index',
         'timing': 3314.811689134387,
         'color': 'blue'
@@ -117,7 +117,7 @@ exports.metricsResults = [
         'color': 'green'
       },
       {
-        'title': 'Perceptual Speed Index',
+        'title': 'Speed Index',
         'id': 'speed-index',
         'timing': 3314.811689134387,
         'color': 'blue'
@@ -165,7 +165,7 @@ module.exports.normalizedExpectations = {
     warn: 500,
     error: 1000
   },
-  [METRICS.TTCI]: {
+  [METRICS.TTI]: {
     warn: 3000,
     error: 5000,
   },
@@ -173,7 +173,7 @@ module.exports.normalizedExpectations = {
     warn: 500,
     error: 1000,
   },
-  [METRICS.PSI]: {
+  [METRICS.SI]: {
     warn: 3000,
     error: 6000,
   },

@@ -48,8 +48,8 @@ export const adaptMetricsData = (res: LH.Result): MetricsResults => {
       case METRICS.TTFMP:
         resolvedMetric.color = colorP2;
         break;
-      case METRICS.TTF_CPU_IDLE:
-      case METRICS.TTCI:
+      case METRICS.TTFCPUIDLE:
+      case METRICS.TTI:
         resolvedMetric.color = colorP0;
         break;
     }

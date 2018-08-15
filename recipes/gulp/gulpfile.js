@@ -22,11 +22,11 @@ const runPwmetrics = function() {
         warn: '>=1000',
         error: '>=2000'
       },
-      [METRICS.TTCI]: {
+      [METRICS.TTI]: {
         warn: '>=5000',
         error: '>=8000'
       },
-      [METRICS.TTF_CPU_IDLE]: {
+      [METRICS.TTFCPUIDLE]: {
         warn: '>=1500',
         error: '>=2000'
       }
@@ -39,7 +39,7 @@ const runPwmetrics = function() {
  * @param {Object} results - Pwmetrics results obtained through Lighthouse
  */
 const handleOk = function(results) {
-  console.log(JSON.stringify(results, null, 4));
+  console.log(JSON.stringify(results, null, 2));
   process.exit(0);
 };
 

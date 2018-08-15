@@ -57,10 +57,10 @@ export class Sheets {
         `${dateObj.toLocaleDateString()} ${dateObj.toLocaleTimeString()}`,
         getTiming(METRICS.TTFMP),
         getTiming(METRICS.TTFCP),
-        getTiming(METRICS.PSI),
+        getTiming(METRICS.SI),
         getTiming(METRICS.VISUALLY_COMPLETE),
-        getTiming(METRICS.TTF_CPU_IDLE),
-        getTiming(METRICS.TTCI),
+        getTiming(METRICS.TTFCPUIDLE),
+        getTiming(METRICS.TTI),
       ]);
     });
 

@@ -56,13 +56,13 @@ export const getMessage = function (messageType: string, ...args: any[]) {
       return 'First Contentful Paint';
     case METRICS.TTFMP:
       return 'First Meaningful Paint';
-    case METRICS.PSI:
-      return 'Perceptual Speed Index';
+    case METRICS.SI:
+      return 'Speed Index';
     case METRICS.VISUALLY_COMPLETE:
       return 'Visually completed';
-    case METRICS.TTF_CPU_IDLE:
+    case METRICS.TTFCPUIDLE:
       return 'First CPU Idle';
-    case METRICS.TTCI:
+    case METRICS.TTI:
       return 'Time to Interactive';
     case 'SUCCESS_RUN':
       return `Run ${args[0] + 1} of ${args[1]} finished successfully`;

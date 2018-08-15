@@ -1,7 +1,7 @@
 // Copyright 2016 Google Inc. All Rights Reserved.
 // Licensed under the Apache License, Version 2.0. See LICENSE
 
-import {LHRunner} from "./lh-runner";
+import {LHRunner} from './lh-runner';
 
 const opn = require('opn');
 const path = require('path');
@@ -98,7 +98,7 @@ class PWMetrics {
     }
 
     if (resultHasExpectationErrors && this.flags.expectations) {
-      console.log(getMessage('HAS_EXPECTATION_ERRORS'));
+      console.error(getMessage('HAS_EXPECTATION_ERRORS'));
     }
 
     return results;
@@ -178,12 +178,12 @@ class PWMetrics {
   }
 
   findMedianRun(results: MetricsResults[]): MetricsResults {
-    const ttfiValues = results.map(r => r.timings.find(timing => timing.id === METRICS.TTF_CPU_IDLE).timing);
+    const ttfiValues = results.map(r => r.timings.find(timing => timing.id === METRICS.TTFCPUIDLE).timing);
     const medianTTFI = this.median(ttfiValues);
     // in the case of duplicate runs having the exact same TTFI, we naively pick the first
     // @fixme, but any for now...
     return results.find((result: any) => result.timings.find((timing: any) =>
-      timing.id === METRICS.TTF_CPU_IDLE && timing.timing === medianTTFI
+      timing.id === METRICS.TTFCPUIDLE && timing.timing === medianTTFI
       )
     );
   }

@@ -4,8 +4,8 @@
 export default {
   TTFCP: 'first-contentful-paint',
   TTFMP: 'first-meaningful-paint',
-  TTF_CPU_IDLE: 'first-cpu-idle',
-  TTCI: 'interactive',
-  PSI: 'speed-index',
+  TTFCPUIDLE: 'first-cpu-idle',
+  TTI: 'interactive',
+  SI: 'speed-index',
   VISUALLY_COMPLETE: 'vc100',
 };

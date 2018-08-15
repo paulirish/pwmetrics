@@ -135,13 +135,13 @@ module.exports = {
       warn: '>=2000',
       error: '>=3000'
     },
-    [METRICS.TTCI]: {
+    [METRICS.TTI]: {
       ...
     },
-    [METRICS.TTF_CPU_IDLE]: {
+    [METRICS.TTFCPUIDLE]: {
       ...
     },
-    [METRICS.PSI]: {
+    [METRICS.SI]: {
       ...
     },
     [METRICS.VISUALLY_COMPLETE]: {
@@ -313,9 +313,9 @@ All metrics now are stored in separate constant object located in `pwmetrics/lib
 {
   TTFCP: 'first-contentful-paint',
   TTFMP: 'first-meaningful-paint',
-  TTF_CPU_IDLE: 'first-cpu-idle',
-  TTCI: 'interactive',
-  PSI: 'speed-index',
+  TTFCPUIDLE: 'first-cpu-idle',
+  TTI: 'interactive',
+  SI: 'speed-index',
   VISUALLY_COMPLETE: 'vc100',
 }
 ```
