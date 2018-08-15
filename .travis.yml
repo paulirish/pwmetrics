@@ -9,9 +9,6 @@ cache:
   yarn: true
   directories:
     - node_modules
-    - lighthouse-extension/node_modules
-    - lighthouse-viewer/node_modules
-    - /home/travis/.rvm/gems/
 install:
   # if our e2e tests fail in the future it might be that we are not compatible
   # with the latest puppeteer api so we probably need to run on chromimum
