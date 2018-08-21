@@ -21,7 +21,10 @@ describe('GoogleOauth', () => {
   let googleOauth;
 
   beforeEach(() => {
-    googleOauth = new GoogleOauth();
+    function logFunc(...args) {
+      console.log(args);
+    }
+    googleOauth = new GoogleOauth(logFunc);
     googleOauth.tokenDir = path.join(process.cwd(), 'tmp');
     googleOauth.tokenPath = path.join(googleOauth.tokenDir, 'test-oauth-token.json');
   });

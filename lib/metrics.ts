@@ -35,16 +35,16 @@ module.exports = {
   prepareData
 };
 
-const checkAudits = (audits: LighthouseAudits) => Object.keys(audits).forEach(key => {
+const checkAudits = (audits: LighthouseAudits, logFunc: any) => Object.keys(audits).forEach(key => {
   const debugString = audits[key].debugString;
   if (audits[key].debugString)
-    console.log(`${debugString} Audit key: ${key}`);
+    logFunc(`${debugString} Audit key: ${key}`);
 });
 
-function prepareData(res: LighthouseResults): MetricsResults {
+function prepareData(res: LighthouseResults, logFunc: any): MetricsResults {
   const audits = res.audits;
 
-  checkAudits(audits);
+  checkAudits(audits, logFunc);
 
   const colorP0 = 'yellow';
   const colorP2 = 'green';

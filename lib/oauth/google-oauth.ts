@@ -33,6 +33,8 @@ class GoogleOauth {
   private tokenDir: string = path.join((process.env.HOME || process.env.HOMEPATH || process.env.USERPROFILE), '/.credentials/');
   private tokenPath: string = path.join(this.tokenDir, 'sheets.googleapis.com-nodejs-pwmetrics.json');
 
+  constructor(private logFunc: any) {}
+
   async authenticate(clientSecret:AuthorizeCredentials): Promise<Oauth2Client> {
     try {
       return await this.authorize(clientSecret);
@@ -103,7 +105,7 @@ class GoogleOauth {
       }
     }
     fs.writeFileSync(this.tokenPath, JSON.stringify(token));
-    console.log(getMessage('G_OAUTH_STORED_TOKEN', this.tokenPath));
+    this.logFunc(getMessage('G_OAUTH_STORED_TOKEN', this.tokenPath));
   }
 }
 

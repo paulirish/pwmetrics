@@ -12,6 +12,9 @@ const expectationsData = require('./fixtures/run-expectations').expectations;
 describe('Expectations', () => {
   describe('checkExpectations', () => {
     let logSpy;
+    const logFunc = (...args) => {
+      console.log(...args);
+    };
 
     beforeEach(() => {
       logSpy = sinon.spy(console, 'log');
@@ -27,7 +30,7 @@ describe('Expectations', () => {
 
     it('should show expectation messages', () => {
       const normExpectations = expectations.normalizeMetrics(expectationsData);
-      expectations.checkExpectations(timings, normExpectations);
+      expectations.checkExpectations(timings, normExpectations, logFunc);
       expect(logSpy).to.have.been.calledTwice;
     });
   });

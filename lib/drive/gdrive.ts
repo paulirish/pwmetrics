@@ -11,13 +11,13 @@ const messages = require('../utils/messages');
 class GDrive {
   private oauth: Oauth2Client;
 
-  constructor(public clientSecret: AuthorizeCredentials) {}
+  constructor(public clientSecret: AuthorizeCredentials, private logFunc: any) {}
 
   async getOauth(): Promise<Oauth2Client> {
     try {
       if (this.oauth) return this.oauth;
 
-      const googleOauth = new GoogleOauth();
+      const googleOauth = new GoogleOauth(this.logFunc);
       return this.oauth = await googleOauth.authenticate(this.clientSecret);
     }catch (error) {
       throw error;
@@ -26,7 +26,7 @@ class GDrive {
 
   async uploadToDrive(data: any, fileName: string): Promise<DriveResponse> {
     try {
-      console.log(messages.getMessage('G_DRIVE_UPLOADING'));
+      this.logFunc(messages.getMessage('G_DRIVE_UPLOADING'));
       const drive = google.drive({
         version: 'v3',
         auth: await this.getOauth()
@@ -45,7 +45,7 @@ class GDrive {
 
       const driveResponse: DriveResponse = await promisify(drive.files.create)(body);
       await this.setSharingPermissions(driveResponse.id);
-      console.log(messages.getMessage('G_DRIVE_UPLOADED'));
+      this.logFunc(messages.getMessage('G_DRIVE_UPLOADED'));
       return driveResponse;
     } catch (error) {
       throw new Error(error);

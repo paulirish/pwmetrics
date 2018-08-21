@@ -3,7 +3,7 @@ const eol = require('os').EOL;
 
 import {Timing, ChartOptions} from '../../types/types';
 
-const drawChart = (timings: Timing[], options: ChartOptions) => {
+const drawChart = (timings: Timing[], options: ChartOptions, logFunc: any) => {
   const {lmargin, width, xlabel, xmin, xmax} = options;
 
   const normalizedTimings = timings.map(value => {
@@ -47,9 +47,9 @@ const drawChart = (timings: Timing[], options: ChartOptions) => {
 
   const chartScale = `${padding}  ${minValueFormatted}${labelPadding}${xlabel}${labelPadding}${maxValueFormatted}`;
 
-  console.log();
-  console.log([chartTop, chart, chartBottom, chartScale].join(eol));
-  console.log();
+  logFunc();
+  logFunc([chartTop, chart, chartBottom, chartScale].join(eol));
+  logFunc();
 };
 
 module.exports = drawChart;

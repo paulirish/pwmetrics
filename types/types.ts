@@ -49,8 +49,9 @@ interface FeatureFlags {
   expectations: Boolean;
   json: Boolean;
   chromeFlags: string;
-  chromePath?: string
+  chromePath?: string;
   port?: number;
+  showOutput: Boolean;
 }
 
 interface MetricsResults {

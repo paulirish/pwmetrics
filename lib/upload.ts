@@ -6,14 +6,14 @@ const {prepareAssets} = require('lighthouse/lighthouse-core/lib/asset-saver');
 import {AuthorizeCredentials, LighthouseResults, PreparedAssets, DriveResponse} from '../types/types';
 const GDrive = require('./drive/gdrive');
 
-const upload = async function(metricsData: LighthouseResults, clientSecret: AuthorizeCredentials): Promise<DriveResponse> {
+const upload = async function(metricsData: LighthouseResults, clientSecret: AuthorizeCredentials, logFunc: any): Promise<DriveResponse> {
   try {
     const assets: PreparedAssets[] = await prepareAssets(metricsData.artifacts, metricsData.audits);
     const trace = assets.map(data => {
       return data.traceData;
     });
     const fileName = `lighthouse-results-${Date.now()}.json`;
-    const gDrive = new GDrive(clientSecret);
+    const gDrive = new GDrive(clientSecret, logFunc);
     return await gDrive.uploadToDrive(trace[0], fileName);
   } catch(error) {
     throw error;
