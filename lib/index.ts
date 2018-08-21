@@ -34,7 +34,6 @@ import {
 const MAX_LIGHTHOUSE_TRIES = 2;
 const getTimelineViewerUrl = (id: string) => `https://chromedevtools.github.io/timeline-viewer/?loadTimelineFromURL=https://drive.google.com/file/d//${id}/view?usp=drivesdk`
 
-
 class PWMetrics {
   flags: FeatureFlags = {
     runs: 1,

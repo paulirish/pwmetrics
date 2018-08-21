@@ -49,9 +49,9 @@ const drawChart = (timings: Timing[], options: ChartOptions) => {
 
   const chartScale = `${padding}  ${minValueFormatted}${labelPadding}${xlabel}${labelPadding}${maxValueFormatted}`;
 
-  logger.log();
+  logger.log('');
   logger.log([chartTop, chart, chartBottom, chartScale].join(eol));
-  logger.log();
+  logger.log('');
 };
 
 module.exports = drawChart;

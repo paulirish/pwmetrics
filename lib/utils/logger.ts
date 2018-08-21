@@ -14,15 +14,15 @@ class Logger {
     return Logger.instance;
   }
 
-  log(...args: any[]) {
+  log(msg: any, ...args: any[]) {
     if(Logger.options.showOutput){
-      console.log(...args);
+      console.log(msg, ...args);
     }
   }
 
-  error(...args: any[]) {
+  error(msg: any, ...args: any[]) {
     if(Logger.options.showOutput){
-      console.error(...args);
+      console.error(msg, ...args);
     }
   }
 }

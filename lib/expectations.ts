@@ -10,7 +10,7 @@ function validateMetrics(metrics: ExpectationMetrics) {
   const metricsKeys = Object.keys(metrics);
 
   if (!metrics || !metricsKeys.length) {
-    logger.log(getMessageWithPrefix('ERROR', 'NO_METRICS'));
+    logger.error(getMessageWithPrefix('ERROR', 'NO_METRICS'));
     process.exit(1);
   }
 
