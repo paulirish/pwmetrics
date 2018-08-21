@@ -15,7 +15,7 @@ const SHEET_TYPES = {
 };
 
 class Sheets {
-  constructor(public config: SheetsConfig, public clientSecret: AuthorizeCredentials, private logFunc: any) {
+  constructor(public config: SheetsConfig, public clientSecret: AuthorizeCredentials) {
     this.validateOptions(config, clientSecret);
   }
 
@@ -67,9 +67,9 @@ class Sheets {
     });
 
     try {
-      const googleOauth = new GoogleOauth(this.logFunc);
+      const googleOauth = new GoogleOauth();
       const oauth: Oauth2Client = await googleOauth.authenticate(this.clientSecret);
-      await gsheets.appendResults(oauth, valuesToAppend, this.config.options, this.logFunc);
+      await gsheets.appendResults(oauth, valuesToAppend, this.config.options);
     } catch(error) {
       throw error;
     }

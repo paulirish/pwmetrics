@@ -10,9 +10,6 @@ const metricsResults = require('./fixtures/metrics-results.json');
 /* eslint-env mocha */
 describe('Metrics', () => {
   let logSpy;
-  const logFunc = (...args) => {
-    console.log(...args);
-  };
 
   beforeEach(() => {
     logSpy = sinon.spy(console, 'log');
@@ -30,7 +27,7 @@ describe('Metrics', () => {
     it('should log error if audit has debugString', () => {
       const eventsWithDebugString = Object.assign({}, events);
       eventsWithDebugString.audits['first-meaningful-paint'].debugString = 'Cannot read property \'ts\' of undefined';
-      metrics.prepareData(events, logFunc);
+      metrics.prepareData(events);
       expect(logSpy).to.be.calledWith('Cannot read property \'ts\' of undefined Audit key: first-meaningful-paint');
     });
   });

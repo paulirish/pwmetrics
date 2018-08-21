@@ -3,18 +3,20 @@
 
 import { Timing, ExpectationMetrics, NormalizedExpectationMetrics } from '../types/types';
 const { getAssertionMessage, getMessageWithPrefix } = require('./utils/messages');
+const Logger = require('./utils/logger');
+const logger = Logger.getInstance();
 
-function validateMetrics(metrics: ExpectationMetrics, logFunc: any) {
+function validateMetrics(metrics: ExpectationMetrics) {
   const metricsKeys = Object.keys(metrics);
 
   if (!metrics || !metricsKeys.length) {
-    logFunc(getMessageWithPrefix('ERROR', 'NO_METRICS'));
+    logger.log(getMessageWithPrefix('ERROR', 'NO_METRICS'));
     process.exit(1);
   }
 
   metricsKeys.forEach(key => {
     if (!metrics[key] || !metrics[key].warn || !metrics[key].error) {
-      logFunc(getMessageWithPrefix('ERROR', 'NO_EXPECTATION_ERROR', key));
+      logger.error(getMessageWithPrefix('ERROR', 'NO_EXPECTATION_ERROR', key));
       process.exit(1);
     }
   });
@@ -31,7 +33,7 @@ function normalizeMetrics(metrics: ExpectationMetrics): NormalizedExpectationMet
   return normalizedMetrics;
 }
 
-function checkExpectations(metricsData: Timing[], expectationMetrics: NormalizedExpectationMetrics, logFunc: any) {
+function checkExpectations(metricsData: Timing[], expectationMetrics: NormalizedExpectationMetrics) {
   metricsData.forEach(metric => {
     const metricName = metric.id;
     const expectationValue = expectationMetrics[metricName];
@@ -47,7 +49,7 @@ function checkExpectations(metricsData: Timing[], expectationMetrics: Normalized
     }
 
     if (msg) {
-      logFunc(msg);
+      logger.log(msg);
     }
   });
 }

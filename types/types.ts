@@ -156,6 +156,10 @@ interface ChartOptions {
   lmargin: number;
 };
 
+interface LoggerOptions {
+  showOutput: Boolean;
+}
+
 export {
   Timing,
   Timestamp,
@@ -176,5 +180,6 @@ export {
   FeatureFlags,
   TermWritableStream,
   PWMetricsResults,
-  ChartOptions
+  ChartOptions,
+  LoggerOptions
 };

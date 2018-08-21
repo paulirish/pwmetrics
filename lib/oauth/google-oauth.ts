@@ -10,6 +10,8 @@ const readlineSync = require('readline-sync');
 const { getMessage } = require('../utils/messages');
 
 import { AuthorizeCredentials, Oauth2Client } from '../../types/types';
+const Logger = require('../utils/logger');
+const logger = Logger.getInstance();
 
 /* improve the bad polyfill that devtools-frontend did */
 //@todo remove after https://github.com/GoogleChrome/lighthouse/issues/1535 will be closed
@@ -32,8 +34,6 @@ const EEXIST = 'EEXIST';
 class GoogleOauth {
   private tokenDir: string = path.join((process.env.HOME || process.env.HOMEPATH || process.env.USERPROFILE), '/.credentials/');
   private tokenPath: string = path.join(this.tokenDir, 'sheets.googleapis.com-nodejs-pwmetrics.json');
-
-  constructor(private logFunc: any) {}
 
   async authenticate(clientSecret:AuthorizeCredentials): Promise<Oauth2Client> {
     try {
@@ -105,7 +105,7 @@ class GoogleOauth {
       }
     }
     fs.writeFileSync(this.tokenPath, JSON.stringify(token));
-    this.logFunc(getMessage('G_OAUTH_STORED_TOKEN', this.tokenPath));
+    logger.log(getMessage('G_OAUTH_STORED_TOKEN', this.tokenPath));
   }
 }
 
