@@ -5,6 +5,8 @@
 import {MetricsResults, MetricsDefinition, Timing, Timestamp, LighthouseResults, LighthouseAudits} from '../types/types';
 
 const metricsDefinitions: MetricsDefinition[] = require('lighthouse/lighthouse-core/lib/traces/pwmetrics-events.js').metricsDefinitions;
+const Logger = require('./utils/logger');
+const logger = Logger.getInstance();
 
 const metricsIds = {
   NAVSTART: 'navstart',
@@ -38,7 +40,7 @@ module.exports = {
 const checkAudits = (audits: LighthouseAudits) => Object.keys(audits).forEach(key => {
   const debugString = audits[key].debugString;
   if (audits[key].debugString)
-    console.log(`${debugString} Audit key: ${key}`);
+    logger.log(`${debugString} Audit key: ${key}`);
 });
 
 function prepareData(res: LighthouseResults): MetricsResults {

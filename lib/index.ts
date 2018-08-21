@@ -15,6 +15,7 @@ const expectations = require('./expectations');
 const {upload} = require('./upload');
 const messages = require('./utils/messages');
 const drawChart = require('./chart/chart');
+const Logger = require('./utils/logger');
 
 import {
   MainOptions,
@@ -41,7 +42,8 @@ class PWMetrics {
     view: false,
     expectations: false,
     json: false,
-    chromeFlags: ''
+    chromeFlags: '',
+    showOutput: true
   };
   runs: number;
   sheets: SheetsConfig;
@@ -50,6 +52,7 @@ class PWMetrics {
   tryLighthouseCounter: number;
   launcher: LaunchedChrome;
   parsedChromeFlags: Array<string>;
+  logger: any;
 
   constructor(public url: string, opts: MainOptions) {
     this.flags = Object.assign({}, this.flags, opts.flags);
@@ -72,6 +75,8 @@ class PWMetrics {
     }
 
     this.parsedChromeFlags = parseChromeFlags(this.flags.chromeFlags);
+
+    this.logger = Logger.getInstance({showOutput: this.flags.showOutput});
   }
 
   async start() {
@@ -87,10 +92,10 @@ class PWMetrics {
           resultHasExpectationErrors = this.resultHasExpectationErrors(currentMetricResult);
         }
         metricsResults[runIndex] = currentMetricResult;
-        console.log(messages.getMessageWithPrefix('SUCCESS', 'SUCCESS_RUN', runIndex, runs.length));
+        this.logger.log(messages.getMessageWithPrefix('SUCCESS', 'SUCCESS_RUN', runIndex, runs.length));
       } catch (error) {
         metricsResults[runIndex] = error;
-        console.error(messages.getMessageWithPrefix('ERROR', 'FAILED_RUN', runIndex, runs.length, error.message));
+        this.logger.error(messages.getMessageWithPrefix('ERROR', 'FAILED_RUN', runIndex, runs.length, error.message));
       }
     }
 
@@ -98,7 +103,7 @@ class PWMetrics {
     if (results.runs.length > 0) {
       if (this.runs > 1 && !this.flags.submit) {
         results.median = this.findMedianRun(results.runs);
-        console.log(messages.getMessage('MEDIAN_RUN'));
+        this.logger.log(messages.getMessage('MEDIAN_RUN'));
         this.displayOutput(results.median);
       } else if (this.flags.submit) {
         const sheets = new Sheets(this.sheets, this.clientSecret);
@@ -135,7 +140,7 @@ class PWMetrics {
         lhResults = await this.runLighthouseOnCI().then((lhResults:LighthouseResults) => {
           // fix for https://github.com/paulirish/pwmetrics/issues/63
           return new Promise<LighthouseResults>(resolve => {
-            console.log(messages.getMessage('WAITING'));
+            this.logger.log(messages.getMessage('WAITING'));
             setTimeout(_ => {
               return resolve(lhResults);
             }, 2000);
@@ -177,20 +182,20 @@ class PWMetrics {
 
   async retryLighthouseOnCI(): Promise<LighthouseResults> {
     this.tryLighthouseCounter++;
-    console.log(messages.getMessage('CRI_TIMEOUT_RELAUNCH'));
+    this.logger.log(messages.getMessage('CRI_TIMEOUT_RELAUNCH'));
 
     try {
       return await this.runLighthouseOnCI();
     } catch(error) {
-      console.error(error.message);
-      console.error(messages.getMessage('CLOSING_CHROME'));
+      this.logger.error(error.message);
+      this.logger.error(messages.getMessage('CLOSING_CHROME'));
       await this.killLauncher();
     }
   }
 
   async launchChrome(): Promise<LaunchedChrome|Error> {
     try {
-      console.log(messages.getMessage('LAUNCHING_CHROME'));
+      this.logger.log(messages.getMessage('LAUNCHING_CHROME'));
       this.launcher = await launch({
         port: this.flags.port,
         chromeFlags: this.parsedChromeFlags,
@@ -199,7 +204,7 @@ class PWMetrics {
       this.flags.port = this.launcher.port;
       return this.launcher;
     } catch(error) {
-      console.error(error);
+      this.logger.error(error);
       await this.killLauncher();
       return error;
     }
@@ -242,7 +247,7 @@ class PWMetrics {
     timings = timings.filter(r => {
       // filter out metrics that failed to record
       if (r.timing === undefined || isNaN(r.timing)) {
-        console.error(messages.getMessageWithPrefix('ERROR', 'METRIC_IS_UNAVAILABLE', r.title));
+        this.logger.log(messages.getMessageWithPrefix('ERROR', 'METRIC_IS_UNAVAILABLE', r.title));
         return false;
       }
       // don't chart hidden metrics, but include in json

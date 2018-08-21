@@ -49,8 +49,9 @@ interface FeatureFlags {
   expectations: Boolean;
   json: Boolean;
   chromeFlags: string;
-  chromePath?: string
+  chromePath?: string;
   port?: number;
+  showOutput: Boolean;
 }
 
 interface MetricsResults {
@@ -155,6 +156,10 @@ interface ChartOptions {
   lmargin: number;
 };
 
+interface LoggerOptions {
+  showOutput: Boolean;
+}
+
 export {
   Timing,
   Timestamp,
@@ -175,5 +180,6 @@ export {
   FeatureFlags,
   TermWritableStream,
   PWMetricsResults,
-  ChartOptions
+  ChartOptions,
+  LoggerOptions
 };

@@ -10,6 +10,8 @@ const readlineSync = require('readline-sync');
 const { getMessage } = require('../utils/messages');
 
 import { AuthorizeCredentials, Oauth2Client } from '../../types/types';
+const Logger = require('../utils/logger');
+const logger = Logger.getInstance();
 
 /* improve the bad polyfill that devtools-frontend did */
 //@todo remove after https://github.com/GoogleChrome/lighthouse/issues/1535 will be closed
@@ -103,7 +105,7 @@ class GoogleOauth {
       }
     }
     fs.writeFileSync(this.tokenPath, JSON.stringify(token));
-    console.log(getMessage('G_OAUTH_STORED_TOKEN', this.tokenPath));
+    logger.log(getMessage('G_OAUTH_STORED_TOKEN', this.tokenPath));
   }
 }
 
