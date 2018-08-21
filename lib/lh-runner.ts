@@ -14,7 +14,7 @@ export class LHRunner {
   launcher: LaunchedChrome;
   tryLighthouseCounter: number;
 
-  //@todo imporve FeatureFlags -> LHFlags
+  //@todo improve FeatureFlags -> LHFlags
   constructor(public url: string, public flags: FeatureFlags) {
     this.tryLighthouseCounter = 0;
   }

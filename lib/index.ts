@@ -178,12 +178,12 @@ class PWMetrics {
   }
 
   findMedianRun(results: MetricsResults[]): MetricsResults {
-    const ttfiValues = results.map(r => r.timings.find(timing => timing.id === METRICS.TTFCPUIDLE).timing);
-    const medianTTFI = this.median(ttfiValues);
+    const TTFCPUIDLEValues = results.map(r => r.timings.find(timing => timing.id === METRICS.TTFCPUIDLE).timing);
+    const medianTTFCPUIDLE = this.median(TTFCPUIDLEValues);
     // in the case of duplicate runs having the exact same TTFI, we naively pick the first
     // @fixme, but any for now...
     return results.find((result: any) => result.timings.find((timing: any) =>
-      timing.id === METRICS.TTFCPUIDLE && timing.timing === medianTTFI
+      timing.id === METRICS.TTFCPUIDLE && timing.timing === medianTTFCPUIDLE
       )
     );
   }
