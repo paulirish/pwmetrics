@@ -67,9 +67,9 @@ export interface GSheetsValuesToAppend {
   0: string; // lighthouseVersion
   1: string; // url
   2: string; // time
-  3: number; // TTFMP timing
-  4: number; // SI timing
-  5: number; // VISUALLY_COMPLETE timing
+  3: number; // TTFCP timing
+  4: number; // TTFMP timing
+  5: number; // SI timing
   6: number; // TTFCPUIDLE timing
   7: number; // TTI timing
 }

@@ -2,37 +2,37 @@
   "timings": [
     {
       "title": "First Contentful Paint",
-      "id": "first-contentful-paint",
-      "timing": 1059.9194,
+      "id": "firstContentfulPaint",
+      "timing": 4180,
       "color": "green"
     },
     {
       "title": "First Meaningful Paint",
-      "id": "first-meaningful-paint",
-      "timing": 1575.1898999999999,
+      "id": "firstMeaningfulPaint",
+      "timing": 4180,
       "color": "green"
     },
     {
-      "title": "Speed Index",
-      "id": "speed-index",
-      "timing": 3314.811689134387,
-      "color": "blue"
-    },
-    {
       "title": "First CPU Idle",
-      "id": "first-cpu-idle",
-      "timing": 5629.956099999999,
+      "id": "firstCPUIdle",
+      "timing": 4180,
       "color": "yellow"
     },
     {
       "title": "Time to Interactive",
       "id": "interactive",
-      "timing": 5629.956099999999,
+      "timing": 4180,
       "color": "yellow"
+    },
+    {
+      "title": "Speed Index",
+      "id": "speedIndex",
+      "timing": 4329,
+      "color": "blue"
     }
   ],
-  "generatedTime": "2018-06-08T19:36:07.375Z",
-  "lighthouseVersion": "3.0.0-beta.0",
-  "requestedUrl": "https://www.paulirish.com/",
+  "generatedTime": "2018-08-27T20:53:51.206Z",
+  "lighthouseVersion": "3.0.3",
+  "requestedUrl": "http://paulirish.com/",
   "finalUrl": "https://www.paulirish.com/"
 }

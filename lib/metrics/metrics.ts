@@ -6,6 +6,7 @@ export default {
   TTFMP: 'firstMeaningfulPaint',
   TTFCPUIDLE: 'firstCPUIdle',
   TTI: 'interactive',
-  SI: 'speedIndex ',
-  VISUALLY_COMPLETE: 'observedLastVisualChange',
+  SI: 'speedIndex',
+  // @todo add in further improvements
+  // VISUALLY_COMPLETE: 'observedLastVisualChange',
 };

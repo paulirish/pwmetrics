@@ -144,9 +144,6 @@ module.exports = {
     [METRICS.SI]: {
       ...
     },
-    [METRICS.VISUALLY_COMPLETE]: {
-      ...
-    },
   },
   sheets: {
     type: 'GOOGLE_SHEETS', // sheets service type. Available types: GOOGLE_SHEETS
@@ -316,7 +313,6 @@ All metrics now are stored in separate constant object located in `pwmetrics/lib
   TTFCPUIDLE: 'first-cpu-idle',
   TTI: 'interactive',
   SI: 'speed-index',
-  VISUALLY_COMPLETE: 'vc100',
 }
 ```
 

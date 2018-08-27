@@ -20,38 +20,32 @@ exports.metricsResults = [
     'timings': [
       {
         'title': 'First Contentful Paint',
-        'id': 'first-contentful-paint',
+        'id': 'firstContentfulPaint',
         'timing': 1059.9194,
         'color': 'green'
       },
       {
         'title': 'First Meaningful Paint',
-        'id': 'first-meaningful-paint',
+        'id': 'firstMeaningfulPaint',
         'timing': 1575.1898999999999,
         'color': 'green'
       },
       {
         'title': 'Speed Index',
-        'id': 'speed-index',
-        'timing': 3314.811689134387,
-        'color': 'blue'
-      },
-      {
-        'title': 'Estimated Input Latency',
-        'id': 'estimated-input-latency',
-        'timing': 369.8,
+        'id': 'speedIndex',
+        'timing': 4329,
         'color': 'blue'
       },
       {
         'title': 'First CPU Idle',
-        'id': 'first-cpu-idle',
-        'timing': 5629.956099999999,
+        'id': 'firstCPUIdle',
+        'timing': 4180,
         'color': 'yellow'
       },
       {
         'title': 'Time to Interactive',
         'id': 'interactive',
-        'timing': 5629.956099999999,
+        'timing': 4180,
         'color': 'yellow'
       }
     ],
@@ -63,38 +57,32 @@ exports.metricsResults = [
     'timings': [
       {
         'title': 'First Contentful Paint',
-        'id': 'first-contentful-paint',
+        'id': 'firstContentfulPaint',
         'timing': 1059.9194,
         'color': 'green'
       },
       {
         'title': 'First Meaningful Paint',
-        'id': 'first-meaningful-paint',
+        'id': 'firstMeaningfulPaint',
         'timing': 1575.1898999999999,
         'color': 'green'
       },
       {
         'title': 'Speed Index',
-        'id': 'speed-index',
-        'timing': 3314.811689134387,
-        'color': 'blue'
-      },
-      {
-        'title': 'Estimated Input Latency',
-        'id': 'estimated-input-latency',
-        'timing': 369.8,
+        'id': 'speedIndex',
+        'timing': 4329,
         'color': 'blue'
       },
       {
         'title': 'First CPU Idle',
-        'id': 'first-cpu-idle',
-        'timing': 5629.956099999999,
+        'id': 'firstCPUIdle',
+        'timing': 4180,
         'color': 'yellow'
       },
       {
         'title': 'Time to Interactive',
         'id': 'interactive',
-        'timing': 5629.956099999999,
+        'timing': 4180,
         'color': 'yellow'
       }
     ],
@@ -106,38 +94,32 @@ exports.metricsResults = [
     'timings': [
       {
         'title': 'First Contentful Paint',
-        'id': 'first-contentful-paint',
+        'id': 'firstContentfulPaint',
         'timing': 1059.9194,
         'color': 'green'
       },
       {
         'title': 'First Meaningful Paint',
-        'id': 'first-meaningful-paint',
+        'id': 'firstMeaningfulPaint',
         'timing': 1575.1898999999999,
         'color': 'green'
       },
       {
         'title': 'Speed Index',
-        'id': 'speed-index',
-        'timing': 3314.811689134387,
-        'color': 'blue'
-      },
-      {
-        'title': 'Estimated Input Latency',
-        'id': 'estimated-input-latency',
-        'timing': 369.8,
+        'id': 'speedIndex',
+        'timing': 4329,
         'color': 'blue'
       },
       {
         'title': 'First CPU Idle',
-        'id': 'first-cpu-idle',
-        'timing': 5629.956099999999,
+        'id': 'firstCPUIdle',
+        'timing': 4180,
         'color': 'yellow'
       },
       {
         'title': 'Time to Interactive',
         'id': 'interactive',
-        'timing': 5629.956099999999,
+        'timing': 4180,
         'color': 'yellow'
       }
     ],

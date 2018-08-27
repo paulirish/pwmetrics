@@ -25,10 +25,11 @@ describe('Metrics', () => {
     });
 
     it('should log error if audit has debugString', () => {
-      const eventsWithDebugString = Object.assign({}, events);
-      eventsWithDebugString.audits['first-meaningful-paint'].errorMessage = 'Cannot read property \'ts\' of undefined';
+      const {audits} = events;
+      audits.metrics.errorMessage = 'Cannot read property \'ts\' of undefined';
+      audits.metrics.details.explanation = 'Explanation of error';
       adaptMetricsData(events);
-      expect(logSpy).to.be.calledWith('Cannot read property \'ts\' of undefined Audit key: first-meaningful-paint');
+      expect(logSpy).to.be.calledWith('Cannot read property \'ts\' of undefined \n Explanation of error');
     });
   });
 });

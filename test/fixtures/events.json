@@ -1,82 +1,50 @@
 {
-  "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/69.0.3451.0 Safari/537.36",
-  "lighthouseVersion": "3.0.0-beta.0",
-  "fetchTime": "2018-06-08T19:36:07.375Z",
-  "requestedUrl": "https://www.paulirish.com/",
+  "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/70.0.3534.0 Safari/537.36",
+  "lighthouseVersion": "3.0.3",
+  "fetchTime": "2018-08-27T20:53:51.206Z",
+  "requestedUrl": "http://paulirish.com/",
   "finalUrl": "https://www.paulirish.com/",
   "runWarnings": [],
   "audits": {
-    "first-contentful-paint": {
-      "id": "first-contentful-paint",
-      "title": "First Contentful Paint",
-      "description": "First contentful paint marks the time at which the first text/image is painted. [Learn more](https://developers.google.com/web/fundamentals/performance/user-centric-performance-metrics#first_paint_and_first_contentful_paint).",
-      "score": 1,
-      "scoreDisplayMode": "numeric",
-      "rawValue": 1059.9194,
-      "displayValue": [
-        "%10d ms",
-        1059.9194
-      ]
-    },
-    "first-meaningful-paint": {
-      "id": "first-meaningful-paint",
-      "title": "First Meaningful Paint",
-      "description": "First Meaningful Paint measures when the primary content of a page is visible. [Learn more](https://developers.google.com/web/tools/lighthouse/audits/first-meaningful-paint).",
-      "score": 0.99,
-      "scoreDisplayMode": "numeric",
-      "rawValue": 1575.1898999999999,
-      "displayValue": [
-        "%10d ms",
-        1575.1898999999999
-      ]
-    },
-    "speed-index": {
-      "id": "speed-index",
-      "title": "Speed Index",
-      "description": "Speed Index shows how quickly the contents of a page are visibly populated. [Learn more](https://developers.google.com/web/tools/lighthouse/audits/speed-index).",
-      "score": 0.91,
-      "scoreDisplayMode": "numeric",
-      "rawValue": 3314.811689134387,
-      "displayValue": [
-        "%10d ms",
-        3314.811689134387
-      ]
-    },
-    "estimated-input-latency": {
-      "id": "estimated-input-latency",
-      "title": "Estimated Input Latency",
-      "description": "The score above is an estimate of how long your app takes to respond to user input, in milliseconds, during the busiest 5s window of page load. If your latency is higher than 50 ms, users may perceive your app as laggy. [Learn more](https://developers.google.com/web/tools/lighthouse/audits/estimated-input-latency).",
-      "score": 0,
-      "scoreDisplayMode": "numeric",
-      "rawValue": 369.8,
-      "displayValue": [
-        "%d ms",
-        369.8
-      ]
-    },
-    "first-cpu-idle": {
-      "id": "first-cpu-idle",
-      "title": "First CPU Idle",
-      "description": "First CPU Idle marks the first time at which the page's main thread is quiet enough to handle input. [Learn more](https://developers.google.com/web/tools/lighthouse/audits/first-interactive).",
-      "score": 0.62,
-      "scoreDisplayMode": "numeric",
-      "rawValue": 5629.956099999999,
-      "displayValue": [
-        "%10d ms",
-        5629.956099999999
-      ]
-    },
-    "interactive": {
-      "id": "interactive",
-      "title": "Time to Interactive",
-      "description": "Interactive marks the time at which the page is fully interactive. [Learn more](https://developers.google.com/web/tools/lighthouse/audits/consistently-interactive).",
-      "score": 0.69,
-      "scoreDisplayMode": "numeric",
-      "rawValue": 5629.956099999999,
-      "displayValue": [
-        "%10d ms",
-        5629.956099999999
-      ]
+    "metrics": {
+      "id": "metrics",
+      "title": "Metrics",
+      "description": "Collects all available metrics.",
+      "score": null,
+      "scoreDisplayMode": "informative",
+      "rawValue": 4179.649,
+      "details": {
+        "items": [
+          {
+            "firstContentfulPaint": 4180,
+            "firstMeaningfulPaint": 4180,
+            "firstCPUIdle": 4180,
+            "interactive": 4180,
+            "speedIndex": 4329,
+            "estimatedInputLatency": 13,
+            "observedNavigationStart": 0,
+            "observedNavigationStartTs": 49414590783,
+            "observedFirstPaint": 1005,
+            "observedFirstPaintTs": 49415595415,
+            "observedFirstContentfulPaint": 1005,
+            "observedFirstContentfulPaintTs": 49415595415,
+            "observedFirstMeaningfulPaint": 1005,
+            "observedFirstMeaningfulPaintTs": 49415595415,
+            "observedTraceEnd": 4796,
+            "observedTraceEndTs": 49419386628,
+            "observedLoad": 3731,
+            "observedLoadTs": 49418322041,
+            "observedDomContentLoaded": 2861,
+            "observedDomContentLoadedTs": 49417451887,
+            "observedFirstVisualChange": 958,
+            "observedFirstVisualChangeTs": 49415548783,
+            "observedLastVisualChange": 3475,
+            "observedLastVisualChangeTs": 49418065783,
+            "observedSpeedIndex": 1330,
+            "observedSpeedIndexTs": 49415921212
+          }
+        ]
+      }
     }
   },
   "configSettings": {
@@ -99,12 +67,7 @@
     "additionalTraceCategories": null,
     "extraHeaders": null,
     "onlyAudits": [
-      "first-contentful-paint",
-      "first-meaningful-paint",
-      "speed-index",
-      "interactive",
-      "first-cpu-idle",
-      "estimated-input-latency"
+      "metrics"
     ],
     "onlyCategories": null,
     "skipAudits": null
@@ -114,38 +77,12 @@
       "title": "Performance",
       "auditRefs": [
         {
-          "id": "first-contentful-paint",
-          "weight": 3,
-          "group": "metrics"
-        },
-        {
-          "id": "first-meaningful-paint",
-          "weight": 1,
-          "group": "metrics"
-        },
-        {
-          "id": "speed-index",
-          "weight": 4,
-          "group": "metrics"
-        },
-        {
-          "id": "interactive",
-          "weight": 5,
-          "group": "metrics"
-        },
-        {
-          "id": "first-cpu-idle",
-          "weight": 2,
-          "group": "metrics"
-        },
-        {
-          "id": "estimated-input-latency",
-          "weight": 0,
-          "group": "metrics"
+          "id": "metrics",
+          "weight": 0
         }
       ],
       "id": "performance",
-      "score": 0.82
+      "score": 0
     }
   },
   "categoryGroups": {
@@ -206,6 +143,6 @@
     }
   },
   "timing": {
-    "total": 5802
+    "total": 6607
   }
 }

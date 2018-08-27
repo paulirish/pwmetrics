@@ -55,10 +55,9 @@ export class Sheets {
         data.lighthouseVersion,
         data.requestedUrl,
         `${dateObj.toLocaleDateString()} ${dateObj.toLocaleTimeString()}`,
-        getTiming(METRICS.TTFMP),
         getTiming(METRICS.TTFCP),
+        getTiming(METRICS.TTFMP),
         getTiming(METRICS.SI),
-        getTiming(METRICS.VISUALLY_COMPLETE),
         getTiming(METRICS.TTFCPUIDLE),
         getTiming(METRICS.TTI),
       ]);

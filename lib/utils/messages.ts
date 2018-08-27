@@ -58,8 +58,6 @@ export const getMessage = function (messageType: string, ...args: any[]) {
       return 'First Meaningful Paint';
     case METRICS.SI:
       return 'Speed Index';
-    case METRICS.VISUALLY_COMPLETE:
-      return 'Visually completed';
     case METRICS.TTFCPUIDLE:
       return 'First CPU Idle';
     case METRICS.TTI:
