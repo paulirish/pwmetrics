@@ -33,7 +33,7 @@ export class LHRunner {
         lhResults = await this.runLighthouseOnCI().then((lhResults: LH.RunnerResult) => {
           // fix for https://github.com/paulirish/pwmetrics/issues/63
           return new Promise<LH.RunnerResult>(resolve => {
-            console.log(getMessage('WAITING'));
+            this.logger.log(getMessage('WAITING'));
             setTimeout(_ => {
               return resolve(lhResults);
             }, 2000);
@@ -74,20 +74,20 @@ export class LHRunner {
 
   async retryLighthouseOnCI(): Promise<LH.RunnerResult> {
     this.tryLighthouseCounter++;
-    console.log(getMessage('CRI_TIMEOUT_RELAUNCH'));
+    this.logger.log(getMessage('CRI_TIMEOUT_RELAUNCH'));
 
     try {
       return await this.runLighthouseOnCI();
     } catch (error) {
-      console.error(error.message);
-      console.error(getMessage('CLOSING_CHROME'));
+      this.logger.error(error.message);
+      this.logger.error(getMessage('CLOSING_CHROME'));
       await this.killLauncher();
     }
   }
 
   async launchChrome(): Promise<LaunchedChrome | Error> {
     try {
-      console.log(getMessage('LAUNCHING_CHROME'));
+      this.logger.log(getMessage('LAUNCHING_CHROME'));
       this.launcher = await launch({
         port: this.flags.port,
         chromeFlags: parseChromeFlags(this.flags.chromeFlags),
@@ -96,7 +96,7 @@ export class LHRunner {
       this.flags.port = this.launcher.port;
       return this.launcher;
     } catch (error) {
-      console.error(error);
+      this.logger.error(error);
       await this.killLauncher();
       return error;
     }
