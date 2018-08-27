@@ -15,7 +15,8 @@ const runPwmetrics = function() {
   return new PWMetrics(url, {
     flags: {
       runs: 3,
-      expectations: true
+      expectations: true,
+      chromeFlags: '--disable-gpu --headless --enable-logging',
     },
     expectations: {
       [METRICS.TTFMP]: {
