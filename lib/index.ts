@@ -1,12 +1,12 @@
 // Copyright 2016 Google Inc. All Rights Reserved.
 // Licensed under the Apache License, Version 2.0. See LICENSE
 
-import {LHRunner} from './lh-runner';
-
 const opn = require('opn');
 const path = require('path');
 
 import METRICS from './metrics/metrics';
+import Logger from './utils/logger';
+import {LHRunner} from './lh-runner';
 import {Sheets} from './sheets';
 import {adaptMetricsData} from './metrics/metrics-adapter';
 import {validateMetrics, normalizeExpectationMetrics, checkExpectations} from './expectations';
@@ -36,12 +36,14 @@ class PWMetrics {
     view: false,
     expectations: false,
     json: false,
-    chromeFlags: ''
+    chromeFlags: '',
+    showOutput: true
   };
   runs: number;
   sheets: SheetsConfig;
   normalizedExpectations: NormalizedExpectationMetrics;
   clientSecret: AuthorizeCredentials;
+  logger: any;
 
   constructor(public url: string, opts: MainOptions) {
     this.flags = Object.assign({}, this.flags, opts.flags);
@@ -61,6 +63,8 @@ class PWMetrics {
         this.normalizedExpectations = normalizeExpectationMetrics(expectations);
       } else throw new Error(getMessageWithPrefix('ERROR', 'NO_EXPECTATIONS_FOUND'));
     }
+
+    this.logger = Logger.getInstance({showOutput: this.flags.showOutput});
   }
 
   async start() {
@@ -78,10 +82,10 @@ class PWMetrics {
           resultHasExpectationErrors = this.resultHasExpectationErrors(currentMetricResult);
         }
         metricsResults[runIndex] = currentMetricResult;
-        console.log(getMessageWithPrefix('SUCCESS', 'SUCCESS_RUN', runIndex, runs.length));
+        this.logger.log(getMessageWithPrefix('SUCCESS', 'SUCCESS_RUN', runIndex, runs.length));
       } catch (error) {
         metricsResults[runIndex] = error;
-        console.error(getMessageWithPrefix('ERROR', 'FAILED_RUN', runIndex, runs.length, error.message));
+        this.logger.error(getMessageWithPrefix('ERROR', 'FAILED_RUN', runIndex, runs.length, error.message));
       }
     }
 
@@ -89,7 +93,7 @@ class PWMetrics {
     if (results.runs.length > 0) {
       if (this.runs > 1 && !this.flags.submit) {
         results.median = this.findMedianRun(results.runs);
-        console.log(getMessage('MEDIAN_RUN'));
+        this.logger.log(getMessage('MEDIAN_RUN'));
         this.displayOutput(results.median);
       } else if (this.flags.submit) {
         const sheets = new Sheets(this.sheets, this.clientSecret);
@@ -98,7 +102,7 @@ class PWMetrics {
     }
 
     if (resultHasExpectationErrors && this.flags.expectations) {
-      console.error(getMessage('HAS_EXPECTATION_ERRORS'));
+      this.logger.error(getMessage('HAS_EXPECTATION_ERRORS'));
     }
 
     return results;
@@ -152,7 +156,7 @@ class PWMetrics {
     timings = timings.filter(r => {
       // filter out metrics that failed to record
       if (r.timing === undefined || isNaN(r.timing)) {
-        console.error(getMessageWithPrefix('ERROR', 'METRIC_IS_UNAVAILABLE', r.title));
+        this.logger.error(getMessageWithPrefix('ERROR', 'METRIC_IS_UNAVAILABLE', r.title));
         return false;
       } else {
         return true;

@@ -2,6 +2,8 @@ const wunderbar = require('@gribnoysup/wunderbar');
 const eol = require('os').EOL;
 
 import {Timing, ChartOptions} from '../../types/types';
+import Logger from '../utils/logger';
+const logger = Logger.getInstance();
 
 export const drawChart = (timings: Timing[], options: ChartOptions) => {
   const {lmargin, width, xlabel, xmin, xmax} = options;
@@ -47,7 +49,7 @@ export const drawChart = (timings: Timing[], options: ChartOptions) => {
 
   const chartScale = `${padding}  ${minValueFormatted}${labelPadding}${xlabel}${labelPadding}${maxValueFormatted}`;
 
-  console.log();
-  console.log([chartTop, chart, chartBottom, chartScale].join(eol));
-  console.log();
+  logger.log('');
+  logger.log([chartTop, chart, chartBottom, chartScale].join(eol));
+  logger.log('');
 };

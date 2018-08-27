@@ -120,8 +120,9 @@ module.exports = {
     json: true, // not required, set to true if you want json output
     outputPath: 'stdout', // not required, only needed if you have specified json output, can be "stdout" or a path
     chromePath: '/Applications/Google\ Chrome\ Canary.app/Contents/MacOS/Google\ Chrome\ Canary', //optional path to specific Chrome location
-    chromeFlags: '' // custom flags to pass to Chrome. For a full list of flags, see http://peter.sh/experiments/chromium-command-line-switches/.
+    chromeFlags: '', // custom flags to pass to Chrome. For a full list of flags, see http://peter.sh/experiments/chromium-command-line-switches/.
     // Note: pwmetrics supports all flags from Lighthouse
+    showOutput: true // not required, set to false for pwmetrics not output any console.log messages
   },
   expectations: {
     // these expectations values are examples, for your cases set your own

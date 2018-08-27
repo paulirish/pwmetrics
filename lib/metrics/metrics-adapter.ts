@@ -1,15 +1,18 @@
 // Copyright 2016 Google Inc. All Rights Reserved.
 // Licensed under the Apache License, Version 2.0. See LICENSE
 
-import {getMessage} from '../utils/messages';
 import {MetricsResults, Timing} from '../../types/types';
+import {getMessage} from '../utils/messages';
+import Logger from '../utils/logger';
 import METRICS from './metrics';
+
+const logger = Logger.getInstance();
 
 const checkMetrics = (metrics: Record<string, LH.Audit.Result>) => {
   const errorMessage = metrics.errorMessage;
   const explanation = metrics.details.explanation;
   if (errorMessage)
-    console.log(`${errorMessage} \n ${explanation}`);
+    logger.log(`${errorMessage} \n ${explanation}`);
 };
 
 const getMetricTitle = (metricId) => {

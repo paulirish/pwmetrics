@@ -1,21 +1,23 @@
 // Copyright 2016 Google Inc. All Rights Reserved.
 // Licensed under the Apache License, Version 2.0. See LICENSE
 
+import Logger from './utils/logger';
+import {getAssertionMessage, getMessageWithPrefix} from './utils/messages';
 import {Timing, ExpectationMetrics, NormalizedExpectationMetrics} from '../types/types';
 
-import {getAssertionMessage, getMessageWithPrefix} from './utils/messages';
+const logger = Logger.getInstance();
 
 export const validateMetrics = (metrics: ExpectationMetrics) => {
   const metricsKeys = Object.keys(metrics);
 
   if (!metrics || !metricsKeys.length) {
-    console.error(getMessageWithPrefix('ERROR', 'NO_METRICS'));
+    logger.error(getMessageWithPrefix('ERROR', 'NO_METRICS'));
     process.exit(1);
   }
 
   metricsKeys.forEach(key => {
     if (!metrics[key] || !metrics[key].warn || !metrics[key].error) {
-      console.error(getMessageWithPrefix('ERROR', 'NO_EXPECTATION_ERROR', key));
+      logger.error(getMessageWithPrefix('ERROR', 'NO_EXPECTATION_ERROR', key));
       process.exit(1);
     }
   });
@@ -48,7 +50,7 @@ export const checkExpectations = (metricsData: Timing[], expectationMetrics: Nor
     }
 
     if (msg) {
-      console.log(msg);
+      logger.log(msg);
     }
   });
 };

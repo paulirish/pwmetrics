@@ -4,6 +4,7 @@
 const lighthouse = require('lighthouse/lighthouse-core');
 const parseChromeFlags = require('lighthouse/lighthouse-cli/run').parseChromeFlags;
 import {launch, LaunchedChrome} from 'chrome-launcher';
+import Logger from './utils/logger';
 import {FeatureFlags} from '../types/types';
 import {getMessage} from './utils/messages';
 
@@ -13,10 +14,12 @@ const MAX_LIGHTHOUSE_TRIES = 2;
 export class LHRunner {
   launcher: LaunchedChrome;
   tryLighthouseCounter: number;
+  logger: any;
 
   //@todo improve FeatureFlags -> LHFlags
   constructor(public url: string, public flags: FeatureFlags) {
     this.tryLighthouseCounter = 0;
+    this.logger = Logger.getInstance({showOutput: this.flags.showOutput});
   }
 
   async run(): Promise<LH.RunnerResult> {

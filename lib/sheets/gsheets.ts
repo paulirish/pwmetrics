@@ -7,6 +7,8 @@ const promisify = require('micro-promisify');
 const { getMessage } = require('../utils/messages');
 
 import { Oauth2Client, GSheetsAppendResultsOptions, GSheetsValuesToAppend } from '../../types/types';
+import Logger from '../utils/logger';
+const logger = Logger.getInstance();
 
 async function getRange(auth: Oauth2Client, range: number, spreadsheetId: string): Promise<Array<GSheetsValuesToAppend>> {
   try {
@@ -18,7 +20,7 @@ async function getRange(auth: Oauth2Client, range: number, spreadsheetId: string
     });
     return response.values;
   } catch(error) {
-    console.log(getMessage('G_SHEETS_API_ERROR', error));
+    logger.error(getMessage('G_SHEETS_API_ERROR', error));
     throw new Error(error);
   }
 }
@@ -35,7 +37,7 @@ async function appendResults(auth: Oauth2Client, valuesToAppend: Array<GSheetsVa
     const sheets = google.sheets('v4');
     // clone values to append
     const values = Object.assign([], valuesToAppend);
-    console.log(getMessage('G_SHEETS_APPENDING', formatValues(valuesToAppend)));
+    logger.log(getMessage('G_SHEETS_APPENDING', formatValues(valuesToAppend)));
 
     const response = await promisify(sheets.spreadsheets.values.append)({
       auth: auth,
@@ -47,9 +49,9 @@ async function appendResults(auth: Oauth2Client, valuesToAppend: Array<GSheetsVa
       },
     });
     const rangeValues: Array<GSheetsValuesToAppend> = await getRange(auth, response.updates.updatedRange, options.spreadsheetId);
-    console.log(getMessage('G_SHEETS_APPENDED', formatValues(rangeValues)));
+    logger.log(getMessage('G_SHEETS_APPENDED', formatValues(rangeValues)));
   } catch(error) {
-    console.log(getMessage('G_SHEETS_API_ERROR', error));
+    log.error(getMessage('G_SHEETS_API_ERROR', error));
     throw new Error(error);
   }
 }

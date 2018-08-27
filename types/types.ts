@@ -25,8 +25,9 @@ export interface FeatureFlags {
   expectations: Boolean;
   json: Boolean;
   chromeFlags: string;
-  chromePath?: string
+  chromePath?: string;
   port?: number;
+  showOutput: Boolean;
 }
 
 export interface MetricsResults {
@@ -107,6 +108,10 @@ export interface ChartOptions {
   xmin: number;
   xmax: number;
   lmargin: number;
+}
+
+export interface LoggerOptions {
+  showOutput: Boolean;
 }
 
 export interface LHFlags extends LH.Flags {
