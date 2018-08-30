@@ -3,7 +3,7 @@
 // Licensed under the Apache License, Version 2.0. See LICENSE
 'use strict';
 
-/* eslint-disable no-console */
+/* eslint-disable no-logger */
 const sysPath = require('path');
 const fs = require('fs');
 const yargs = require('yargs');
@@ -11,6 +11,9 @@ const yargs = require('yargs');
 const PWMetrics = require('../lib/index');
 const {getConfigFromFile} = require('../lib/utils/fs');
 const {getMessageWithPrefix, getMessage} = require('../lib/utils/messages');
+const Logger = require('../lib/utils/logger');
+const logger = Logger.getInstance();
+
 let config;
 
 const cliFlags = yargs
@@ -91,7 +94,7 @@ const writeToDisk = function(fileName, data) {
     const path = sysPath.join(process.cwd(), fileName);
     fs.writeFile(path, data, err => {
       if (err) reject(err);
-      console.log(getMessageWithPrefix('SUCCESS', 'SAVED_TO_JSON', path));
+      logger.log(getMessageWithPrefix('SUCCESS', 'SAVED_TO_JSON', path));
       resolve();
     });
   });
@@ -104,15 +107,16 @@ pwMetrics.start()
       // serialize accordingly
       data = JSON.stringify(data, null, 2) + '\n';
       // output to file.
-      if (options.flags.outputPath != 'stdout')
+      if (options.flags.outputPath != 'stdout') {
         return writeToDisk(options.flags.outputPath, data);
-      // output to stdout
-      else if (data)
+        // output to stdout
+      } else if (data) {
         process.stdout.write(data);
+      }
     }
   }).then(() => {
     process.exit(0);
   }).catch(err => {
-    console.error(err);
+    logger.error(err);
     process.exit(1);
   });

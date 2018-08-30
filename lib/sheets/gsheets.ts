@@ -51,7 +51,7 @@ async function appendResults(auth: Oauth2Client, valuesToAppend: Array<GSheetsVa
     const rangeValues: Array<GSheetsValuesToAppend> = await getRange(auth, response.updates.updatedRange, options.spreadsheetId);
     logger.log(getMessage('G_SHEETS_APPENDED', formatValues(rangeValues)));
   } catch(error) {
-    log.error(getMessage('G_SHEETS_API_ERROR', error));
+    logger.error(getMessage('G_SHEETS_API_ERROR', error));
     throw new Error(error);
   }
 }
