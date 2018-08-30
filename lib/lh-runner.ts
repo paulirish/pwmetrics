@@ -4,7 +4,7 @@
 const lighthouse = require('lighthouse/lighthouse-core');
 const parseChromeFlags = require('lighthouse/lighthouse-cli/run').parseChromeFlags;
 import {launch, LaunchedChrome} from 'chrome-launcher';
-import Logger from './utils/logger';
+import {Logger} from './utils/logger';
 import {FeatureFlags} from '../types/types';
 import {getMessage} from './utils/messages';
 

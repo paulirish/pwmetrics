@@ -7,7 +7,7 @@ const promisify = require('micro-promisify');
 const { getMessage } = require('../utils/messages');
 
 import { Oauth2Client, GSheetsAppendResultsOptions, GSheetsValuesToAppend } from '../../types/types';
-import Logger from '../utils/logger';
+import { Logger } from '../utils/logger';
 const logger = Logger.getInstance();
 
 async function getRange(auth: Oauth2Client, range: number, spreadsheetId: string): Promise<Array<GSheetsValuesToAppend>> {

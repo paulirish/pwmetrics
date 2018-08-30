@@ -1,5 +1,5 @@
 'use strict';
-const METRICS = require('../../lib/metrics/metrics').default;
+const {METRICS} = require('../../lib/metrics/metrics');
 const url = 'http://example.com/';
 
 exports.publicVariables = {

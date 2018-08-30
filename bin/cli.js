@@ -11,7 +11,7 @@ const yargs = require('yargs');
 const PWMetrics = require('../lib/index');
 const {getConfigFromFile} = require('../lib/utils/fs');
 const {getMessageWithPrefix, getMessage} = require('../lib/utils/messages');
-const Logger = require('../lib/utils/logger');
+const {Logger} = require('../lib/utils/logger');
 const logger = Logger.getInstance();
 
 let config;

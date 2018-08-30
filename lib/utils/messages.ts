@@ -1,6 +1,6 @@
 // Copyright 2016 Google Inc. All Rights Reserved.
 // Licensed under the Apache License, Version 2.0. See LICENSE
-import METRICS from '../metrics/metrics';
+import {METRICS} from '../metrics/metrics';
 
 const GREEN = '\x1B[32m';
 const YELLOW = '\x1b[33m';

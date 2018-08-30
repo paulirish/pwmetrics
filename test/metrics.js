@@ -2,7 +2,7 @@
 // Licensed under the Apache License, Version 2.0. See LICENSE
 'use strict';
 
-const adaptMetricsData = require('../lib/metrics/metrics-adapter').adaptMetricsData;
+const {adaptMetricsData} = require('../lib/metrics/metrics-adapter');
 
 const events = require('./fixtures/events.json');
 const metricsResults = require('./fixtures/metrics-results.json');

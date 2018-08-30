@@ -4,8 +4,8 @@
 const opn = require('opn');
 const path = require('path');
 
-import METRICS from './metrics/metrics';
-import Logger from './utils/logger';
+import {METRICS} from './metrics/metrics';
+import {Logger} from './utils/logger';
 import {LHRunner} from './lh-runner';
 import {Sheets} from './sheets';
 import {adaptMetricsData} from './metrics/metrics-adapter';

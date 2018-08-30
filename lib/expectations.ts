@@ -1,7 +1,7 @@
 // Copyright 2016 Google Inc. All Rights Reserved.
 // Licensed under the Apache License, Version 2.0. See LICENSE
 
-import Logger from './utils/logger';
+import {Logger} from './utils/logger';
 import {getAssertionMessage, getMessageWithPrefix} from './utils/messages';
 import {Timing, ExpectationMetrics, NormalizedExpectationMetrics} from '../types/types';
 

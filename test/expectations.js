@@ -2,10 +2,12 @@
 // Licensed under the Apache License, Version 2.0. See LICENSE
 'use strict';
 
+const {Logger} = require('../lib/utils/logger');
 const expectations = require('../lib/expectations');
-const timings = require('./fixtures/metrics-results.json').timings;
-const normalizedExpectations = require('./fixtures/mocks').normalizedExpectations;
+const {timings} = require('./fixtures/metrics-results.json');
+const {normalizedExpectations} = require('./fixtures/mocks');
 const expectationsData = require('./fixtures/run-expectations').expectations;
+const logger = Logger.getInstance();
 
 /* eslint-env mocha */
 /* eslint-disable no-unused-expressions, no-console */
@@ -14,10 +16,10 @@ describe('Expectations', () => {
     let logSpy;
 
     beforeEach(() => {
-      logSpy = sinon.spy(console, 'log');
+      logSpy = sinon.spy(logger, 'log');
     });
     afterEach(() => {
-      console.log.restore();
+      logger.log.restore();
     });
 
     it('should normalize expectation', () => {

@@ -3,8 +3,8 @@
 
 import {MetricsResults, Timing} from '../../types/types';
 import {getMessage} from '../utils/messages';
-import Logger from '../utils/logger';
-import METRICS from './metrics';
+import {Logger} from '../utils/logger';
+import {METRICS} from './metrics';
 
 const logger = Logger.getInstance();
 

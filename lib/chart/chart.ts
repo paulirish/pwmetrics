@@ -2,7 +2,7 @@ const wunderbar = require('@gribnoysup/wunderbar');
 const eol = require('os').EOL;
 
 import {Timing, ChartOptions} from '../../types/types';
-import Logger from '../utils/logger';
+import {Logger} from '../utils/logger';
 const logger = Logger.getInstance();
 
 export const drawChart = (timings: Timing[], options: ChartOptions) => {

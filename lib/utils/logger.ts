@@ -1,6 +1,6 @@
 import { LoggerOptions} from '../../types/types';
 
-class Logger {
+export class Logger {
   static options: LoggerOptions = {
     showOutput: true
   };
@@ -26,5 +26,3 @@ class Logger {
     }
   }
 }
-
-export default Logger;

@@ -5,7 +5,7 @@
 /* eslint-disable no-console */
 const gulp = require('gulp');
 const PWMetrics = require('../../lib/');
-const METRICS = require('../../lib/metrics/metrics').default;
+const METRICS = require('../../lib/metrics/metrics');
 
 /**
  * Run pwmetrics
@@ -16,7 +16,7 @@ const runPwmetrics = function() {
     flags: {
       runs: 3,
       expectations: true,
-      chromeFlags: '--disable-gpu --headless --enable-logging --no-sandbox',
+      chromeFlags: '--headless --enable-logging --no-sandbox',
     },
     expectations: {
       [METRICS.TTFMP]: {

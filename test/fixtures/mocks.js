@@ -1,7 +1,7 @@
 'use strict';
 
 const lighthouseVersion = require('lighthouse/package.json').version;
-const METRICS = require('../../lib/metrics/metrics').default;
+const {METRICS} = require('../../lib/metrics/metrics');
 const url = 'http://example.com/';
 
 exports.metricsResult = {
