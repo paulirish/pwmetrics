@@ -22,7 +22,7 @@
     "chrome-launcher": "^0.10.2",
     "google-auth-library": "^0.10.0",
     "googleapis": "^16.0.0",
-    "lighthouse": "3.0.3",
+    "lighthouse": "^3.0.3",
     "micro-promisify": "^0.1.1",
     "readline-sync": "^1.4.6",
     "yargs": "^6.6.0"
@@ -35,8 +35,7 @@
     "mocha": "^3.2.0",
     "sinon": "^1.17.7",
     "sinon-chai": "^2.8.0",
-    "typescript": "3.0.1",
-    "vscode-chrome-debug-core": "3.23.8"
+    "typescript": "3.0.1"
   },
   "repository": {
     "type": "git",

@@ -32,10 +32,6 @@
   version "0.0.28"
   resolved "https://registry.yarnpkg.com/@types/rimraf/-/rimraf-0.0.28.tgz#5562519bc7963caca8abf7f128cae3b594d41d06"
 
-"@types/source-map@^0.1.27":
-  version "0.1.29"
-  resolved "https://registry.yarnpkg.com/@types/source-map/-/source-map-0.1.29.tgz#d7048a60180b09f8aa6d53bda311c6b51cbd7018"
-
 acorn-jsx@^3.0.0:
   version "3.0.1"
   resolved "https://registry.yarnpkg.com/acorn-jsx/-/acorn-jsx-3.0.1.tgz#afdf9488fb1ecefc8348f6fb22f464e32a58b36b"
@@ -781,8 +777,8 @@ esprima@^3.1.1:
   resolved "https://registry.yarnpkg.com/esprima/-/esprima-3.1.3.tgz#fdca51cee6133895e3c88d535ce49dbff62a4633"
 
 esprima@^4.0.0:
-  version "4.0.0"
-  resolved "https://registry.yarnpkg.com/esprima/-/esprima-4.0.0.tgz#4499eddcd1110e0b218bacf2fa7f7f59f55ca804"
+  version "4.0.1"
+  resolved "https://registry.yarnpkg.com/esprima/-/esprima-4.0.1.tgz#13b04cdb3e6c5d19df91ab6987a8695619b0aa71"
 
 esrecurse@^4.1.0:
   version "4.1.0"
@@ -1085,7 +1081,7 @@ glob@^4.3.1:
     minimatch "^2.0.1"
     once "^1.3.0"
 
-glob@^7.0.5, glob@^7.0.6:
+glob@^7.0.5:
   version "7.1.2"
   resolved "https://registry.yarnpkg.com/glob/-/glob-7.1.2.tgz#c19c9df9a028702d678612384a6552404c636d15"
   dependencies:
@@ -1737,7 +1733,7 @@ lighthouse-logger@^1.0.0:
   dependencies:
     debug "^2.6.8"
 
-lighthouse@3.0.3:
+lighthouse@^3.0.3:
   version "3.0.3"
   resolved "https://registry.yarnpkg.com/lighthouse/-/lighthouse-3.0.3.tgz#7a15e1ef717ffed1450ff789c8e1fbbde597f566"
   dependencies:
@@ -2115,13 +2111,18 @@ node-forge@^0.6.46:
   version "0.6.49"
   resolved "https://registry.yarnpkg.com/node-forge/-/node-forge-0.6.49.tgz#f1ee95d5d74623938fe19d698aa5a26d54d2f60f"
 
-noice-json-rpc@1.0.1:
-  version "1.0.1"
-  resolved "https://registry.yarnpkg.com/noice-json-rpc/-/noice-json-rpc-1.0.1.tgz#5e7289a60a1c20880489cb15101552bac392266e"
-
-normalize-package-data@^2.3.2, normalize-package-data@^2.3.4:
+normalize-package-data@^2.3.2:
   version "2.3.5"
   resolved "https://registry.yarnpkg.com/normalize-package-data/-/normalize-package-data-2.3.5.tgz#8d924f142960e1777e7ffe170543631cc7cb02df"
+  dependencies:
+    hosted-git-info "^2.1.4"
+    is-builtin-module "^1.0.0"
+    semver "2 || 3 || 4 || 5"
+    validate-npm-package-license "^3.0.1"
+
+normalize-package-data@^2.3.4:
+  version "2.4.0"
+  resolved "https://registry.yarnpkg.com/normalize-package-data/-/normalize-package-data-2.4.0.tgz#12f95a307d58352075a04907b84ac8be98ac012f"
   dependencies:
     hosted-git-info "^2.1.4"
     is-builtin-module "^1.0.0"
@@ -2698,10 +2699,6 @@ sntp@1.x.x:
   dependencies:
     hoek "2.x.x"
 
-source-map@^0.6.1:
-  version "0.6.1"
-  resolved "https://registry.yarnpkg.com/source-map/-/source-map-0.6.1.tgz#74722af32e9614e9c287a8d0bbde48b5e2f1a263"
-
 sparkles@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/sparkles/-/sparkles-1.0.0.tgz#1acbbfb592436d10bbe8f785b7cc6f82815012c3"
@@ -3076,34 +3073,6 @@ vinyl@^0.5.0:
     clone-stats "^0.0.1"
     replace-ext "0.0.1"
 
-vscode-chrome-debug-core@3.23.8:
-  version "3.23.8"
-  resolved "https://registry.yarnpkg.com/vscode-chrome-debug-core/-/vscode-chrome-debug-core-3.23.8.tgz#f0fd1582b6d7653d327171104b9c8e2eebb6bf41"
-  dependencies:
-    "@types/source-map" "^0.1.27"
-    glob "^7.0.6"
-    noice-json-rpc "1.0.1"
-    source-map "^0.6.1"
-    vscode-debugadapter "^1.28.0-pre.2"
-    vscode-debugprotocol "^1.28.0-pre.1"
-    vscode-nls "^3.2.1"
-    ws "^3.3.2"
-
-vscode-debugadapter@^1.28.0-pre.2:
-  version "1.31.0"
-  resolved "https://registry.yarnpkg.com/vscode-debugadapter/-/vscode-debugadapter-1.31.0.tgz#f0f9183a5dccfb3da912f28fb3f1d0b14fec34f3"
-  dependencies:
-    mkdirp "^0.5.1"
-    vscode-debugprotocol "1.31.0"
-
-vscode-debugprotocol@1.31.0, vscode-debugprotocol@^1.28.0-pre.1:
-  version "1.31.0"
-  resolved "https://registry.yarnpkg.com/vscode-debugprotocol/-/vscode-debugprotocol-1.31.0.tgz#8467eeabeea65f52da5ac03b03c18e10e8b95eb4"
-
-vscode-nls@^3.2.1:
-  version "3.2.4"
-  resolved "https://registry.yarnpkg.com/vscode-nls/-/vscode-nls-3.2.4.tgz#2166b4183c8aea884d20727f5449e62be69fd398"
-
 wcwidth@^1.0.1:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/wcwidth/-/wcwidth-1.0.1.tgz#f0b0dcf915bc5ff1528afadb2c0e17b532da2fe8"
@@ -3170,14 +3139,6 @@ write@^0.2.1:
 ws@3.3.2:
   version "3.3.2"
   resolved "https://registry.yarnpkg.com/ws/-/ws-3.3.2.tgz#96c1d08b3fefda1d5c1e33700d3bfaa9be2d5608"
-  dependencies:
-    async-limiter "~1.0.0"
-    safe-buffer "~5.1.0"
-    ultron "~1.1.0"
-
-ws@^3.3.2:
-  version "3.3.3"
-  resolved "https://registry.yarnpkg.com/ws/-/ws-3.3.3.tgz#f1cf84fe2d5e901ebce94efaece785f187a228f2"
   dependencies:
     async-limiter "~1.0.0"
     safe-buffer "~5.1.0"
