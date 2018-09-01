@@ -5,7 +5,7 @@
 /* eslint-disable no-console */
 const gulp = require('gulp');
 const PWMetrics = require('../../lib/');
-const METRICS = require('../../lib/metrics/metrics');
+const {METRICS} = require('../../lib/metrics/metrics');
 
 /**
  * Run pwmetrics
