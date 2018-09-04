@@ -71,17 +71,11 @@ class PWMetrics {
     const runs = Array.apply(null, {length: +this.runs}).map(Number.call, Number);
     let metricsResults: MetricsResults[] = [];
 
-    let resultHasExpectationErrors = false;
-
     for (let runIndex of runs) {
       try {
         const lhRunner = new LHRunner(this.url, this.flags);
         const lhTrace = await lhRunner.run();
-        const currentMetricResult: MetricsResults = await this.recordLighthouseTrace(lhTrace);
-        if (!resultHasExpectationErrors && this.flags.expectations) {
-          resultHasExpectationErrors = this.resultHasExpectationErrors(currentMetricResult);
-        }
-        metricsResults[runIndex] = currentMetricResult;
+        metricsResults[runIndex] = await this.recordLighthouseTrace(lhTrace);
         this.logger.log(getMessageWithPrefix('SUCCESS', 'SUCCESS_RUN', runIndex, runs.length));
       } catch (error) {
         metricsResults[runIndex] = error;
@@ -90,26 +84,28 @@ class PWMetrics {
     }
 
     const results: PWMetricsResults = {runs: metricsResults.filter(r => !(r instanceof Error))};
-    if (results.runs.length > 0) {
-      if (this.runs > 1 && !this.flags.submit) {
-        results.median = this.findMedianRun(results.runs);
-        this.logger.log(getMessage('MEDIAN_RUN'));
-        this.displayOutput(results.median);
-      } else if (this.flags.submit) {
-        const sheets = new Sheets(this.sheets, this.clientSecret);
-        await sheets.appendResults(results.runs);
-      }
+    if (this.runs > 1 && !this.flags.submit) {
+      results.median = this.findMedianRun(results.runs);
+      this.logger.log(getMessage('MEDIAN_RUN'));
+      this.displayOutput(results.median);
+    } else if (this.flags.submit) {
+      const sheets = new Sheets(this.sheets, this.clientSecret);
+      await sheets.appendResults(results.runs);
     }
 
-    if (resultHasExpectationErrors && this.flags.expectations) {
-      this.logger.error(getMessage('HAS_EXPECTATION_ERRORS'));
+    if (this.flags.expectations) {
+      const resultsToCompare = this.runs > 1 ? results.median.timings : results[0].timings;
+      if (this.resultHasExpectationErrors(resultsToCompare)) {
+        checkExpectations(resultsToCompare, this.normalizedExpectations);
+        this.logger.error(getMessage('HAS_EXPECTATION_ERRORS'));
+      }
     }
 
     return results;
   }
 
-  resultHasExpectationErrors(metrics: MetricsResults): boolean {
-    return metrics.timings.some((timing: Timing) => {
+  resultHasExpectationErrors(timings: Timing[]): boolean {
+    return timings.some((timing: Timing) => {
       const expectation = this.normalizedExpectations[timing.id];
       if (!expectation) {
         return false;
@@ -130,10 +126,6 @@ class PWMetrics {
 
       if (!this.flags.submit && this.runs <= 1) {
         this.displayOutput(preparedData);
-      }
-
-      if (this.flags.expectations) {
-        checkExpectations(preparedData.timings, this.normalizedExpectations);
       }
 
       return preparedData;
