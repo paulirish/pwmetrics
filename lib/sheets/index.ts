@@ -8,7 +8,7 @@ import * as gsheets  from './gsheets';
 
 // @todo add 'import' after moving all stuff to typescript
 const { getMessage } = require('../utils/messages');
-const METRICS = require('../metrics/metrics');
+const { METRICS } = require('../metrics/metrics');
 
 const SHEET_TYPES = {
   'GOOGLE_SHEETS': 'GOOGLE_SHEETS'
