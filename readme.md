@@ -212,7 +212,7 @@ Submit results to Google Sheets
 
 *Instructions:*
 
-- Copy [this spreadsheet](https://docs.google.com/spreadsheets/d/14DXR9x267fOftf7sYFuUlT3djChSl6PNuPBvUD4h9Rw/edit).
+- Copy [this spreadsheet](https://docs.google.com/spreadsheets/d/17jgt_uKxm4WvROmKMfSDzhdCAstNvyaiDP_k2XqzgD0).
 - Copy the ID of the spreadsheet into the config as value of `sheets.options.spreadsheetId` property.
 - Setup Google Developer project and get credentials. ([everything in step 1 here](https://developers.google.com/sheets/api/quickstart/nodejs#step_1_turn_on_the_api_name))
 - Take a `client_secret` and put it into the config as value of `clientSecret` property.
