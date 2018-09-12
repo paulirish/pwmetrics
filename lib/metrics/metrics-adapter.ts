@@ -28,7 +28,8 @@ export const adaptMetricsData = (res: LH.Result): MetricsResults => {
 
   // has to be Record<string, LH.Audit.Result>
   const metricsAudit:any = auditResults.metrics;
-  if (!metricsAudit || !metricsAudit.details || !metricsAudit.details.items) return;
+  if (!metricsAudit || !metricsAudit.details || !metricsAudit.details.items)
+    throw new Error('No metrics data');
 
   const metricsValues = metricsAudit.details.items[0];
 
