@@ -2,10 +2,10 @@ const wunderbar = require('@gribnoysup/wunderbar');
 const eol = require('os').EOL;
 
 import {Timing, ChartOptions} from '../../types/types';
-const Logger = require('../utils/logger');
+import {Logger} from '../utils/logger';
 const logger = Logger.getInstance();
 
-const drawChart = (timings: Timing[], options: ChartOptions) => {
+export const drawChart = (timings: Timing[], options: ChartOptions) => {
   const {lmargin, width, xlabel, xmin, xmax} = options;
 
   const normalizedTimings = timings.map(value => {
@@ -53,5 +53,3 @@ const drawChart = (timings: Timing[], options: ChartOptions) => {
   logger.log([chartTop, chart, chartBottom, chartScale].join(eol));
   logger.log('');
 };
-
-module.exports = drawChart;

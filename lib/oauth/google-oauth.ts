@@ -10,7 +10,7 @@ const readlineSync = require('readline-sync');
 const { getMessage } = require('../utils/messages');
 
 import { AuthorizeCredentials, Oauth2Client } from '../../types/types';
-const Logger = require('../utils/logger');
+import {Logger} from '../utils/logger';
 const logger = Logger.getInstance();
 
 /* improve the bad polyfill that devtools-frontend did */

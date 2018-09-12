@@ -5,9 +5,9 @@ const google = require('googleapis');
 const promisify = require('micro-promisify');
 
 import { Oauth2Client, AuthorizeCredentials, DriveResponse } from '../../types/types';
+import { Logger } from '../utils/logger';
 const GoogleOauth = require('../oauth/google-oauth');
 const messages = require('../utils/messages');
-const Logger = require('../utils/logger');
 const logger = Logger.getInstance();
 
 class GDrive {

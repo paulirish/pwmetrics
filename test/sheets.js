@@ -2,7 +2,7 @@
 // Licensed under the Apache License, Version 2.0. See LICENSE
 'use strict';
 
-const Sheets = require('../lib/sheets');
+const Sheets = require('../lib/sheets').Sheets;
 const {getMessage} = require('../lib/utils/messages');
 
 const runOptions = require('./fixtures/run-options');

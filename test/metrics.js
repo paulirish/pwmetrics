@@ -2,7 +2,7 @@
 // Licensed under the Apache License, Version 2.0. See LICENSE
 'use strict';
 
-const metrics = require('../lib/metrics');
+const {adaptMetricsData} = require('../lib/metrics/metrics-adapter');
 
 const events = require('./fixtures/events.json');
 const metricsResults = require('./fixtures/metrics-results.json');
@@ -21,14 +21,15 @@ describe('Metrics', () => {
 
   describe('prepareData', () => {
     it('should prepare data', () => {
-      expect(metrics.prepareData(events)).to.be.deep.equal(metricsResults);
+      expect(adaptMetricsData(events)).to.be.deep.equal(metricsResults);
     });
 
     it('should log error if audit has debugString', () => {
-      const eventsWithDebugString = Object.assign({}, events);
-      eventsWithDebugString.audits['first-meaningful-paint'].debugString = 'Cannot read property \'ts\' of undefined';
-      metrics.prepareData(events);
-      expect(logSpy).to.be.calledWith('Cannot read property \'ts\' of undefined Audit key: first-meaningful-paint');
+      const {audits} = events;
+      audits.metrics.errorMessage = 'Cannot read property \'ts\' of undefined';
+      audits.metrics.details.explanation = 'Explanation of error';
+      adaptMetricsData(events);
+      expect(logSpy).to.be.calledWith('Cannot read property \'ts\' of undefined \n Explanation of error');
     });
   });
 });

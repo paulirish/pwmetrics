@@ -1,9 +1,9 @@
 import { LoggerOptions} from '../../types/types';
 
-class Logger {
+export class Logger {
   static options: LoggerOptions = {
     showOutput: true
-  }
+  };
   private static instance: Logger;
 
   constructor() {}
@@ -26,5 +26,3 @@ class Logger {
     }
   }
 }
-
-module.exports = Logger;

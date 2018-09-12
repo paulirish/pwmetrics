@@ -1,56 +1,38 @@
 {
-  "timings": [{
-    "title": "First Contentful Paint",
-    "id": "ttfcp",
-    "timestamp": 82750857804,
-    "timing": 838.263,
-    "color": "green"
-  }, {
-    "title": "First Meaningful Paint",
-    "id": "ttfmp",
-    "timestamp": 82750857814,
-    "timing": 838.273,
-    "color": "green"
-  }, {
-    "title": "Perceptual Speed Index",
-    "id": "psi",
-    "timestamp": 82750873600,
-    "timing": 854.059,
-    "color": "blue"
-  }, {
-    "title": "First Visual Change",
-    "id": "fv",
-    "timestamp": 82750873541,
-    "timing": 854,
-    "color": "blue"
-  }, {
-    "title": "Visually Complete 85%",
-    "id": "vc85",
-    "timestamp": 82750873600,
-    "timing": 854.059,
-    "color": "blue"
-  }, {
-    "title": "Visually Complete 100%",
-    "id": "vc100",
-    "timestamp": 82750873541,
-    "timing": 854,
-    "color": "blue"
-  }, {
-    "title": "First Interactive (vBeta)",
-    "id": "ttfi",
-    "timestamp": 82750859471,
-    "timing": 839.93,
-    "color": "yellow"
-  }, {
-    "title": "Time to Consistently Interactive (vBeta)",
-    "id": "ttci",
-    "timestamp": 82750859471,
-    "timing": 839.93,
-    "color": "yellow"
-  }],
-  "timestamps": [{"title": "Navigation Start", "id": "navstart", "timestamp": 82750019541}],
-  "generatedTime": "2017-05-17T11:50:08.096Z",
-  "lighthouseVersion": "2.0.0-alpha.7",
-  "initialUrl": "http://example.com",
-  "url": "http://example.com/"
+  "timings": [
+    {
+      "title": "First Contentful Paint",
+      "id": "firstContentfulPaint",
+      "timing": 4180,
+      "color": "green"
+    },
+    {
+      "title": "First Meaningful Paint",
+      "id": "firstMeaningfulPaint",
+      "timing": 4180,
+      "color": "green"
+    },
+    {
+      "title": "First CPU Idle",
+      "id": "firstCPUIdle",
+      "timing": 4180,
+      "color": "yellow"
+    },
+    {
+      "title": "Time to Interactive",
+      "id": "interactive",
+      "timing": 4180,
+      "color": "yellow"
+    },
+    {
+      "title": "Speed Index",
+      "id": "speedIndex",
+      "timing": 4329,
+      "color": "blue"
+    }
+  ],
+  "generatedTime": "2018-08-27T20:53:51.206Z",
+  "lighthouseVersion": "3.0.3",
+  "requestedUrl": "http://paulirish.com/",
+  "finalUrl": "https://www.paulirish.com/"
 }

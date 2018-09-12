@@ -1,549 +1,148 @@
 {
-  "lighthouseVersion": "2.0.0-alpha.7",
-  "generatedTime": "2017-05-17T11:50:08.096Z",
-  "initialUrl": "http://example.com",
-  "url": "http://example.com/",
+  "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/70.0.3534.0 Safari/537.36",
+  "lighthouseVersion": "3.0.3",
+  "fetchTime": "2018-08-27T20:53:51.206Z",
+  "requestedUrl": "http://paulirish.com/",
+  "finalUrl": "https://www.paulirish.com/",
+  "runWarnings": [],
   "audits": {
-    "first-meaningful-paint": {
-      "score": 100,
-      "displayValue": "838.3ms",
-      "rawValue": 838.3,
-      "optimalValue": "< 1,600 ms",
-      "extendedInfo": {
-        "value": {
-          "timestamps": {
-            "navStart": 82750019541,
-            "fCP": 82750857804,
-            "fMP": 82750857814,
-            "onLoad": 82750693281,
-            "endOfTrace": 82757534802
-          }, "timings": {"navStart": 0, "fCP": 838.263, "fMP": 838.273, "onLoad": 673.74, "endOfTrace": 7515.261}
-        }, "formatter": "null"
-      },
-      "scoringMode": "numeric",
-      "name": "first-meaningful-paint",
-      "category": "Performance",
-      "description": "First meaningful paint",
-      "helpText": "First meaningful paint measures when the primary content of a page is visible. [Learn more](https://developers.google.com/web/tools/lighthouse/audits/first-meaningful-paint)."
-    },
-    "speed-index-metric": {
-      "score": 100,
-      "displayValue": "854",
-      "rawValue": 854,
-      "optimalValue": "< 1,250",
-      "extendedInfo": {
-        "formatter": "speedline",
-        "value": {
-          "timings": {
-            "firstVisualChange": 854,
-            "visuallyReady": 854.0590000003576,
-            "visuallyComplete": 854,
-            "speedIndex": 854.0590000003576,
-            "perceptualSpeedIndex": 854.0590000003576
-          },
-          "timestamps": {
-            "firstVisualChange": 82750873541,
-            "visuallyReady": 82750873600,
-            "visuallyComplete": 82750873541,
-            "speedIndex": 82750873600,
-            "perceptualSpeedIndex": 82750873600
-          },
-          "frames": [{"timestamp": 82750019.541, "progress": 0}, {"timestamp": 82750873.6, "progress": 100}]
-        }
-      },
-      "scoringMode": "numeric",
-      "name": "speed-index-metric",
-      "category": "Performance",
-      "description": "Perceptual Speed Index",
-      "helpText": "Speed Index shows how quickly the contents of a page are visibly populated. [Learn more](https://developers.google.com/web/tools/lighthouse/audits/speed-index)."
-    },
-    "screenshot-thumbnails": {
-      "score": 100,
-      "displayValue": "true",
-      "rawValue": true,
-      "scoringMode": "binary",
-      "informative": true,
-      "name": "screenshot-thumbnails",
-      "category": "Images",
-      "description": "Screenshot Thumbnails",
-      "helpText": "This is what the load of your site looked like.",
+    "metrics": {
+      "id": "metrics",
+      "title": "Metrics",
+      "description": "Collects all available metrics.",
+      "score": null,
+      "scoreDisplayMode": "informative",
+      "rawValue": 4179.649,
       "details": {
-        "type": "filmstrip",
-        "scale": 854,
-        "items": [{
-          "timing": 85,
-          "timestamp": 82750104941,
-          "data": "/9j/4AAQSkZJRgABAQAAAQABAAD/2wCEAAMCAgMCAgMDAwMEAwMEBQgFBQQEBQoHBwYIDAoMDAsKCwsNDhIQDQ4RDgsLEBYQERMUFRUVDA8XGBYUGBIUFRQBAwQEBQQFCQUFCRQNCw0UFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFP/AABEIAGoAPAMBEQACEQEDEQH/xAGiAAABBQEBAQEBAQAAAAAAAAAAAQIDBAUGBwgJCgsQAAIBAwMCBAMFBQQEAAABfQECAwAEEQUSITFBBhNRYQcicRQygZGhCCNCscEVUtHwJDNicoIJChYXGBkaJSYnKCkqNDU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6g4SFhoeIiYqSk5SVlpeYmZqio6Slpqeoqaqys7S1tre4ubrCw8TFxsfIycrS09TV1tfY2drh4uPk5ebn6Onq8fLz9PX29/j5+gEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoLEQACAQIEBAMEBwUEBAABAncAAQIDEQQFITEGEkFRB2FxEyIygQgUQpGhscEJIzNS8BVictEKFiQ04SXxFxgZGiYnKCkqNTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqCg4SFhoeIiYqSk5SVlpeYmZqio6Slpqeoqaqys7S1tre4ubrCw8TFxsfIycrS09TV1tfY2dri4+Tl5ufo6ery8/T19vf4+fr/2gAMAwEAAhEDEQA/AP1ToAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoA//Z"
-        }, {
-          "timing": 171,
-          "timestamp": 82750190340.99998,
-          "data": "/9j/4AAQSkZJRgABAQAAAQABAAD/2wCEAAMCAgMCAgMDAwMEAwMEBQgFBQQEBQoHBwYIDAoMDAsKCwsNDhIQDQ4RDgsLEBYQERMUFRUVDA8XGBYUGBIUFRQBAwQEBQQFCQUFCRQNCw0UFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFP/AABEIAGoAPAMBEQACEQEDEQH/xAGiAAABBQEBAQEBAQAAAAAAAAAAAQIDBAUGBwgJCgsQAAIBAwMCBAMFBQQEAAABfQECAwAEEQUSITFBBhNRYQcicRQygZGhCCNCscEVUtHwJDNicoIJChYXGBkaJSYnKCkqNDU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6g4SFhoeIiYqSk5SVlpeYmZqio6Slpqeoqaqys7S1tre4ubrCw8TFxsfIycrS09TV1tfY2drh4uPk5ebn6Onq8fLz9PX29/j5+gEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoLEQACAQIEBAMEBwUEBAABAncAAQIDEQQFITEGEkFRB2FxEyIygQgUQpGhscEJIzNS8BVictEKFiQ04SXxFxgZGiYnKCkqNTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqCg4SFhoeIiYqSk5SVlpeYmZqio6Slpqeoqaqys7S1tre4ubrCw8TFxsfIycrS09TV1tfY2dri4+Tl5ufo6ery8/T19vf4+fr/2gAMAwEAAhEDEQA/AP1ToAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoA//Z"
-        }, {
-          "timing": 256,
-          "timestamp": 82750275741,
-          "data": "/9j/4AAQSkZJRgABAQAAAQABAAD/2wCEAAMCAgMCAgMDAwMEAwMEBQgFBQQEBQoHBwYIDAoMDAsKCwsNDhIQDQ4RDgsLEBYQERMUFRUVDA8XGBYUGBIUFRQBAwQEBQQFCQUFCRQNCw0UFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFP/AABEIAGoAPAMBEQACEQEDEQH/xAGiAAABBQEBAQEBAQAAAAAAAAAAAQIDBAUGBwgJCgsQAAIBAwMCBAMFBQQEAAABfQECAwAEEQUSITFBBhNRYQcicRQygZGhCCNCscEVUtHwJDNicoIJChYXGBkaJSYnKCkqNDU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6g4SFhoeIiYqSk5SVlpeYmZqio6Slpqeoqaqys7S1tre4ubrCw8TFxsfIycrS09TV1tfY2drh4uPk5ebn6Onq8fLz9PX29/j5+gEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoLEQACAQIEBAMEBwUEBAABAncAAQIDEQQFITEGEkFRB2FxEyIygQgUQpGhscEJIzNS8BVictEKFiQ04SXxFxgZGiYnKCkqNTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqCg4SFhoeIiYqSk5SVlpeYmZqio6Slpqeoqaqys7S1tre4ubrCw8TFxsfIycrS09TV1tfY2dri4+Tl5ufo6ery8/T19vf4+fr/2gAMAwEAAhEDEQA/AP1ToAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoA//Z"
-        }, {
-          "timing": 342,
-          "timestamp": 82750361140.99998,
-          "data": "/9j/4AAQSkZJRgABAQAAAQABAAD/2wCEAAMCAgMCAgMDAwMEAwMEBQgFBQQEBQoHBwYIDAoMDAsKCwsNDhIQDQ4RDgsLEBYQERMUFRUVDA8XGBYUGBIUFRQBAwQEBQQFCQUFCRQNCw0UFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFP/AABEIAGoAPAMBEQACEQEDEQH/xAGiAAABBQEBAQEBAQAAAAAAAAAAAQIDBAUGBwgJCgsQAAIBAwMCBAMFBQQEAAABfQECAwAEEQUSITFBBhNRYQcicRQygZGhCCNCscEVUtHwJDNicoIJChYXGBkaJSYnKCkqNDU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6g4SFhoeIiYqSk5SVlpeYmZqio6Slpqeoqaqys7S1tre4ubrCw8TFxsfIycrS09TV1tfY2drh4uPk5ebn6Onq8fLz9PX29/j5+gEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoLEQACAQIEBAMEBwUEBAABAncAAQIDEQQFITEGEkFRB2FxEyIygQgUQpGhscEJIzNS8BVictEKFiQ04SXxFxgZGiYnKCkqNTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqCg4SFhoeIiYqSk5SVlpeYmZqio6Slpqeoqaqys7S1tre4ubrCw8TFxsfIycrS09TV1tfY2dri4+Tl5ufo6ery8/T19vf4+fr/2gAMAwEAAhEDEQA/AP1ToAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoA//Z"
-        }, {
-          "timing": 427,
-          "timestamp": 82750446541,
-          "data": "/9j/4AAQSkZJRgABAQAAAQABAAD/2wCEAAMCAgMCAgMDAwMEAwMEBQgFBQQEBQoHBwYIDAoMDAsKCwsNDhIQDQ4RDgsLEBYQERMUFRUVDA8XGBYUGBIUFRQBAwQEBQQFCQUFCRQNCw0UFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFP/AABEIAGoAPAMBEQACEQEDEQH/xAGiAAABBQEBAQEBAQAAAAAAAAAAAQIDBAUGBwgJCgsQAAIBAwMCBAMFBQQEAAABfQECAwAEEQUSITFBBhNRYQcicRQygZGhCCNCscEVUtHwJDNicoIJChYXGBkaJSYnKCkqNDU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6g4SFhoeIiYqSk5SVlpeYmZqio6Slpqeoqaqys7S1tre4ubrCw8TFxsfIycrS09TV1tfY2drh4uPk5ebn6Onq8fLz9PX29/j5+gEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoLEQACAQIEBAMEBwUEBAABAncAAQIDEQQFITEGEkFRB2FxEyIygQgUQpGhscEJIzNS8BVictEKFiQ04SXxFxgZGiYnKCkqNTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqCg4SFhoeIiYqSk5SVlpeYmZqio6Slpqeoqaqys7S1tre4ubrCw8TFxsfIycrS09TV1tfY2dri4+Tl5ufo6ery8/T19vf4+fr/2gAMAwEAAhEDEQA/AP1ToAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoA//Z"
-        }, {
-          "timing": 512,
-          "timestamp": 82750531941,
-          "data": "/9j/4AAQSkZJRgABAQAAAQABAAD/2wCEAAMCAgMCAgMDAwMEAwMEBQgFBQQEBQoHBwYIDAoMDAsKCwsNDhIQDQ4RDgsLEBYQERMUFRUVDA8XGBYUGBIUFRQBAwQEBQQFCQUFCRQNCw0UFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFP/AABEIAGoAPAMBEQACEQEDEQH/xAGiAAABBQEBAQEBAQAAAAAAAAAAAQIDBAUGBwgJCgsQAAIBAwMCBAMFBQQEAAABfQECAwAEEQUSITFBBhNRYQcicRQygZGhCCNCscEVUtHwJDNicoIJChYXGBkaJSYnKCkqNDU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6g4SFhoeIiYqSk5SVlpeYmZqio6Slpqeoqaqys7S1tre4ubrCw8TFxsfIycrS09TV1tfY2drh4uPk5ebn6Onq8fLz9PX29/j5+gEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoLEQACAQIEBAMEBwUEBAABAncAAQIDEQQFITEGEkFRB2FxEyIygQgUQpGhscEJIzNS8BVictEKFiQ04SXxFxgZGiYnKCkqNTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqCg4SFhoeIiYqSk5SVlpeYmZqio6Slpqeoqaqys7S1tre4ubrCw8TFxsfIycrS09TV1tfY2dri4+Tl5ufo6ery8/T19vf4+fr/2gAMAwEAAhEDEQA/AP1ToAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoA//Z"
-        }, {
-          "timing": 598,
-          "timestamp": 82750617340.99998,
-          "data": "/9j/4AAQSkZJRgABAQAAAQABAAD/2wCEAAMCAgMCAgMDAwMEAwMEBQgFBQQEBQoHBwYIDAoMDAsKCwsNDhIQDQ4RDgsLEBYQERMUFRUVDA8XGBYUGBIUFRQBAwQEBQQFCQUFCRQNCw0UFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFP/AABEIAGoAPAMBEQACEQEDEQH/xAGiAAABBQEBAQEBAQAAAAAAAAAAAQIDBAUGBwgJCgsQAAIBAwMCBAMFBQQEAAABfQECAwAEEQUSITFBBhNRYQcicRQygZGhCCNCscEVUtHwJDNicoIJChYXGBkaJSYnKCkqNDU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6g4SFhoeIiYqSk5SVlpeYmZqio6Slpqeoqaqys7S1tre4ubrCw8TFxsfIycrS09TV1tfY2drh4uPk5ebn6Onq8fLz9PX29/j5+gEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoLEQACAQIEBAMEBwUEBAABAncAAQIDEQQFITEGEkFRB2FxEyIygQgUQpGhscEJIzNS8BVictEKFiQ04SXxFxgZGiYnKCkqNTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqCg4SFhoeIiYqSk5SVlpeYmZqio6Slpqeoqaqys7S1tre4ubrCw8TFxsfIycrS09TV1tfY2dri4+Tl5ufo6ery8/T19vf4+fr/2gAMAwEAAhEDEQA/AP1ToAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoA//Z"
-        }, {
-          "timing": 683,
-          "timestamp": 82750702741,
-          "data": "/9j/4AAQSkZJRgABAQAAAQABAAD/2wCEAAMCAgMCAgMDAwMEAwMEBQgFBQQEBQoHBwYIDAoMDAsKCwsNDhIQDQ4RDgsLEBYQERMUFRUVDA8XGBYUGBIUFRQBAwQEBQQFCQUFCRQNCw0UFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFP/AABEIAGoAPAMBEQACEQEDEQH/xAGiAAABBQEBAQEBAQAAAAAAAAAAAQIDBAUGBwgJCgsQAAIBAwMCBAMFBQQEAAABfQECAwAEEQUSITFBBhNRYQcicRQygZGhCCNCscEVUtHwJDNicoIJChYXGBkaJSYnKCkqNDU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6g4SFhoeIiYqSk5SVlpeYmZqio6Slpqeoqaqys7S1tre4ubrCw8TFxsfIycrS09TV1tfY2drh4uPk5ebn6Onq8fLz9PX29/j5+gEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoLEQACAQIEBAMEBwUEBAABAncAAQIDEQQFITEGEkFRB2FxEyIygQgUQpGhscEJIzNS8BVictEKFiQ04SXxFxgZGiYnKCkqNTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqCg4SFhoeIiYqSk5SVlpeYmZqio6Slpqeoqaqys7S1tre4ubrCw8TFxsfIycrS09TV1tfY2dri4+Tl5ufo6ery8/T19vf4+fr/2gAMAwEAAhEDEQA/AP1ToAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoA//Z"
-        }, {
-          "timing": 769,
-          "timestamp": 82750788140.99998,
-          "data": "/9j/4AAQSkZJRgABAQAAAQABAAD/2wCEAAMCAgMCAgMDAwMEAwMEBQgFBQQEBQoHBwYIDAoMDAsKCwsNDhIQDQ4RDgsLEBYQERMUFRUVDA8XGBYUGBIUFRQBAwQEBQQFCQUFCRQNCw0UFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFP/AABEIAGoAPAMBEQACEQEDEQH/xAGiAAABBQEBAQEBAQAAAAAAAAAAAQIDBAUGBwgJCgsQAAIBAwMCBAMFBQQEAAABfQECAwAEEQUSITFBBhNRYQcicRQygZGhCCNCscEVUtHwJDNicoIJChYXGBkaJSYnKCkqNDU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6g4SFhoeIiYqSk5SVlpeYmZqio6Slpqeoqaqys7S1tre4ubrCw8TFxsfIycrS09TV1tfY2drh4uPk5ebn6Onq8fLz9PX29/j5+gEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoLEQACAQIEBAMEBwUEBAABAncAAQIDEQQFITEGEkFRB2FxEyIygQgUQpGhscEJIzNS8BVictEKFiQ04SXxFxgZGiYnKCkqNTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqCg4SFhoeIiYqSk5SVlpeYmZqio6Slpqeoqaqys7S1tre4ubrCw8TFxsfIycrS09TV1tfY2dri4+Tl5ufo6ery8/T19vf4+fr/2gAMAwEAAhEDEQA/AP1ToAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoA//Z"
-        }, {
-          "timing": 854,
-          "timestamp": 82750873541,
-          "data": "/9j/4AAQSkZJRgABAQAAAQABAAD/2wCEAAMCAgMCAgMDAwMEAwMEBQgFBQQEBQoHBwYIDAoMDAsKCwsNDhIQDQ4RDgsLEBYQERMUFRUVDA8XGBYUGBIUFRQBAwQEBQQFCQUFCRQNCw0UFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFP/AABEIAGoAPAMBEQACEQEDEQH/xAGiAAABBQEBAQEBAQAAAAAAAAAAAQIDBAUGBwgJCgsQAAIBAwMCBAMFBQQEAAABfQECAwAEEQUSITFBBhNRYQcicRQygZGhCCNCscEVUtHwJDNicoIJChYXGBkaJSYnKCkqNDU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6g4SFhoeIiYqSk5SVlpeYmZqio6Slpqeoqaqys7S1tre4ubrCw8TFxsfIycrS09TV1tfY2drh4uPk5ebn6Onq8fLz9PX29/j5+gEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoLEQACAQIEBAMEBwUEBAABAncAAQIDEQQFITEGEkFRB2FxEyIygQgUQpGhscEJIzNS8BVictEKFiQ04SXxFxgZGiYnKCkqNTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqCg4SFhoeIiYqSk5SVlpeYmZqio6Slpqeoqaqys7S1tre4ubrCw8TFxsfIycrS09TV1tfY2dri4+Tl5ufo6ery8/T19vf4+fr/2gAMAwEAAhEDEQA/AP0zvfiH4V03xjYeEbzxNo9r4rv4TcWehT38SX1zEA5MkcBbe6/upOQCP3bf3TQBvk460AVLLV7DUZ76C0vbe6msJhb3ccMqu1vKY0lCSAH5GMcsb4ODtkQ9GBIBV8L+LdD8caHa614c1rT9f0a63fZ9R0u6jubebaxVtkiEq2GVgcHggjtQBpmVAQN65OcDPWgBwOaAFoAKAPHvir+z/wDBr43+JtTsPG/h/R/EPiW80i1tp4pblk1CLT4rmSSExlHWWGMzPJuePb5mNrlgoAAMv4lfsU/CD4uQeMJdf8NG51bxVHafbdb+1yveRyWsJhtZoHkZhE6IcfKuJP8AloJASCAdT4B/Z4+HXw31e+1fw54fitLzUdWm1+SQ3M08a380bxy3EKO7JAzxyuh8oKCpC4wqgAGXrvwF+DPxB0vxR4l1XQNF12x8X6THHquuTXBlW+sAxuI3Fxv4RdyusiMNoig2kCGLYAafiX9m34ceMdB8Y6Lq/hxL3TfF1za3etw/ap0+1SWwhFv8yuGRUFvDhEKr8vTk5APRLvUbTT7Wa5urmG2toFLyzTSBEjUdSzHgD60ANudWsbOe2gnvIIZ7mb7NBFJKqtLLsaTy1BOWbYjPgc7VJ6AmgC3QB438T/D3ie68aapqnhlb7Tb/AP4RqW0t9V07SdKneSUrclImkuZlldlkMLxxkRwBt3mO4dvKBnLar8OrzUPiLceJL7wpf+J7jS4muNOkuNI8Oqs1yl+bm2FvcOxuI3jjmmiBfaNjSSBhKwZpgtubcTOgPw+8Y2mixpYavPpFnpukmH+zNE8PaZDcXVzEtwkP2RpJXhhi3GGWOGUHaUgDSgecpoCr4V+EFzofg+1s4NPfSb6CZJ7p9P8AD+i239pWEUtwE0maJS6bPIlaJWRkx5gbeuZVItdtAJ9N8EeNtYvdfTUNQubG+vbO5trbXbvQ9LkNuyL5Fky7JGZxG63N6sckZX/iYhCylGSgDN8c+FvGh8NaZoOqadqvjoLG9vJJ4f0bRbe1Z1zJDM8WoTuEWN2tjGqBiJLMswZWUUmlrcak47G7F4E8V+I/Gmk6jceKZLzwtZ6pcXEun3vhu1SUyI15CqI8yK8UQRoo/OVZHmVVaNo43Yu09BavU9P8I6ReeH/CujaXqGo/2xf2VnDbXGo/ZktvtUiIFaXyowEj3EFtijaucDgUAc94v0ue78V6ZcQeB9M19orSX/icX1xHFJasJYJI4UzG7kNJHHKSMBTbq3LBAdYKDWsrP06EtvojDtfCui+HtOiOnfB22h/saV7XT7PTrfTo8W4ukkV7fMiKgLwW9xsYphkQ/fQUKMOsul9n9w7vsdppuvavday9tdeHLmysWiikivjcwuAzKxeORA2VZCoGV3qd6kN97anGKWkr/f8A5Ar9jfrMYUAFABQAUAFABQAUAFABQAUAFABQAUAFABQAUAFABQAUAFABQAUAFABQAUAFABQAUAFABQAUAFABQAUAFABQAUAFABQAUAFABQAUAFABQAUAFABQAUAFABQAUAFABQAUAFABQAUAFABQAUAFABQAUAFABQAUAFABQAUAFABQAUAFABQAUAFABQAUAFABQAUAFABQB//Z"
-        }]
-      }
-    },
-    "estimated-input-latency": {
-      "score": 100,
-      "displayValue": "16ms",
-      "rawValue": 16,
-      "optimalValue": "< 50 ms",
-      "extendedInfo": {
-        "value": [{"percentile": 0.5, "time": 16}, {"percentile": 0.75, "time": 16}, {
-          "percentile": 0.9,
-          "time": 16
-        }, {"percentile": 0.99, "time": 16}, {"percentile": 1, "time": 23.484999999996944}], "formatter": "null"
-      },
-      "scoringMode": "numeric",
-      "name": "estimated-input-latency",
-      "category": "Performance",
-      "description": "Estimated Input Latency",
-      "helpText": "The score above is an estimate of how long your app takes to respond to user input, in milliseconds. There is a 90% probability that a user encounters this amount of latency, or less. 10% of the time a user can expect additional latency. If your score is higher than Lighthouse's target score, users may perceive your app as laggy. [Learn more](https://developers.google.com/web/tools/lighthouse/audits/estimated-input-latency)."
-    },
-    "first-interactive": {
-      "score": 100,
-      "displayValue": "840ms",
-      "rawValue": 839.9300000063181,
-      "extendedInfo": {"value": {"timeInMs": 839.9300000063181, "timestamp": 82750859471}, "formatter": "null"},
-      "scoringMode": "numeric",
-      "name": "first-interactive",
-      "category": "Performance",
-      "description": "First Interactive (beta)",
-      "helpText": "The first point at which necessary scripts of the page have loaded and the CPU is idle enough to handle most user input."
-    },
-    "consistently-interactive": {
-      "score": 100,
-      "displayValue": "840ms",
-      "rawValue": 839.93,
-      "extendedInfo": {
-        "value": {
-          "cpuQuietPeriod": {"start": 82750859.471, "end": 82757534.802},
-          "networkQuietPeriod": {"start": 0, "end": 82757534.802},
-          "cpuQuietPeriods": [{"start": 82750859.471, "end": 82757534.802}],
-          "networkQuietPeriods": [{"start": 0, "end": 82757534.802}],
-          "timestamp": 82750859471,
-          "timeInMs": 839.93
-        }, "formatter": "null"
-      },
-      "scoringMode": "numeric",
-      "name": "consistently-interactive",
-      "category": "Performance",
-      "description": "Consistently Interactive (beta)",
-      "helpText": "The point at which most network resources have finished loading and the CPU is idle for a prolonged period."
-    },
-    "user-timings": {
-      "score": true,
-      "displayValue": "0",
-      "rawValue": true,
-      "extendedInfo": {"formatter": "user-timings", "value": []},
-      "scoringMode": "binary",
-      "informative": true,
-      "name": "user-timings",
-      "category": "Performance",
-      "description": "User Timing marks and measures",
-      "helpText": "Consider instrumenting your app with the User Timing API to create custom, real-world measurements of key user experiences. [Learn more](https://developers.google.com/web/tools/lighthouse/audits/user-timing).",
-      "details": {
-        "type": "table",
-        "header": "View Details",
-        "itemHeaders": [{"type": "text", "itemType": "text", "text": "Name"}, {
-          "type": "text",
-          "itemType": "text",
-          "text": "Type"
-        }, {"type": "text", "itemType": "text", "text": "Time"}],
-        "items": []
-      }
-    },
-    "critical-request-chains": {
-      "score": true,
-      "displayValue": "0",
-      "rawValue": true,
-      "optimalValue": 0,
-      "extendedInfo": {
-        "formatter": "critical-request-chains",
-        "value": {
-          "chains": {
-            "21506.1": {
-              "request": {
-                "url": "http://example.com/",
-                "startTime": 82750.024719,
-                "endTime": 82750.65861,
-                "responseReceivedTime": 82750.657165,
-                "transferSize": 957
-              }, "children": {}
-            },
-            "21506.2": {
-              "request": {
-                "url": "http://example.com/favicon.ico",
-                "startTime": 82750.865118,
-                "endTime": 82751.437639,
-                "responseReceivedTime": 82751.436082,
-                "transferSize": 943
-              }, "children": {}
-            }
-          }, "longestChain": {"duration": 1412.9200000024866, "length": 1, "transferSize": 943}
-        }
-      },
-      "scoringMode": "binary",
-      "informative": true,
-      "name": "critical-request-chains",
-      "category": "Performance",
-      "description": "Critical Request Chains",
-      "helpText": "The Critical Request Chains below show you what resources are required for first render of this page. Improve page load by reducing the length of chains, reducing the download size of resources, or deferring the download of unnecessary resources. [Learn more](https://developers.google.com/web/tools/lighthouse/audits/critical-request-chains).",
-      "details": {
-        "type": "criticalrequestchain",
-        "header": {"type": "text", "text": "View critical network waterfall:"},
-        "chains": {
-          "21506.1": {
-            "request": {
-              "url": "http://example.com/",
-              "startTime": 82750.024719,
-              "endTime": 82750.65861,
-              "responseReceivedTime": 82750.657165,
-              "transferSize": 957
-            }, "children": {}
-          },
-          "21506.2": {
-            "request": {
-              "url": "http://example.com/favicon.ico",
-              "startTime": 82750.865118,
-              "endTime": 82751.437639,
-              "responseReceivedTime": 82751.436082,
-              "transferSize": 943
-            }, "children": {}
+        "items": [
+          {
+            "firstContentfulPaint": 4180,
+            "firstMeaningfulPaint": 4180,
+            "firstCPUIdle": 4180,
+            "interactive": 4180,
+            "speedIndex": 4329,
+            "estimatedInputLatency": 13,
+            "observedNavigationStart": 0,
+            "observedNavigationStartTs": 49414590783,
+            "observedFirstPaint": 1005,
+            "observedFirstPaintTs": 49415595415,
+            "observedFirstContentfulPaint": 1005,
+            "observedFirstContentfulPaintTs": 49415595415,
+            "observedFirstMeaningfulPaint": 1005,
+            "observedFirstMeaningfulPaintTs": 49415595415,
+            "observedTraceEnd": 4796,
+            "observedTraceEndTs": 49419386628,
+            "observedLoad": 3731,
+            "observedLoadTs": 49418322041,
+            "observedDomContentLoaded": 2861,
+            "observedDomContentLoadedTs": 49417451887,
+            "observedFirstVisualChange": 958,
+            "observedFirstVisualChangeTs": 49415548783,
+            "observedLastVisualChange": 3475,
+            "observedLastVisualChangeTs": 49418065783,
+            "observedSpeedIndex": 1330,
+            "observedSpeedIndexTs": 49415921212
           }
-        },
-        "longestChain": {"duration": 1412.9200000024866, "length": 1, "transferSize": 943}
-      }
-    },
-    "total-byte-weight": {
-      "score": 100,
-      "displayValue": "Total size was 2 KB",
-      "rawValue": 1900,
-      "optimalValue": "< 1,600 KB",
-      "extendedInfo": {
-        "formatter": "table",
-        "value": {
-          "results": [{
-            "url": "/",
-            "totalBytes": 957,
-            "totalKb": "1 KB",
-            "totalMs": "0ms"
-          }, {"url": "/favicon.ico", "totalBytes": 943, "totalKb": "1 KB", "totalMs": "0ms"}],
-          "tableHeadings": {"url": "URL", "totalKb": "Total Size", "totalMs": "Transfer Time"}
-        }
-      },
-      "scoringMode": "numeric",
-      "name": "total-byte-weight",
-      "category": "Network",
-      "description": "Avoids enormous network payloads",
-      "helpText": "Network transfer size [costs users real dollars](https://whatdoesmysitecost.com/) and is [highly correlated](http://httparchive.org/interesting.php#onLoad) with long load times. Try to find ways to reduce the size of required files.",
-      "details": {
-        "type": "table",
-        "header": "View Details",
-        "itemHeaders": [{"type": "text", "itemType": "url", "text": "URL"}, {
-          "type": "text",
-          "itemType": "text",
-          "text": "Total Size"
-        }, {"type": "text", "itemType": "text", "text": "Transfer Time"}],
-        "items": [[{"type": "url", "text": "/"}, {"type": "text", "text": "1 KB"}, {
-          "type": "text",
-          "text": "0ms"
-        }], [{"type": "url", "text": "/favicon.ico"}, {"type": "text", "text": "1 KB"}, {"type": "text", "text": "0ms"}]]
-      }
-    },
-    "offscreen-images": {
-      "score": 100,
-      "displayValue": "",
-      "rawValue": 0,
-      "extendedInfo": {
-        "formatter": "table",
-        "value": {
-          "wastedMs": 0,
-          "wastedKb": 0,
-          "results": [],
-          "tableHeadings": {"preview": "", "url": "URL", "totalKb": "Original", "potentialSavings": "Potential Savings"}
-        }
-      },
-      "scoringMode": "binary",
-      "informative": true,
-      "name": "offscreen-images",
-      "category": "Images",
-      "description": "Offscreen images",
-      "helpText": "Images that are not above the fold should be lazily loaded after the page is interactive. Consider using the [IntersectionObserver](https://developers.google.com/web/updates/2016/04/intersectionobserver) API.",
-      "details": {
-        "type": "table",
-        "header": "View Details",
-        "itemHeaders": [{"type": "text", "itemType": "thumbnail", "text": ""}, {
-          "type": "text",
-          "itemType": "url",
-          "text": "URL"
-        }, {"type": "text", "itemType": "text", "text": "Original"}, {
-          "type": "text",
-          "itemType": "text",
-          "text": "Potential Savings"
-        }],
-        "items": []
-      }
-    },
-    "uses-webp-images": {
-      "score": 100,
-      "displayValue": "",
-      "rawValue": 0,
-      "extendedInfo": {
-        "formatter": "table",
-        "value": {
-          "wastedMs": 0,
-          "wastedKb": 0,
-          "results": [],
-          "tableHeadings": {"preview": "", "url": "URL", "totalKb": "Original", "potentialSavings": "Potential Savings"}
-        }
-      },
-      "scoringMode": "binary",
-      "informative": true,
-      "name": "uses-webp-images",
-      "category": "Images",
-      "description": "Serve images as WebP",
-      "helpText": "[WebP](https://developers.google.com/speed/webp/) images take less time to download and save cellular data. [Learn more about image optimization](https://developers.google.com/web/fundamentals/performance/optimizing-content-efficiency/image-optimization).",
-      "details": {
-        "type": "table",
-        "header": "View Details",
-        "itemHeaders": [{"type": "text", "itemType": "thumbnail", "text": ""}, {
-          "type": "text",
-          "itemType": "url",
-          "text": "URL"
-        }, {"type": "text", "itemType": "text", "text": "Original"}, {
-          "type": "text",
-          "itemType": "text",
-          "text": "Potential Savings"
-        }],
-        "items": []
-      }
-    },
-    "uses-optimized-images": {
-      "score": 100,
-      "displayValue": "",
-      "rawValue": 0,
-      "extendedInfo": {
-        "formatter": "table",
-        "value": {
-          "wastedMs": 0,
-          "wastedKb": 0,
-          "results": [],
-          "tableHeadings": {"preview": "", "url": "URL", "totalKb": "Original", "potentialSavings": "Potential Savings"}
-        }
-      },
-      "scoringMode": "binary",
-      "informative": true,
-      "name": "uses-optimized-images",
-      "category": "Images",
-      "description": "Optimize images",
-      "helpText": "Optimized images take less time to download and save cellular data. The identified images could have smaller file sizes when compressed as JPEG (q=85). [Learn more about image optimization](https://developers.google.com/web/fundamentals/performance/optimizing-content-efficiency/image-optimization).",
-      "details": {
-        "type": "table",
-        "header": "View Details",
-        "itemHeaders": [{"type": "text", "itemType": "thumbnail", "text": ""}, {
-          "type": "text",
-          "itemType": "url",
-          "text": "URL"
-        }, {"type": "text", "itemType": "text", "text": "Original"}, {
-          "type": "text",
-          "itemType": "text",
-          "text": "Potential Savings"
-        }],
-        "items": []
-      }
-    },
-    "uses-request-compression": {
-      "score": 100,
-      "displayValue": "",
-      "rawValue": 0,
-      "extendedInfo": {
-        "formatter": "table",
-        "value": {
-          "wastedMs": 0,
-          "wastedKb": 0,
-          "results": [],
-          "tableHeadings": {"url": "Uncompressed resource URL", "totalKb": "Original", "potentialSavings": "GZIP Savings"}
-        }
-      },
-      "scoringMode": "binary",
-      "informative": true,
-      "name": "uses-request-compression",
-      "category": "Performance",
-      "description": "Enable text compression",
-      "helpText": "Text-based responses should be served with compression (gzip, deflate or brotli) to minimize total network bytes. [Learn more](https://developers.google.com/web/fundamentals/performance/optimizing-content-efficiency/optimize-encoding-and-transfer).",
-      "details": {
-        "type": "table",
-        "header": "View Details",
-        "itemHeaders": [{"type": "text", "itemType": "url", "text": "Uncompressed resource URL"}, {
-          "type": "text",
-          "itemType": "text",
-          "text": "Original"
-        }, {"type": "text", "itemType": "text", "text": "GZIP Savings"}],
-        "items": []
-      }
-    },
-    "uses-responsive-images": {
-      "score": 100,
-      "displayValue": "",
-      "rawValue": 0,
-      "extendedInfo": {
-        "formatter": "table",
-        "value": {
-          "wastedMs": 0,
-          "wastedKb": 0,
-          "results": [],
-          "tableHeadings": {"preview": "", "url": "URL", "totalKb": "Original", "potentialSavings": "Potential Savings"}
-        }
-      },
-      "scoringMode": "binary",
-      "informative": true,
-      "name": "uses-responsive-images",
-      "category": "Images",
-      "description": "Properly size images",
-      "helpText": "Serve images that are appropriately-sized to save cellular data and improve load time. [Learn more](https://developers.google.com/web/tools/lighthouse/audits/oversized-images).",
-      "details": {
-        "type": "table",
-        "header": "View Details",
-        "itemHeaders": [{"type": "text", "itemType": "thumbnail", "text": ""}, {
-          "type": "text",
-          "itemType": "url",
-          "text": "URL"
-        }, {"type": "text", "itemType": "text", "text": "Original"}, {
-          "type": "text",
-          "itemType": "text",
-          "text": "Potential Savings"
-        }],
-        "items": []
-      }
-    },
-    "dom-size": {
-      "score": 100,
-      "displayValue": "13 nodes",
-      "rawValue": 13,
-      "optimalValue": "< 1,500 nodes",
-      "extendedInfo": {
-        "formatter": "cards",
-        "value": [{"title": "Total DOM Nodes", "value": "13", "target": "< 1,500 nodes"}, {
-          "title": "DOM Depth",
-          "value": "5",
-          "snippet": "html >\n  body >\n    div >\n      p >\n        a",
-          "target": "< 32"
-        }, {
-          "title": "Maximum Children",
-          "value": "5",
-          "snippet": "Element with most children:\nhead",
-          "target": "< 60 nodes"
-        }]
-      },
-      "scoringMode": "numeric",
-      "name": "dom-size",
-      "category": "Performance",
-      "description": "Avoids an excessive DOM size",
-      "helpText": "Browser engineers recommend pages contain fewer than ~1,500 DOM nodes. The sweet spot is a tree depth < 32 elements and fewer than 60 children/parent element. A large DOM can increase memory, cause longer [style calculations](https://developers.google.com/web/fundamentals/performance/rendering/reduce-the-scope-and-complexity-of-style-calculations), and produce costly [layout reflows](https://developers.google.com/speed/articles/reflow). [Learn more](https://developers.google.com/web/fundamentals/performance/rendering/).",
-      "details": {
-        "type": "cards",
-        "header": {"type": "text", "text": "View details"},
-        "items": [{"title": "Total DOM Nodes", "value": "13", "target": "< 1,500 nodes"}, {
-          "title": "DOM Depth",
-          "value": "5",
-          "snippet": "html >\n  body >\n    div >\n      p >\n        a",
-          "target": "< 32"
-        }, {
-          "title": "Maximum Children",
-          "value": "5",
-          "snippet": "Element with most children:\nhead",
-          "target": "< 60 nodes"
-        }]
-      }
-    },
-    "link-blocking-first-paint": {
-      "score": 100,
-      "displayValue": "",
-      "rawValue": 0,
-      "extendedInfo": {
-        "formatter": "table",
-        "value": {
-          "wastedMs": 0,
-          "results": [],
-          "tableHeadings": {"url": "URL", "totalKb": "Size (KB)", "totalMs": "Delayed Paint By (ms)"}
-        }
-      },
-      "scoringMode": "binary",
-      "informative": true,
-      "name": "link-blocking-first-paint",
-      "category": "Performance",
-      "description": "Reduce render-blocking stylesheets",
-      "helpText": "Link elements are blocking the first paint of your page. Consider inlining critical links and deferring non-critical ones. [Learn more](https://developers.google.com/web/tools/lighthouse/audits/blocking-resources).",
-      "details": {
-        "type": "table",
-        "header": "View Details",
-        "itemHeaders": [{"type": "text", "itemType": "url", "text": "URL"}, {
-          "type": "text",
-          "itemType": "text",
-          "text": "Size (KB)"
-        }, {"type": "text", "itemType": "text", "text": "Delayed Paint By (ms)"}],
-        "items": []
-      }
-    },
-    "script-blocking-first-paint": {
-      "score": 100,
-      "displayValue": "",
-      "rawValue": 0,
-      "extendedInfo": {
-        "formatter": "table",
-        "value": {
-          "wastedMs": 0,
-          "results": [],
-          "tableHeadings": {"url": "URL", "totalKb": "Size (KB)", "totalMs": "Delayed Paint By (ms)"}
-        }
-      },
-      "scoringMode": "binary",
-      "informative": true,
-      "name": "script-blocking-first-paint",
-      "category": "Performance",
-      "description": "Reduce render-blocking scripts",
-      "helpText": "Script elements are blocking the first paint of your page. Consider inlining critical scripts and deferring non-critical ones. [Learn more](https://developers.google.com/web/tools/lighthouse/audits/blocking-resources).",
-      "details": {
-        "type": "table",
-        "header": "View Details",
-        "itemHeaders": [{"type": "text", "itemType": "url", "text": "URL"}, {
-          "type": "text",
-          "itemType": "text",
-          "text": "Size (KB)"
-        }, {"type": "text", "itemType": "text", "text": "Delayed Paint By (ms)"}],
-        "items": []
+        ]
       }
     }
+  },
+  "configSettings": {
+    "output": "json",
+    "maxWaitForLoad": 45000,
+    "throttlingMethod": "simulate",
+    "throttling": {
+      "rttMs": 150,
+      "throughputKbps": 1638.4,
+      "requestLatencyMs": 562.5,
+      "downloadThroughputKbps": 1474.5600000000002,
+      "uploadThroughputKbps": 675,
+      "cpuSlowdownMultiplier": 4
+    },
+    "auditMode": false,
+    "gatherMode": false,
+    "disableStorageReset": false,
+    "disableDeviceEmulation": false,
+    "blockedUrlPatterns": null,
+    "additionalTraceCategories": null,
+    "extraHeaders": null,
+    "onlyAudits": [
+      "metrics"
+    ],
+    "onlyCategories": null,
+    "skipAudits": null
+  },
+  "categories": {
+    "performance": {
+      "title": "Performance",
+      "auditRefs": [
+        {
+          "id": "metrics",
+          "weight": 0
+        }
+      ],
+      "id": "performance",
+      "score": 0
+    }
+  },
+  "categoryGroups": {
+    "metrics": {
+      "title": "Metrics"
+    },
+    "load-opportunities": {
+      "title": "Opportunities",
+      "description": "These are opportunities to speed up your application by optimizing the following resources."
+    },
+    "diagnostics": {
+      "title": "Diagnostics",
+      "description": "More information about the performance of your application."
+    },
+    "a11y-color-contrast": {
+      "title": "Color Contrast Is Satisfactory",
+      "description": "These are opportunities to improve the legibility of your content."
+    },
+    "a11y-describe-contents": {
+      "title": "Elements Describe Contents Well",
+      "description": "These are opportunities to make your content easier to understand for a user of assistive technology, like a screen reader."
+    },
+    "a11y-well-structured": {
+      "title": "Elements Are Well Structured",
+      "description": "These are opportunities to make sure your HTML is appropriately structured."
+    },
+    "a11y-aria": {
+      "title": "ARIA Attributes Follow Best Practices",
+      "description": "These are opportunities to improve the usage of ARIA in your application which may enhance the experience for users of assistive technology, like a screen reader."
+    },
+    "a11y-correct-attributes": {
+      "title": "Elements Use Attributes Correctly",
+      "description": "These are opportunities to improve the configuration of your HTML elements."
+    },
+    "a11y-element-names": {
+      "title": "Elements Have Discernible Names",
+      "description": "These are opportunities to improve the semantics of the controls in your application. This may enhance the experience for users of assistive technology, like a screen reader."
+    },
+    "a11y-language": {
+      "title": "Page Specifies Valid Language",
+      "description": "These are opportunities to improve the interpretation of your content by users in different locales."
+    },
+    "a11y-meta": {
+      "title": "Meta Tags Used Properly",
+      "description": "These are opportunities to improve the user experience of your site."
+    },
+    "seo-mobile": {
+      "title": "Mobile Friendly",
+      "description": "Make sure your pages are mobile friendly so users don’t have to pinch or zoom in order to read the content pages. [Learn more](https://developers.google.com/search/mobile-sites/)."
+    },
+    "seo-content": {
+      "title": "Content Best Practices",
+      "description": "Format your HTML in a way that enables crawlers to better understand your app’s content."
+    },
+    "seo-crawl": {
+      "title": "Crawling and Indexing",
+      "description": "To appear in search results, crawlers need access to your app."
+    }
+  },
+  "timing": {
+    "total": 6607
   }
 }
