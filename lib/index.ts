@@ -111,7 +111,10 @@ class PWMetrics {
         return false;
       }
       const expectedErrorLimit = expectation.error;
-      return expectedErrorLimit !== undefined && timing.timing >= expectedErrorLimit;
+      const expectedWarningLimit = expectation.warn;
+      const hasErrors = expectedErrorLimit !== undefined && timing.timing >= expectedErrorLimit;
+      const hasWarnings = expectedWarningLimit !== undefined && timing.timing >= expectedWarningLimit;
+      return hasErrors || hasWarnings;
     });
   }
 
