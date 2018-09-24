@@ -107,7 +107,7 @@ module.exports = {
 `pwmetrics-config.js`
 
 ```js
-const METRICS = require('pwmetrics/lib/metrics/metrics'); 
+const METRICS = require('pwmetrics/lib/metrics/metrics');
 
 module.exports = {
   url: 'http://example.com/',
@@ -307,13 +307,13 @@ module.exports = {
 All metrics now are stored in separate constant object located in `pwmetrics/lib/metrics/metrics`;
 
 ```js
-// Metrics.js
+// lib/metrics/metrics.ts
 {
-  TTFCP: 'first-contentful-paint',
-  TTFMP: 'first-meaningful-paint',
-  TTFCPUIDLE: 'first-cpu-idle',
+  TTFCP: 'firstContentfulPaint',
+  TTFMP: 'firstMeaningfulPaint',
+  TTFCPUIDLE: 'firstCPUIdle',
   TTI: 'interactive',
-  SI: 'speed-index',
+  SI: 'speedIndex'
 }
 ```
 
