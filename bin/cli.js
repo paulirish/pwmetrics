@@ -65,6 +65,11 @@ const cliFlags = yargs
     'type': 'boolean',
     'default': false
   })
+  .option('fail-on-error', {
+    'describe': 'Exit PWMetrics with an error status code after the first unfilled expectation',
+    'type': 'boolean',
+    'default': false
+  })
   .check((argv) => {
     // Make sure pwmetrics has been passed a url, either from cli or config fileg()
 

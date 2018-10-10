@@ -43,7 +43,8 @@ class PWMetrics {
     expectations: false,
     json: false,
     chromeFlags: '',
-    showOutput: true
+    showOutput: true,
+    failOnError: false,
   };
   runs: number;
   sheets: SheetsConfig;
@@ -111,7 +112,7 @@ class PWMetrics {
       if (hasExpectationsWarnings || hasExpectationsErrors) {
         checkExpectations(resultsToCompare, this.normalizedExpectations);
 
-        if (hasExpectationsErrors) {
+        if (hasExpectationsErrors && this.flags.failOnError) {
           throw new Error(getMessage('HAS_EXPECTATION_ERRORS'));
         }
         else {

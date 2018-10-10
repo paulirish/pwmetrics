@@ -28,6 +28,7 @@ export interface FeatureFlags {
   chromePath?: string;
   port?: number;
   showOutput: Boolean;
+  failOnError: Boolean;
 }
 
 export interface MetricsResults {
