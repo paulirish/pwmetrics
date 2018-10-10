@@ -6,6 +6,7 @@
 /* eslint-disable no-logger */
 const sysPath = require('path');
 const fs = require('fs');
+const os = require('os');
 const yargs = require('yargs');
 
 const PWMetrics = require('../lib/index');
@@ -101,20 +102,20 @@ const writeToDisk = function(fileName, data) {
 };
 
 const pwMetrics = new PWMetrics(options.url, options);
-pwMetrics.start()
-  .then(data => {
-    if (options.flags.json) {
-      // serialize accordingly
-      data = JSON.stringify(data, null, 2) + '\n';
-      // output to file.
-      if (options.flags.outputPath != 'stdout') {
-        return writeToDisk(options.flags.outputPath, data);
-        // output to stdout
-      } else if (data) {
-        process.stdout.write(data);
-      }
+pwMetrics.start(data => {
+  if (options.flags.json) {
+    // serialize accordingly
+    const formattedData = JSON.stringify(data, null, 2) + os.EOL;
+    // output to file.
+    if (options.flags.outputPath !== 'stdout') {
+      writeToDisk(options.flags.outputPath, formattedData);
+    // output to stdout
+    } else if (formattedData) {
+      process.stdout.write(formattedData);
     }
-  }).then(() => {
+  }
+})
+  .then(() => {
     process.exit(0);
   }).catch(err => {
     logger.error(err);

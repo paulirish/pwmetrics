@@ -1,6 +1,12 @@
 // Copyright 2016 Google Inc. All Rights Reserved.
 // Licensed under the Apache License, Version 2.0. See LICENSE
 
+declare var process: {
+  stdout: {
+    columns: string;
+  }
+};
+
 const opn = require('opn');
 const path = require('path');
 
@@ -67,7 +73,7 @@ class PWMetrics {
     this.logger = Logger.getInstance({showOutput: this.flags.showOutput});
   }
 
-  async start() {
+  async start(outputDataCallback) {
     const runs = Array.apply(null, {length: +this.runs}).map(Number.call, Number);
     let metricsResults: MetricsResults[] = [];
 
@@ -93,28 +99,38 @@ class PWMetrics {
       await sheets.appendResults(results.runs);
     }
 
+    if (outputDataCallback) {
+      outputDataCallback(results);
+    }
+
     if (this.flags.expectations) {
       const resultsToCompare = this.runs > 1 ? results.median.timings : results[0].timings;
-      if (this.resultHasExpectationErrors(resultsToCompare)) {
+      const hasExpectationsWarnings = this.resultHasExpectationIssues(resultsToCompare, 'warn');
+      const hasExpectationsErrors = this.resultHasExpectationIssues(resultsToCompare, 'error');
+
+      if (hasExpectationsWarnings || hasExpectationsErrors) {
         checkExpectations(resultsToCompare, this.normalizedExpectations);
-        this.logger.error(getMessage('HAS_EXPECTATION_ERRORS'));
+
+        if (hasExpectationsErrors) {
+          throw new Error(getMessage('HAS_EXPECTATION_ERRORS'));
+        }
+        else {
+          this.logger.warn(getMessage('HAS_EXPECTATION_ERRORS'));
+        }
       }
     }
 
     return results;
   }
 
-  resultHasExpectationErrors(timings: Timing[]): boolean {
+  resultHasExpectationIssues(timings: Timing[], issueType: 'warn' | 'error'): boolean {
     return timings.some((timing: Timing) => {
       const expectation = this.normalizedExpectations[timing.id];
       if (!expectation) {
         return false;
       }
-      const expectedErrorLimit = expectation.error;
-      const expectedWarningLimit = expectation.warn;
-      const hasErrors = expectedErrorLimit !== undefined && timing.timing >= expectedErrorLimit;
-      const hasWarnings = expectedWarningLimit !== undefined && timing.timing >= expectedWarningLimit;
-      return hasErrors || hasWarnings;
+      const expectedLimit = expectation[issueType];
+      return expectedLimit !== undefined && timing.timing >= expectedLimit;
     });
   }
 
@@ -160,7 +176,7 @@ class PWMetrics {
 
     const fullWidthInMs = Math.max(...timings.map(result => result.timing));
     const maxLabelWidth = Math.max(...timings.map(result => result.title.length));
-    const terminalWidth = process.stdout.columns || 90;
+    const terminalWidth = +process.stdout.columns || 90;
 
     drawChart(timings, {
       // 90% of terminal width to give some right margin
