@@ -4,11 +4,14 @@
 declare var process: {
   stdout: {
     columns: string;
+    write: Function;
   }
 };
 
 const opn = require('opn');
+const os = require('os');
 const path = require('path');
+
 
 import {METRICS} from './metrics/metrics';
 import {Logger} from './utils/logger';
@@ -17,6 +20,7 @@ import {Sheets} from './sheets';
 import {adaptMetricsData} from './metrics/metrics-adapter';
 import {validateMetrics, normalizeExpectationMetrics, checkExpectations} from './expectations';
 import {upload} from './upload';
+import {writeToDisk} from './utils/fs';
 import {getMessage, getMessageWithPrefix} from './utils/messages';
 import {drawChart} from './chart/chart';
 
@@ -45,6 +49,7 @@ class PWMetrics {
     chromeFlags: '',
     showOutput: true,
     failOnError: false,
+    outputPath: 'stdout',
   };
   runs: number;
   sheets: SheetsConfig;
@@ -74,7 +79,7 @@ class PWMetrics {
     this.logger = Logger.getInstance({showOutput: this.flags.showOutput});
   }
 
-  async start(outputDataCallback) {
+  async start() {
     const runs = Array.apply(null, {length: +this.runs}).map(Number.call, Number);
     let metricsResults: MetricsResults[] = [];
 
@@ -100,9 +105,7 @@ class PWMetrics {
       await sheets.appendResults(results.runs);
     }
 
-    if (outputDataCallback) {
-      outputDataCallback(results);
-    }
+    this.outputData(results);
 
     if (this.flags.expectations) {
       const resultsToCompare = this.runs > 1 ? results.median.timings : results[0].timings;
@@ -214,6 +217,20 @@ class PWMetrics {
   view(id: string) {
     if (this.flags.view) {
       opn(getTimelineViewerUrl(id));
+    }
+  }
+
+  outputData(data: PWMetricsResults) {
+    if (this.flags.json) {
+      // serialize accordingly
+      const formattedData = JSON.stringify(data, null, 2) + os.EOL;
+      // output to file.
+      if (this.flags.outputPath !== 'stdout') {
+        writeToDisk(this.flags.outputPath, formattedData);
+      // output to stdout
+      } else if (formattedData) {
+        process.stdout.write(formattedData);
+      }
     }
   }
 }

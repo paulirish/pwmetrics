@@ -29,6 +29,7 @@ export interface FeatureFlags {
   port?: number;
   showOutput: Boolean;
   failOnError: Boolean;
+  outputPath: string;
 }
 
 export interface MetricsResults {
