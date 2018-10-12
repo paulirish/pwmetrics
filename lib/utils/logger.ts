@@ -20,6 +20,12 @@ export class Logger {
     }
   }
 
+  warn(msg: any, ...args: any[]) {
+    if(Logger.options.showOutput){
+      console.warn(msg, ...args);
+    }
+  }
+
   error(msg: any, ...args: any[]) {
     if(Logger.options.showOutput){
       console.error(msg, ...args);

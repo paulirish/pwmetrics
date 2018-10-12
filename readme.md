@@ -68,6 +68,9 @@ pwmetrics --view
 # --expectations  Assert metrics results against provides values. See _Defining expectations_ below.
 pwmetrics --expectations
 
+# --fail-on-error  Exit PWMetrics with an error status code after the first unfilled expectation.
+pwmetrics --fail-on-error
+
 
 ```
 
@@ -123,6 +126,7 @@ module.exports = {
     chromeFlags: '', // custom flags to pass to Chrome. For a full list of flags, see http://peter.sh/experiments/chromium-command-line-switches/.
     // Note: pwmetrics supports all flags from Lighthouse
     showOutput: true // not required, set to false for pwmetrics not output any console.log messages
+    failOnError: false // not required, set to true if you want to fail the process on expectations errors
   },
   expectations: {
     // these expectations values are examples, for your cases set your own
