@@ -105,7 +105,7 @@ class PWMetrics {
       await sheets.appendResults(results.runs);
     }
 
-    this.outputData(results);
+    await this.outputData(results);
 
     if (this.flags.expectations) {
       const resultsToCompare = this.runs > 1 ? results.median.timings : results[0].timings;
@@ -226,10 +226,10 @@ class PWMetrics {
       const formattedData = JSON.stringify(data, null, 2) + os.EOL;
       // output to file.
       if (this.flags.outputPath !== 'stdout') {
-        writeToDisk(this.flags.outputPath, formattedData);
+        return writeToDisk(this.flags.outputPath, formattedData);
       // output to stdout
       } else if (formattedData) {
-        process.stdout.write(formattedData);
+        return Promise.resolve(process.stdout.write(formattedData));
       }
     }
   }

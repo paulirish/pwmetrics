@@ -3,6 +3,8 @@
 
 import * as path from 'path';
 import * as fs from 'fs';
+import * as promisify from 'micro-promisify';
+
 import {getMessageWithPrefix} from './messages';
 import {Logger} from './logger';
 
@@ -27,11 +29,11 @@ export function getConfigFromFile(fileName: string = 'package.json') {
 }
 
 export function writeToDisk(fileName: string, data: string) {
-  return new Promise((resolve, reject) => {
+  return new Promise(async (resolve, reject) => {
     const filePath = path.join(process.cwd(), fileName);
 
     try {
-      fs.writeFileSync(filePath, data);
+      await promisify(fs.writeFile)(filePath, data);
     } catch (err) {
       reject(err);
     }
