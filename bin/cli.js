@@ -4,9 +4,6 @@
 'use strict';
 
 /* eslint-disable no-logger */
-const sysPath = require('path');
-const fs = require('fs');
-const os = require('os');
 const yargs = require('yargs');
 
 const PWMetrics = require('../lib/index');
@@ -95,34 +92,13 @@ options.url = cliFlags._[0] || options.url;
 if (!options.url || !options.url.length)
   throw new Error(getMessage('NO_URL'));
 
-const writeToDisk = function(fileName, data) {
-  return new Promise((resolve, reject) => {
-    const path = sysPath.join(process.cwd(), fileName);
-    fs.writeFile(path, data, err => {
-      if (err) reject(err);
-      logger.log(getMessageWithPrefix('SUCCESS', 'SAVED_TO_JSON', path));
-      resolve();
-    });
-  });
-};
 
 const pwMetrics = new PWMetrics(options.url, options);
-pwMetrics.start(data => {
-  if (options.flags.json) {
-    // serialize accordingly
-    const formattedData = JSON.stringify(data, null, 2) + os.EOL;
-    // output to file.
-    if (options.flags.outputPath !== 'stdout') {
-      writeToDisk(options.flags.outputPath, formattedData);
-    // output to stdout
-    } else if (formattedData) {
-      process.stdout.write(formattedData);
-    }
-  }
-})
+pwMetrics.start()
   .then(() => {
     process.exit(0);
-  }).catch(err => {
+  })
+  .catch(err => {
     logger.error(err);
     process.exit(1);
   });
