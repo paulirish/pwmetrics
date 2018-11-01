@@ -110,7 +110,7 @@ module.exports = {
 `pwmetrics-config.js`
 
 ```js
-const {METRICS} = require('pwmetrics/lib/metrics/metrics');
+const METRICS = require('pwmetrics/lib/metrics');
 
 module.exports = {
   url: 'http://example.com/',
