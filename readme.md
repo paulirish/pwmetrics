@@ -119,13 +119,13 @@ module.exports = {
     submit: true, // turn on submitting to Google Sheets
     upload: true, // turn on uploading to Google Drive
     view: true, // open uploaded traces to Google Drive in DevTools
-    expectations: true, // turn on assertation metrics results against provides values
+    expectations: true, // turn on assertion metrics results against provides values
     json: true, // not required, set to true if you want json output
     outputPath: 'stdout', // not required, only needed if you have specified json output, can be "stdout" or a path
     chromePath: '/Applications/Google\ Chrome\ Canary.app/Contents/MacOS/Google\ Chrome\ Canary', //optional path to specific Chrome location
     chromeFlags: '', // custom flags to pass to Chrome. For a full list of flags, see http://peter.sh/experiments/chromium-command-line-switches/.
     // Note: pwmetrics supports all flags from Lighthouse
-    showOutput: true // not required, set to false for pwmetrics not output any console.log messages
+    showOutput: true, // not required, set to false for pwmetrics not output any console.log messages
     failOnError: false // not required, set to true if you want to fail the process on expectations errors
   },
   expectations: {
@@ -313,11 +313,13 @@ All metrics now are stored in separate constant object located in `pwmetrics/lib
 ```js
 // lib/metrics/metrics.ts
 {
-  TTFCP: 'firstContentfulPaint',
-  TTFMP: 'firstMeaningfulPaint',
-  TTFCPUIDLE: 'firstCPUIdle',
-  TTI: 'interactive',
-  SI: 'speedIndex'
+  METRICS: {
+    TTFCP: 'firstContentfulPaint',
+    TTFMP: 'firstMeaningfulPaint',
+    TTFCPUIDLE: 'firstCPUIdle',
+    TTI: 'interactive',
+    SI: 'speedIndex'
+  }
 }
 ```
 
