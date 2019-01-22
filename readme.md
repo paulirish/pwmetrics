@@ -154,7 +154,8 @@ module.exports = {
     type: 'GOOGLE_SHEETS', // sheets service type. Available types: GOOGLE_SHEETS
     options: {
       spreadsheetId: 'sheet_id',
-      tableName: 'data'
+      tableName: 'data',
+      uploadMedian: false // not required, set to true if you want to upload only the median run
     }
   },
   clientSecret: {

@@ -7,6 +7,7 @@ export interface SheetsConfig {
     spreadsheetId: string;
     tableName: string;
     clientSecret: AuthorizeCredentials;
+    uploadMedian?: boolean;
   };
 }
 
