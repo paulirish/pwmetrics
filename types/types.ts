@@ -46,7 +46,7 @@ export interface PWMetricsResults {
 }
 
 export interface Timing {
-  title: string,
+  title: string;
   id: string;
   timing: number;
   color: string;
