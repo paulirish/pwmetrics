@@ -105,7 +105,7 @@ class PWMetrics {
 
       if (this.sheets.options.uploadMedian) {
         results.median = this.findMedianRun(results.runs);
-        await sheets.appendResults([results.median,]);
+        await sheets.appendResults([results.median]);
       }
       else {
         await sheets.appendResults(results.runs);
