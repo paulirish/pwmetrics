@@ -7,7 +7,7 @@
     "pwmetrics": "bin/cli.js"
   },
   "scripts": {
-    "prepublish": "npm run build",
+    "prepare": "npm run build",
     "build": "tsc",
     "dev": "tsc -w",
     "lint": "[ \"$CI\" = true ] && eslint --quiet -f codeframe . || eslint .",
