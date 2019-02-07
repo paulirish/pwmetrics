@@ -115,7 +115,7 @@ class PWMetrics {
     await this.outputData(results);
 
     if (this.flags.expectations) {
-      const resultsToCompare = this.runs > 1 ? results.median.timings : results[0].timings;
+      const resultsToCompare = this.runs > 1 ? results.median.timings : results.runs[0].timings;
       const hasExpectationsWarnings = this.resultHasExpectationIssues(resultsToCompare, 'warn');
       const hasExpectationsErrors = this.resultHasExpectationIssues(resultsToCompare, 'error');
 
