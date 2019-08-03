@@ -8,7 +8,7 @@ declare var process: {
   }
 };
 
-const opn = require('opn');
+const opn = require('open');
 const os = require('os');
 const path = require('path');
 
