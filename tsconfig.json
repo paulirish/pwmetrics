@@ -9,10 +9,10 @@
   },
   "typeRoots": [
     "@types",
-    "node_modules/lighthouse/typings"
+    "node_modules/lighthouse/types"
   ],
   "include": [
     "lib/**/*.ts",
-    "node_modules/lighthouse/typings/*.d.ts"
+    "node_modules/lighthouse/types/*.d.ts"
   ]
 }
