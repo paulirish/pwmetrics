@@ -25,7 +25,8 @@
     "lighthouse": "^5.2.0",
     "micro-promisify": "^0.1.1",
     "readline-sync": "^1.4.6",
-    "yargs": "^6.6.0"
+    "yargs": "^6.6.0",
+    "open": "^6.4.0"
   },
   "devDependencies": {
     "chai": "^3.5.0",
