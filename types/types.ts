@@ -12,7 +12,7 @@ export interface SheetsConfig {
 }
 
 export interface MainOptions {
-  flags?: FeatureFlags;
+  flags?: Partial<FeatureFlags>;
   sheets?: SheetsConfig;
   expectations?: ExpectationMetrics;
   clientSecret?: AuthorizeCredentials;
