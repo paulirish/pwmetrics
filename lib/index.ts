@@ -242,4 +242,4 @@ class PWMetrics {
   }
 }
 
-module.exports = PWMetrics;
+export = PWMetrics;
