@@ -30,6 +30,7 @@ export interface FeatureFlags {
   port?: number;
   showOutput: Boolean;
   failOnError: Boolean;
+  metric: string;
   outputPath: string;
 }
 

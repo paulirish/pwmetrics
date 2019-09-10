@@ -49,6 +49,7 @@ class PWMetrics {
     chromeFlags: '',
     showOutput: true,
     failOnError: false,
+    metric: 'TTFCPUIDLE',
     outputPath: 'stdout',
   };
   runs: number;
@@ -204,21 +205,42 @@ class PWMetrics {
   }
 
   findMedianRun(results: MetricsResults[]): MetricsResults {
-    const TTFCPUIDLEValues = results.map(r => r.timings.find(timing => timing.id === METRICS.TTFCPUIDLE).timing);
-    const medianTTFCPUIDLE = this.median(TTFCPUIDLEValues);
-    // in the case of duplicate runs having the exact same TTFI, we naively pick the first
-    // @fixme, but any for now...
-    return results.find((result: any) => result.timings.find((timing: any) =>
-      timing.id === METRICS.TTFCPUIDLE && timing.timing === medianTTFCPUIDLE
-      )
-    );
+    const clone = o => JSON.parse(JSON.stringify(o));
+    const metric = this.flags.metric;
+    const metricValues = Object.entries(METRICS)
+      .reduce((acc, [metric, metricId]) => Object.assign(acc, {
+        [metric]: results.map(r => r.timings.find(({ id }) => id === metricId).timing),
+      }), {});
+
+    if (metric === 'all') {
+      // User requested the average value for all metrics, deep-clone and fill in the medians
+      const result = clone(results[0]);
+      result.timings.forEach(timing => {
+        const metric = Object.keys(METRICS).find(k => METRICS[k] === timing.id);
+        const idx = this.medianIndex(metricValues[metric]);
+        timing.timing = results[idx].timings.find(t => t.id === timing.id).timing;
+      });
+      return result;
+    } else if (metric === 'average') {
+      // User requested the average value for all metrics, deep-clone and fill in the averages
+      const result = clone(results[0]);
+      result.timings.forEach(timing => {
+        const metric = Object.keys(METRICS).find(k => METRICS[k] === timing.id);
+        const sum = metricValues[metric].reduce((acc, v) => acc + v, 0);
+        timing.timing = sum / metricValues[metric].length;
+      });
+      return result;
+    }
+    const medianIndex = this.medianIndex(metricValues[metric]);
+    return results[medianIndex]
   }
 
-  median(values: Array<number>) {
-    if (values.length === 1) return values[0];
-    values.sort((a, b) => a - b);
-    const half = Math.floor(values.length / 2);
-    return values[half];
+  medianIndex(values: Array<number>) {
+    if (values.length === 1) return 0;
+    const mappedValues = values.map((v, i) => ({ index: i, value: v }));
+    mappedValues.sort((a, b) => a.value - b.value);
+    const medianIndex = Math.floor(mappedValues.length / 2);
+    return mappedValues[medianIndex].index;
   }
 
   view(id: string) {
