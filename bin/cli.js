@@ -67,6 +67,12 @@ const cliFlags = yargs
     'type': 'boolean',
     'default': false
   })
+  .option('metric', {
+    'describe': 'Metric to use to find the median run (SI, TTI, etc.), or ' +
+                '\'all\' to report all medians or \'average\' to report all averages',
+    'type': 'string',
+    'default': 'TTFCPUIDLE',
+  })
   .check((argv) => {
     // Make sure pwmetrics has been passed a url, either from cli or config fileg()
 
