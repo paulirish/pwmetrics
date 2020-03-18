@@ -160,3 +160,17 @@ module.exports.normalizedExpectations = {
     error: 6000,
   },
 };
+
+module.exports.sheetsResponse = {
+  data: {
+    updates: {
+      updatedRange: 'A1:C1'
+    }
+  }
+};
+
+module.exports.valuesToAppend = [
+  ['3.0.0-beta.0', 'https://www.paulirish.com/', '6/8/2018 3:36:07 PM', 1059.9194, 1575.1898999999999, 4329, 4180, 4180],
+  ['3.0.0-beta.0', 'https://www.paulirish.com/', '6/8/2018 3:36:07 PM', 1059.9194, 1575.1898999999999, 4329, 4180, 4180],
+  ['3.0.0-beta.0', 'https://www.paulirish.com/', '6/8/2018 3:36:07 PM', 1059.9194, 1575.1898999999999, 4329, 4180, 4180]
+];

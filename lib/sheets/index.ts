@@ -4,7 +4,7 @@
 import { SheetsConfig, MetricsResults, Oauth2Client, AuthorizeCredentials, GSheetsValuesToAppend } from '../../types/types';
 
 const GoogleOauth = require('../oauth/google-oauth');
-import * as gsheets  from './gsheets';
+const GSheets = require('./gsheets').GSheets;
 
 // @todo add 'import' after moving all stuff to typescript
 const { getMessage } = require('../utils/messages');
@@ -71,6 +71,7 @@ export class Sheets {
 
     try {
       const oauth = await this.getOauth();
+      const gsheets = new GSheets();
       await gsheets.appendResults(oauth, valuesToAppend, this.config.options);
     } catch(error) {
       throw error;
