@@ -32,7 +32,7 @@ export class GSheets {
         spreadsheetId: spreadsheetId,
         range: range
       });
-      return response.values;
+      return response.data.values;
     } catch(error) {
       logger.error(getMessage('G_SHEETS_API_ERROR', error));
       throw new Error(error);
@@ -56,7 +56,6 @@ export class GSheets {
 
   public async appendResults (auth: Oauth2Client, valuesToAppend: Array<GSheetsValuesToAppend>, options:GSheetsAppendResultsOptions):Promise<any> {
     this.auth = auth;
-
     try {
       // clone values to append
       const values = Object.assign([], valuesToAppend);
