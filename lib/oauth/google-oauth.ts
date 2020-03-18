@@ -4,7 +4,7 @@
 import * as fs from 'fs';
 import * as path from 'path';
 
-const GoogleAuth = require('google-auth-library');
+const { OAuth2Client } = require('google-auth-library');
 const readlineSync = require('readline-sync');
 
 const { getMessage } = require('../utils/messages');
@@ -47,8 +47,7 @@ class GoogleOauth {
     const clientSecret = credentials.installed.client_secret;
     const clientId = credentials.installed.client_id;
     const redirectUrl = credentials.installed.redirect_uris[0];
-    const auth = new GoogleAuth();
-    const oauth2Client: Oauth2Client = new auth.OAuth2(clientId, clientSecret, redirectUrl);
+    const oauth2Client: Oauth2Client = new OAuth2Client(clientId, clientSecret, redirectUrl);
 
     try {
       const token = this.getToken();
