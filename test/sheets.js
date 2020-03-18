@@ -84,7 +84,9 @@ describe('Sheets', () => {
     let spy;
 
     beforeEach(() => {
-      oauthStub = sinon.stub(sheets, 'getOauth', () => { return "oauth" });
+      oauthStub = sinon.stub(sheets, 'getOauth', () => {
+        return 'oauth';
+      });
       sinon.stub(GSheets.prototype, 'sendResultsToGoogle', () => sheetsResponse);
       spy = sinon.stub(GSheets.prototype, 'getRange', () => valuesToAppend);
     });
@@ -93,8 +95,8 @@ describe('Sheets', () => {
       oauthStub.restore();
     });
 
-    it('should at least consider running', async () => {
-      await sheets.appendResults(metricsResults);
+    it('should at least consider running', async() => {
+      sheets.appendResults(metricsResults);
       sinon.assert.calledOnce(spy);
     });
   });
