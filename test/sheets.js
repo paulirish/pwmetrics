@@ -3,9 +3,10 @@
 'use strict';
 
 const Sheets = require('../lib/sheets').Sheets;
-const {getMessage} = require('../lib/utils/messages');
 
+const {getMessage} = require('../lib/utils/messages');
 const runOptions = require('./fixtures/run-options');
+const {metricsResults} = require('./fixtures/mocks');
 
 /* eslint-env mocha */
 describe('Sheets', () => {
@@ -74,6 +75,21 @@ describe('Sheets', () => {
   });
 
   describe('appendResultsToGSheets', () => {
-    // @todo after refactoring lib/gsheets/gsheets
+
+  });
+
+  describe('gSheets', () => {
+    let oauthStub;
+    beforeEach(() => {
+      oauthStub = sinon.stub(sheets, 'getOauth', () => {});
+    });
+
+    afterEach(() => {
+      oauthStub.restore();
+    });
+
+    it('should at least consider running', () => {
+      sheets.appendResults(metricsResults);
+    });
   });
 });

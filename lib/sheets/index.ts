@@ -45,6 +45,12 @@ export class Sheets {
     }
   }
 
+  async getOauth() {
+    const googleOauth = new GoogleOauth();
+    const oauth: Oauth2Client = await googleOauth.authenticate(this.clientSecret);
+    return oauth;
+  }
+
   async appendResultsToGSheets(results: Array<MetricsResults>) {
     let valuesToAppend: Array<GSheetsValuesToAppend> = [];
     results.forEach(data => {
@@ -64,8 +70,7 @@ export class Sheets {
     });
 
     try {
-      const googleOauth = new GoogleOauth();
-      const oauth: Oauth2Client = await googleOauth.authenticate(this.clientSecret);
+      const oauth = await this.getOauth();
       await gsheets.appendResults(oauth, valuesToAppend, this.config.options);
     } catch(error) {
       throw error;
