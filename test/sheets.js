@@ -2,10 +2,12 @@
 // Licensed under the Apache License, Version 2.0. See LICENSE
 'use strict';
 
+const GSheets = require('../lib/sheets/gsheets').GSheets;
 const Sheets = require('../lib/sheets').Sheets;
-const {getMessage} = require('../lib/utils/messages');
 
+const {getMessage} = require('../lib/utils/messages');
 const runOptions = require('./fixtures/run-options');
+const {metricsResults, sheetsResponse, valuesToAppend} = require('./fixtures/mocks');
 
 /* eslint-env mocha */
 describe('Sheets', () => {
@@ -74,6 +76,28 @@ describe('Sheets', () => {
   });
 
   describe('appendResultsToGSheets', () => {
-    // @todo after refactoring lib/gsheets/gsheets
+
+  });
+
+  describe('gSheets', () => {
+    let oauthStub;
+    let spy;
+
+    beforeEach(() => {
+      oauthStub = sinon.stub(sheets, 'getOauth', () => {
+        return 'oauth';
+      });
+      sinon.stub(GSheets.prototype, 'sendResultsToGoogle', () => sheetsResponse);
+      spy = sinon.stub(GSheets.prototype, 'getRange', () => valuesToAppend);
+    });
+
+    afterEach(() => {
+      oauthStub.restore();
+    });
+
+    it('should at least consider running', async() => {
+      sheets.appendResults(metricsResults);
+      sinon.assert.calledOnce(spy);
+    });
   });
 });

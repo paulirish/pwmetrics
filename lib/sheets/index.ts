@@ -4,7 +4,7 @@
 import { SheetsConfig, MetricsResults, Oauth2Client, AuthorizeCredentials, GSheetsValuesToAppend } from '../../types/types';
 
 const GoogleOauth = require('../oauth/google-oauth');
-import * as gsheets  from './gsheets';
+const GSheets = require('./gsheets').GSheets;
 
 // @todo add 'import' after moving all stuff to typescript
 const { getMessage } = require('../utils/messages');
@@ -45,6 +45,12 @@ export class Sheets {
     }
   }
 
+  async getOauth() {
+    const googleOauth = new GoogleOauth();
+    const oauth: Oauth2Client = await googleOauth.authenticate(this.clientSecret);
+    return oauth;
+  }
+
   async appendResultsToGSheets(results: Array<MetricsResults>) {
     let valuesToAppend: Array<GSheetsValuesToAppend> = [];
     results.forEach(data => {
@@ -64,8 +70,8 @@ export class Sheets {
     });
 
     try {
-      const googleOauth = new GoogleOauth();
-      const oauth: Oauth2Client = await googleOauth.authenticate(this.clientSecret);
+      const oauth = await this.getOauth();
+      const gsheets = new GSheets();
       await gsheets.appendResults(oauth, valuesToAppend, this.config.options);
     } catch(error) {
       throw error;
