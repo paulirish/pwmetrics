@@ -3,10 +3,19 @@
 
 export const METRICS = {
   TTFCP: 'firstContentfulPaint',
-  TTFMP: 'firstMeaningfulPaint',
-  TTFCPUIDLE: 'firstCPUIdle',
+  TTLCP: 'largestContentfulPaint',
+  TBT: 'totalBlockingTime',
   TTI: 'interactive',
   SI: 'speedIndex',
+  /** @deprecated */
+  TTFMP: 'firstMeaningfulPaint',
+  /** @deprecated */
+  TTFCPUIDLE: 'firstCPUIdle',
   // @todo add in further improvements
   // VISUALLY_COMPLETE: 'observedLastVisualChange',
 };
+
+export const DEPRECATED_METRICS = [
+  METRICS.TTFMP,
+  METRICS.TTFCPUIDLE,
+];

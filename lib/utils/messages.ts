@@ -62,6 +62,10 @@ export const getMessage = function (messageType: string, ...args: any[]) {
       return 'First CPU Idle';
     case METRICS.TTI:
       return 'Time to Interactive';
+    case METRICS.TTLCP:
+      return 'Largest Contentful Paint';
+    case METRICS.TBT:
+      return 'Total Blocking Time';
     case 'SUCCESS_RUN':
       return `Run ${args[0] + 1} of ${args[1]} finished successfully`;
     case 'FAILED_RUN':
