@@ -52,6 +52,8 @@ export const getMessage = function (messageType: string, ...args: any[]) {
       return `No matching message prefix: ${args[0]}`;
     case 'METRIC_IS_UNAVAILABLE':
       return `Sorry, ${args[0]} metric is unavailable`;
+    case 'METRIC_IS_DEPRECATED':
+      return `Sorry, ${args[0]} metric is deprecated and cannot be used`;
     case METRICS.TTFCP:
       return 'First Contentful Paint';
     case METRICS.TTFMP:

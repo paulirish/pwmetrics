@@ -18,7 +18,7 @@ import {Logger} from './utils/logger';
 import {LHRunner} from './lh-runner';
 import {Sheets} from './sheets';
 import {adaptMetricsData} from './metrics/metrics-adapter';
-import {validateMetrics, normalizeExpectationMetrics, checkExpectations} from './expectations';
+import {validateMetrics, clarifyMetrics, normalizeExpectationMetrics, checkExpectations} from './expectations';
 import {upload} from './upload';
 import {writeToDisk} from './utils/fs';
 import {getMessage, getMessageWithPrefix} from './utils/messages';
@@ -72,7 +72,8 @@ class PWMetrics {
     if (this.flags.expectations) {
       if (expectations) {
         validateMetrics(expectations);
-        this.normalizedExpectations = normalizeExpectationMetrics(expectations);
+        const actualExpectationMetrics = clarifyMetrics(expectations);
+        this.normalizedExpectations = normalizeExpectationMetrics(actualExpectationMetrics);
       } else throw new Error(getMessageWithPrefix('ERROR', 'NO_EXPECTATIONS_FOUND'));
     }
 
