@@ -72,9 +72,9 @@ export interface GSheetsValuesToAppend {
   1: string; // url
   2: string; // time
   3: number; // TTFCP timing
-  4: number; // TTFMP timing
+  4: number; // TTLCP timing
   5: number; // SI timing
-  6: number; // TTFCPUIDLE timing
+  6: number; // TBT timing
   7: number; // TTI timing
 }
 
