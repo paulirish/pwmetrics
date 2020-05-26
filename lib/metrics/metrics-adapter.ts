@@ -4,7 +4,7 @@
 import {MetricsResults, Timing} from '../../types/types';
 import {getMessage} from '../utils/messages';
 import {Logger} from '../utils/logger';
-import {METRICS} from './metrics';
+import {METRICS, DEPRECATED_METRICS} from './metrics';
 
 const logger = Logger.getInstance();
 
@@ -41,8 +41,8 @@ export const adaptMetricsData = (res: LH.Result): MetricsResults => {
   const timings: Timing[] = [];
 
   // @todo improve to Object.entries
-  Object.keys(metricsValues).forEach(metricKey => {
-    if (!Object.values(METRICS).includes(metricKey)) return;
+  Object.keys(metricsValues).forEach((metricKey: keyof LH.Artifacts.TimingSummary) => {
+    if (!Object.values(METRICS).includes(metricKey) || DEPRECATED_METRICS.includes(metricKey)) return;
 
     const metricTitle = getMetricTitle(metricKey);
     const resolvedMetric: Timing = {
@@ -54,10 +54,10 @@ export const adaptMetricsData = (res: LH.Result): MetricsResults => {
 
     switch (metricKey) {
       case METRICS.TTFCP:
-      case METRICS.TTFMP:
+      case METRICS.TTLCP:
         resolvedMetric.color = colorP2;
         break;
-      case METRICS.TTFCPUIDLE:
+      case METRICS.TBT:
       case METRICS.TTI:
         resolvedMetric.color = colorP0;
         break;
