@@ -7,16 +7,10 @@
       "color": "green"
     },
     {
-      "title": "First Meaningful Paint",
-      "id": "firstMeaningfulPaint",
-      "timing": 4180,
+      "title": "Largest Contentful Paint",
+      "id": "largestContentfulPaint",
+      "timing": 4329,
       "color": "green"
-    },
-    {
-      "title": "First CPU Idle",
-      "id": "firstCPUIdle",
-      "timing": 4180,
-      "color": "yellow"
     },
     {
       "title": "Time to Interactive",
@@ -29,6 +23,12 @@
       "id": "speedIndex",
       "timing": 4329,
       "color": "blue"
+    },
+    {
+      "title": "Total Blocking Time",
+      "id": "totalBlockingTime",
+      "timing": 408,
+      "color": "yellow"
     }
   ],
   "generatedTime": "2018-08-27T20:53:51.206Z",

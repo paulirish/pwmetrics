@@ -14,14 +14,18 @@
       "scoreDisplayMode": "informative",
       "rawValue": 4179.649,
       "details": {
+        "type": "debugdata",
         "items": [
           {
             "firstContentfulPaint": 4180,
             "firstMeaningfulPaint": 4180,
+            "largestContentfulPaint": 4329,
             "firstCPUIdle": 4180,
             "interactive": 4180,
             "speedIndex": 4329,
             "estimatedInputLatency": 13,
+            "totalBlockingTime": 408,
+            "cumulativeLayoutShift": 0.0053,
             "observedNavigationStart": 0,
             "observedNavigationStartTs": 49414590783,
             "observedFirstPaint": 1005,
