@@ -8,9 +8,9 @@ import {METRICS} from './metrics';
 
 const logger = Logger.getInstance();
 
-const checkMetrics = (metrics: Record<string, LH.Audit.Result>) => {
+const checkMetrics = (metrics: LH.Audit.Result) => {
   const errorMessage = metrics.errorMessage;
-  const explanation = metrics.details.explanation;
+  const explanation = metrics.explanation;
   if (errorMessage)
     logger.log(`${errorMessage} \n ${explanation}`);
 };
@@ -26,12 +26,11 @@ const getMetricTitle = (metricId) => {
 export const adaptMetricsData = (res: LH.Result): MetricsResults => {
   const auditResults:Record<string, LH.Audit.Result> = res.audits;
 
-  // has to be Record<string, LH.Audit.Result>
-  const metricsAudit:any = auditResults.metrics;
-  if (!metricsAudit || !metricsAudit.details || !metricsAudit.details.items)
+  const metricsAudit = auditResults.metrics;
+  if (!metricsAudit || !metricsAudit.details || !(metricsAudit.details.type === 'debugdata') || !metricsAudit.details.items)
     throw new Error('No metrics data');
 
-  const metricsValues = metricsAudit.details.items[0];
+  const metricsValues: LH.Artifacts.TimingSummary = metricsAudit.details.items[0];
 
   checkMetrics(metricsAudit);
 
