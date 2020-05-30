@@ -83,8 +83,10 @@ const cliFlags = yargs
   .epilogue('For more Lighthouse CLI options see https://github.com/GoogleChrome/lighthouse/#lighthouse-cli-options')
   .argv;
 
-// Merge options from all sources. Order indicates precedence (last one wins)
-const options = Object.assign({}, {flags: cliFlags}, config);
+const options = config || {};
+
+// Merge flags from CLI and config file (if present). Config flags take precedence.
+options.flags = Object.assign({}, cliFlags, options.flags);
 
 // Get url first from cmd line then from config file.
 options.url = cliFlags._[0] || options.url;
