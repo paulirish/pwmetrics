@@ -37,7 +37,7 @@
     "mocha": "^3.2.0",
     "sinon": "^1.17.7",
     "sinon-chai": "^2.8.0",
-    "typescript": "3.0.1"
+    "typescript": "3.5.1"
   },
   "repository": {
     "type": "git",
