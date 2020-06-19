@@ -1,3 +1,9 @@
+# Deprecated
+
+In feavor of better support and many cool features of:
+- [Lighthouse CI](https://github.com/GoogleChrome/lighthouse-ci) - is a suite of tools that make continuously running, saving, retrieving, and asserting against Lighthouse results as easy as possible.
+- [Lighthouse CI Action](https://github.com/treosh/lighthouse-ci-action) - action integrates Lighthouse CI with Github Actions environment. Making it simple to see failed tests, upload results, run jobs in parallel, store secrets, and interpolate env variables.
+- [Treo.sh](https://treo.sh) - Page speed monitoring made simple.
 
 <h1 align="center">PWMetrics</h1>
 <p align="center">
