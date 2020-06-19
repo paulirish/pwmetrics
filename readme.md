@@ -41,8 +41,8 @@ pwmetrics http://example.com/ --json
 #       "value": 289.642
 #     },
 #     {
-#       "name": "First Meaningful Paint",
-#       "value": 289.6
+#       "name": "Largest Contentful Paint",
+#       "value": 292
 #     },
 #     ...
 
@@ -136,14 +136,14 @@ module.exports = {
       warn: '>=1500',
       error: '>=2000'
     },
-    [METRICS.TTFMP]: {
+    [METRICS.TTLCP]: {
       warn: '>=2000',
       error: '>=3000'
     },
     [METRICS.TTI]: {
       ...
     },
-    [METRICS.TTFCPUIDLE]: {
+    [METRICS.TBT]: {
       ...
     },
     [METRICS.SI]: {
@@ -316,8 +316,8 @@ All metrics now are stored in separate constant object located in `pwmetrics/lib
 {
   METRICS: {
     TTFCP: 'firstContentfulPaint',
-    TTFMP: 'firstMeaningfulPaint',
-    TTFCPUIDLE: 'firstCPUIdle',
+    TTLCP: 'largestContentfulPaint',
+    TBT: 'totalBlockingTime',
     TTI: 'interactive',
     SI: 'speedIndex'
   }

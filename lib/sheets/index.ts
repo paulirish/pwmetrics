@@ -56,9 +56,9 @@ export class Sheets {
         data.requestedUrl,
         `${dateObj.toLocaleDateString()} ${dateObj.toLocaleTimeString()}`,
         getTiming(METRICS.TTFCP),
-        getTiming(METRICS.TTFMP),
+        getTiming(METRICS.TTLCP),
         getTiming(METRICS.SI),
-        getTiming(METRICS.TTFCPUIDLE),
+        getTiming(METRICS.TBT),
         getTiming(METRICS.TTI),
       ]);
     });

@@ -1,6 +1,7 @@
 // Copyright 2016 Google Inc. All Rights Reserved.
 // Licensed under the Apache License, Version 2.0. See LICENSE
 
+import {DEPRECATED_METRICS} from './metrics/metrics';
 import {Logger} from './utils/logger';
 import {getAssertionMessage, getMessageWithPrefix} from './utils/messages';
 import {Timing, ExpectationMetrics, NormalizedExpectationMetrics} from '../types/types';
@@ -22,6 +23,18 @@ export const validateMetrics = (metrics: ExpectationMetrics) => {
     }
   });
 };
+
+export const clarifyMetrics = (metrics: ExpectationMetrics): ExpectationMetrics => {
+  const result: ExpectationMetrics = {};
+  Object.keys(metrics).forEach(key => {
+    if (DEPRECATED_METRICS.includes(key)) {
+      logger.warn(getMessageWithPrefix('WARNING', 'METRIC_IS_DEPRECATED', key));
+    } else {
+      result[key] = metrics[key];
+    }
+  });
+  return result;
+}
 
 export const normalizeExpectationMetrics = (metrics: ExpectationMetrics): NormalizedExpectationMetrics => {
   let normalizedMetrics: NormalizedExpectationMetrics = {};

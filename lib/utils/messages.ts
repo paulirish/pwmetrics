@@ -52,6 +52,8 @@ export const getMessage = function (messageType: string, ...args: any[]) {
       return `No matching message prefix: ${args[0]}`;
     case 'METRIC_IS_UNAVAILABLE':
       return `Sorry, ${args[0]} metric is unavailable`;
+    case 'METRIC_IS_DEPRECATED':
+      return `Sorry, ${args[0]} metric is deprecated and cannot be used`;
     case METRICS.TTFCP:
       return 'First Contentful Paint';
     case METRICS.TTFMP:
@@ -62,6 +64,10 @@ export const getMessage = function (messageType: string, ...args: any[]) {
       return 'First CPU Idle';
     case METRICS.TTI:
       return 'Time to Interactive';
+    case METRICS.TTLCP:
+      return 'Largest Contentful Paint';
+    case METRICS.TBT:
+      return 'Total Blocking Time';
     case 'SUCCESS_RUN':
       return `Run ${args[0] + 1} of ${args[1]} finished successfully`;
     case 'FAILED_RUN':

@@ -18,7 +18,7 @@ import {Logger} from './utils/logger';
 import {LHRunner} from './lh-runner';
 import {Sheets} from './sheets';
 import {adaptMetricsData} from './metrics/metrics-adapter';
-import {validateMetrics, normalizeExpectationMetrics, checkExpectations} from './expectations';
+import {validateMetrics, clarifyMetrics, normalizeExpectationMetrics, checkExpectations} from './expectations';
 import {upload} from './upload';
 import {writeToDisk} from './utils/fs';
 import {getMessage, getMessageWithPrefix} from './utils/messages';
@@ -72,7 +72,8 @@ class PWMetrics {
     if (this.flags.expectations) {
       if (expectations) {
         validateMetrics(expectations);
-        this.normalizedExpectations = normalizeExpectationMetrics(expectations);
+        const actualExpectationMetrics = clarifyMetrics(expectations);
+        this.normalizedExpectations = normalizeExpectationMetrics(actualExpectationMetrics);
       } else throw new Error(getMessageWithPrefix('ERROR', 'NO_EXPECTATIONS_FOUND'));
     }
 
@@ -203,13 +204,14 @@ class PWMetrics {
     return data;
   }
 
+  /** Median run selected by run with the median TTI. */
   findMedianRun(results: MetricsResults[]): MetricsResults {
-    const TTFCPUIDLEValues = results.map(r => r.timings.find(timing => timing.id === METRICS.TTFCPUIDLE).timing);
-    const medianTTFCPUIDLE = this.median(TTFCPUIDLEValues);
+    const TTIValues = results.map(r => r.timings.find(timing => timing.id === METRICS.TTI).timing);
+    const medianTTI = this.median(TTIValues);
     // in the case of duplicate runs having the exact same TTFI, we naively pick the first
     // @fixme, but any for now...
     return results.find((result: any) => result.timings.find((timing: any) =>
-      timing.id === METRICS.TTFCPUIDLE && timing.timing === medianTTFCPUIDLE
+      timing.id === METRICS.TTI && timing.timing === medianTTI
       )
     );
   }

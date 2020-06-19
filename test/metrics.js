@@ -27,7 +27,7 @@ describe('Metrics', () => {
     it('should log error if audit has debugString', () => {
       const {audits} = events;
       audits.metrics.errorMessage = 'Cannot read property \'ts\' of undefined';
-      audits.metrics.details.explanation = 'Explanation of error';
+      audits.metrics.explanation = 'Explanation of error';
       adaptMetricsData(events);
       expect(logSpy).to.be.calledWith('Cannot read property \'ts\' of undefined \n Explanation of error');
     });
